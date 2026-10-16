@@ -117,24 +117,38 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
 
         {/* Chart View Toggles & Timeframe Selector */}
         <div className="flex items-center gap-2">
-          {/* Chart Type Toggle: Candles vs Line */}
-          <div className="flex items-center p-0.5 rounded-xl bg-slate-900 border border-white/10">
+          {/* Chart Type Toggle: Candles vs Line with OriginKit Spring Pill */}
+          <div className="relative flex items-center p-0.5 rounded-xl bg-slate-900 border border-white/10">
             <button
               onClick={() => setChartType('candles')}
-              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-                chartType === 'candles' ? 'bg-[#00f2fe]/20 text-[#00f2fe]' : 'text-slate-400 hover:text-white'
+              className={`relative z-10 p-1.5 rounded-lg transition-colors cursor-pointer ${
+                chartType === 'candles' ? 'text-[#00f2fe]' : 'text-slate-400 hover:text-white'
               }`}
               title="Candlestick Chart"
             >
+              {chartType === 'candles' && (
+                <motion.div
+                  layoutId="chartTypePill"
+                  className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                />
+              )}
               <BarChart2 className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setChartType('line')}
-              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-                chartType === 'line' ? 'bg-[#00f2fe]/20 text-[#00f2fe]' : 'text-slate-400 hover:text-white'
+              className={`relative z-10 p-1.5 rounded-lg transition-colors cursor-pointer ${
+                chartType === 'line' ? 'text-[#00f2fe]' : 'text-slate-400 hover:text-white'
               }`}
               title="Line Area Chart"
             >
+              {chartType === 'line' && (
+                <motion.div
+                  layoutId="chartTypePill"
+                  className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                />
+              )}
               <LineChart className="w-3.5 h-3.5" />
             </button>
           </div>

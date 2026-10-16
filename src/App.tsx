@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Token, TransactionReceipt } from './types';
 import { POPULAR_TOKENS } from './data/tokens';
 import { Header } from './components/Header';
@@ -24,6 +24,20 @@ export function App() {
   const [inToken, setInToken] = useState<Token>(POPULAR_TOKENS[0]); // SOL
   const [outToken, setOutToken] = useState<Token>(POPULAR_TOKENS[1]); // USDC
   const [receipt, setReceipt] = useState<TransactionReceipt | null>(null);
+  const [matchedPrice, setMatchedPrice] = useState<number | null>(null);
+
+  // Global keyboard shortcuts (Esc to close any modal)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsTokenModalOpen(false);
+        setReceipt(null);
+        setIsCaseStudyOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleSwapTokens = () => {
     const temp = inToken;
@@ -117,6 +131,7 @@ export function App() {
                 onOpenOutTokenModal={handleOpenOutToken}
                 onSwapTokens={handleSwapTokens}
                 onExecuteReceipt={(rec) => setReceipt(rec)}
+                matchedPrice={matchedPrice}
               />
             </div>
           </MobileFrame>
@@ -171,7 +186,11 @@ export function App() {
                 <TradingChart inToken={inToken} outToken={outToken} />
 
                 {/* 2. Real Solana CLMM Order Book */}
-                <OrderBook inToken={inToken} outToken={outToken} />
+                <OrderBook 
+                  inToken={inToken} 
+                  outToken={outToken} 
+                  onSelectPrice={(p) => setMatchedPrice(p)}
+                />
 
                 {/* 3. Live Solana Aggregator Swaps Feed */}
                 <RecentSwapsFeed
@@ -189,6 +208,7 @@ export function App() {
                   onOpenOutTokenModal={handleOpenOutToken}
                   onSwapTokens={handleSwapTokens}
                   onExecuteReceipt={(rec) => setReceipt(rec)}
+                  matchedPrice={matchedPrice}
                 />
               </div>
 

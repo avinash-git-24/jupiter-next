@@ -128,16 +128,17 @@ export const Header: React.FC<HeaderProps> = ({
             <BookOpen className="w-3.5 h-3.5 text-[#00f2fe] group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">UX Case Study</span>
             <span className="sm:hidden">Case Study</span>
-            <span className="px-1.5 py-0.2 bg-[#00f2fe]/20 text-[#00f2fe] text-[9px] font-bold rounded">
+            <span className="hidden sm:inline-block px-1.5 py-0.2 bg-[#00f2fe]/20 text-[#00f2fe] text-[9px] font-bold rounded">
               Before/After
             </span>
           </motion.button>
 
           {/* Connected Wallet Pill with OriginKit styling */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/25 transition-all cursor-pointer">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></div>
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/25 transition-all cursor-pointer">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 shrink-0"></div>
             <span className="font-mono text-xs text-slate-200">
-              {connectedWallet}
+              <span className="inline sm:hidden">...{connectedWallet.slice(-4)}</span>
+              <span className="hidden sm:inline">{connectedWallet}</span>
             </span>
           </div>
 

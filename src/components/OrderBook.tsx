@@ -24,26 +24,63 @@ export const OrderBook: React.FC<OrderBookProps> = ({
   const [viewMode, setViewMode] = useState<'both' | 'bids' | 'asks'>('both');
   const basePrice = inToken.priceUsd;
 
-  // Initial Asks (Sell orders above market price)
-  const initialAsks: OrderBookRow[] = [
-    { price: basePrice + 0.45, size: 45.2, total: (basePrice + 0.45) * 45.2, depthPct: 92 },
-    { price: basePrice + 0.32, size: 28.6, total: (basePrice + 0.32) * 28.6, depthPct: 75 },
-    { price: basePrice + 0.20, size: 64.1, total: (basePrice + 0.20) * 64.1, depthPct: 58 },
-    { price: basePrice + 0.12, size: 19.5, total: (basePrice + 0.12) * 19.5, depthPct: 35 },
-    { price: basePrice + 0.05, size: 38.0, total: (basePrice + 0.05) * 38.0, depthPct: 18 },
-  ];
+  const formatPrice = (p: number) => {
+    if (p < 0.0001) return `$${p.toFixed(7)}`;
+    if (p < 0.01) return `$${p.toFixed(5)}`;
+    if (p < 1) return `$${p.toFixed(4)}`;
+    return `$${p.toFixed(2)}`;
+  };
 
-  // Initial Bids (Buy orders below market price)
-  const initialBids: OrderBookRow[] = [
-    { price: basePrice - 0.05, size: 52.4, total: (basePrice - 0.05) * 52.4, depthPct: 22 },
-    { price: basePrice - 0.14, size: 31.8, total: (basePrice - 0.14) * 31.8, depthPct: 41 },
-    { price: basePrice - 0.25, size: 85.0, total: (basePrice - 0.25) * 85.0, depthPct: 67 },
-    { price: basePrice - 0.38, size: 42.1, total: (basePrice - 0.38) * 42.1, depthPct: 84 },
-    { price: basePrice - 0.50, size: 76.5, total: (basePrice - 0.50) * 76.5, depthPct: 98 },
-  ];
+  const formatSize = (s: number) => {
+    if (s >= 1000000) return `${(s / 1000000).toFixed(1)}M`;
+    if (s >= 1000) return `${(s / 1000).toFixed(1)}k`;
+    return s.toFixed(1);
+  };
 
-  const [asks, setAsks] = useState<OrderBookRow[]>(initialAsks);
-  const [bids, setBids] = useState<OrderBookRow[]>(initialBids);
+  const formatTotal = (t: number) => {
+    if (t >= 1000000) return `$${(t / 1000000).toFixed(2)}M`;
+    if (t >= 1000) return `$${(t / 1000).toFixed(1)}k`;
+    return `$${t.toFixed(0)}`;
+  };
+
+  const isMeme = inToken.priceUsd < 0.01;
+  const sizeMultiplier = isMeme ? 500000 : 1;
+  const askOffsets = [0.0035, 0.0025, 0.0016, 0.0009, 0.0004];
+  const bidOffsets = [-0.0004, -0.0011, -0.0019, -0.0028, -0.0039];
+
+  const generateAsks = (bp: number) => askOffsets.map((offset, idx) => {
+    const price = bp * (1 + offset);
+    const size = [45.2, 28.6, 64.1, 19.5, 38.0][idx] * sizeMultiplier;
+    return {
+      price,
+      size,
+      total: price * size,
+      depthPct: [92, 75, 58, 35, 18][idx]
+    };
+  });
+
+  const generateBids = (bp: number) => bidOffsets.map((offset, idx) => {
+    const price = bp * (1 + offset);
+    const size = [52.4, 31.8, 85.0, 42.1, 76.5][idx] * sizeMultiplier;
+    return {
+      price,
+      size,
+      total: price * size,
+      depthPct: [22, 41, 67, 84, 98][idx]
+    };
+  });
+
+  // Recompute relative order book rows whenever token or price changes
+  const [asks, setAsks] = useState<OrderBookRow[]>(() => generateAsks(basePrice));
+  const [bids, setBids] = useState<OrderBookRow[]>(() => generateBids(basePrice));
+  const [prevSymbol, setPrevSymbol] = useState(inToken.symbol);
+
+  // Sync state from props during render (React recommended pattern, avoiding cascading effect renders)
+  if (prevSymbol !== inToken.symbol) {
+    setPrevSymbol(inToken.symbol);
+    setAsks(generateAsks(basePrice));
+    setBids(generateBids(basePrice));
+  }
 
   // Micro-fluctuations to simulate live Solana order book matching
   useEffect(() => {
@@ -67,8 +104,10 @@ export const OrderBook: React.FC<OrderBookProps> = ({
     return () => clearInterval(timer);
   }, []);
 
-  const spread = (asks[asks.length - 1].price - bids[0].price).toFixed(2);
-  const spreadPct = ((+spread / basePrice) * 100).toFixed(3);
+  const bestAsk = asks[asks.length - 1]?.price ?? (basePrice * 1.0004);
+  const bestBid = bids[0]?.price ?? (basePrice * 0.9996);
+  const spreadVal = Math.abs(bestAsk - bestBid);
+  const spreadPct = ((spreadVal / (basePrice || 1)) * 100).toFixed(3);
 
   return (
     <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
@@ -146,13 +185,13 @@ export const OrderBook: React.FC<OrderBookProps> = ({
                 />
 
                 <span className="text-rose-400 font-semibold z-10">
-                  ${row.price.toFixed(2)}
+                  {formatPrice(row.price)}
                 </span>
                 <span className="text-slate-300 text-center z-10">
-                  {row.size.toFixed(1)}
+                  {formatSize(row.size)}
                 </span>
                 <span className="text-slate-400 text-right z-10">
-                  ${row.total.toFixed(0)}
+                  {formatTotal(row.total)}
                 </span>
               </div>
             ))}
@@ -164,7 +203,7 @@ export const OrderBook: React.FC<OrderBookProps> = ({
           <div className="my-2 py-2 px-3 rounded-xl bg-slate-950/80 border border-white/5 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center gap-2">
               <span className="text-lg font-bold text-white flex items-center gap-1">
-                ${basePrice.toFixed(2)}
+                {formatPrice(basePrice)}
                 <ArrowUp className="w-3.5 h-3.5 text-emerald-400 inline" />
               </span>
               <span className="text-[10px] text-slate-500">Live Index</span>
@@ -173,7 +212,7 @@ export const OrderBook: React.FC<OrderBookProps> = ({
             <div className="flex items-center gap-2 text-[11px]">
               <span className="text-slate-400">Spread:</span>
               <span className="text-[#00f2fe] font-bold">
-                ${spread} ({spreadPct}%)
+                {formatPrice(spreadVal)} ({spreadPct}%)
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
             </div>
@@ -196,13 +235,13 @@ export const OrderBook: React.FC<OrderBookProps> = ({
                 />
 
                 <span className="text-emerald-400 font-semibold z-10">
-                  ${row.price.toFixed(2)}
+                  {formatPrice(row.price)}
                 </span>
                 <span className="text-slate-300 text-center z-10">
-                  {row.size.toFixed(1)}
+                  {formatSize(row.size)}
                 </span>
                 <span className="text-slate-400 text-right z-10">
-                  ${row.total.toFixed(0)}
+                  {formatTotal(row.total)}
                 </span>
               </div>
             ))}

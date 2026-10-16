@@ -8,6 +8,7 @@ interface LimitWidgetProps {
   outToken: Token;
   onOpenInTokenModal: () => void;
   onOpenOutTokenModal: () => void;
+  targetPrice?: number | null;
 }
 
 export const LimitWidget: React.FC<LimitWidgetProps> = ({
@@ -15,6 +16,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
   outToken,
   onOpenInTokenModal,
   onOpenOutTokenModal,
+  targetPrice
 }) => {
   const [inAmount, setInAmount] = useState('10');
   const [expiry, setExpiry] = useState<'1d' | '7d' | '30d' | 'never'>('7d');
@@ -22,7 +24,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
   const amountNumber = parseFloat(inAmount) || 0;
   const currentRate = inToken.priceUsd / outToken.priceUsd;
-  const targetRate = currentRate * (1 + rateOffset / 100);
+  const targetRate = targetPrice ? targetPrice : currentRate * (1 + rateOffset / 100);
   const estimatedOut = amountNumber * targetRate;
 
   return (
@@ -106,13 +108,19 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         <div className="p-3 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-400">Execute Order When:</span>
-            <div className="font-mono text-sm font-bold text-white flex items-center gap-1.5">
+            <div className="font-mono text-sm font-bold text-white flex items-center gap-1.5 flex-wrap">
               <span>1 {inToken.symbol} = {targetRate.toFixed(4)} {outToken.symbol}</span>
-              <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
-                rateOffset < 0 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'
-              }`}>
-                ({rateOffset > 0 ? `+${rateOffset}% higher` : `${rateOffset}% dip`})
-              </span>
+              {targetPrice ? (
+                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-[#00f2fe]/20 text-[#00f2fe] border border-[#00f2fe]/40">
+                  CLMM Matched Price
+                </span>
+              ) : (
+                <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
+                  rateOffset < 0 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'
+                }`}>
+                  ({rateOffset > 0 ? `+${rateOffset}% higher` : `${rateOffset}% dip`})
+                </span>
+              )}
             </div>
           </div>
 

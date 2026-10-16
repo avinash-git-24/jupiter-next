@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import type { ButtonActionState } from '../types';
 import { ArrowRight, Check, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -17,24 +17,19 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
   inSymbol,
   outSymbol
 }) => {
-  const [state, setState] = useState<ButtonActionState>('idle');
+  const [internalState, setInternalState] = useState<'holding' | 'routing' | 'success' | null>(null);
   const [holdProgress, setHoldProgress] = useState(0);
   const holdIntervalRef = useRef<number | null>(null);
+  const wasHoldingRef = useRef(false);
 
-  useEffect(() => {
-    if (state === 'routing' || state === 'success') return;
-    if (amount > 0) {
-      setState('ready');
-    } else {
-      setState('idle');
-      setHoldProgress(0);
-    }
-  }, [amount, state]);
+  // Purely derived state: zero cascading renders and 100% reactive to amount changes
+  const state: ButtonActionState = internalState ?? (amount > 0 ? 'ready' : 'idle');
 
   // Handle Hold-to-Confirm Physics with Spring Feedback
   const startHold = () => {
     if (state !== 'ready') return;
-    setState('holding');
+    wasHoldingRef.current = true;
+    setInternalState('holding');
     setHoldProgress(0);
 
     const stepMs = 20;
@@ -45,6 +40,7 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
       setHoldProgress((prev) => {
         if (prev >= 100) {
           clearInterval(holdIntervalRef.current!);
+          wasHoldingRef.current = false;
           triggerExecution();
           return 100;
         }
@@ -54,19 +50,23 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
   };
 
   const cancelHold = () => {
-    if (state === 'holding') {
+    if (internalState === 'holding') {
       if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
       setHoldProgress(0);
-      setState('ready');
+      setInternalState(null);
+      // Suppress immediate click event caused by releasing hold
+      setTimeout(() => {
+        wasHoldingRef.current = false;
+      }, 150);
     }
   };
 
   const triggerExecution = () => {
-    setState('routing');
+    setInternalState('routing');
     
     // Simulate real Jito / Solana fast block inclusion
     setTimeout(() => {
-      setState('success');
+      setInternalState('success');
       
       // Confetti burst
       confetti({
@@ -79,8 +79,9 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
       // Call parent handler to show receipt
       setTimeout(() => {
         onExecuteSwap();
-        setState('ready');
+        setInternalState(null);
         setHoldProgress(0);
+        wasHoldingRef.current = false;
       }, 900);
 
     }, 1300);
@@ -99,7 +100,10 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
         onTouchStart={startHold}
         onTouchEnd={cancelHold}
         onClick={() => {
-          // Instant tap support for accessibility
+          if (wasHoldingRef.current) {
+            wasHoldingRef.current = false;
+            return;
+          }
           if (state === 'ready') {
             triggerExecution();
           }

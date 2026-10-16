@@ -58,7 +58,7 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
 
         {/* ThreeUI Curved SVG Connector Cables Overlay */}
         <svg 
-          className="absolute inset-0 w-full h-full pointer-events-none hidden md:block" 
+          className="absolute inset-0 w-full h-full pointer-events-none block" 
           viewBox="0 0 500 170" 
           fill="none" 
           preserveAspectRatio="none"

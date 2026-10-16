@@ -12,9 +12,9 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
   const mode = receipt.mode || 'swap';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn cursor-pointer">
       <div 
-        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden threeui-specular-card"
+        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden threeui-specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Background */}

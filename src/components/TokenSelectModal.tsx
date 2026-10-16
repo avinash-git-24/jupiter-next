@@ -35,9 +35,9 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn cursor-pointer">
       <div 
-        className="w-full max-w-md rounded-3xl bg-[#0c101a] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] threeui-specular-card"
+        className="w-full max-w-md rounded-3xl bg-[#0c101a] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] threeui-specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

@@ -15,6 +15,7 @@ interface SwapWidgetProps {
   outToken: Token;
   onSwapTokens: () => void;
   onExecuteReceipt: (receipt: TransactionReceipt) => void;
+  matchedPrice?: number | null;
 }
 
 export const SwapWidget: React.FC<SwapWidgetProps> = ({
@@ -23,13 +24,21 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   inToken,
   outToken,
   onSwapTokens,
-  onExecuteReceipt
+  onExecuteReceipt,
+  matchedPrice
 }) => {
   const [mode, setMode] = useState<SwapMode>('swap');
   const [inAmount, setInAmount] = useState('1.5');
   const [priorityFee, setPriorityFee] = useState<PriorityFeeLevel>('turbo');
   const [slippage, setSlippage] = useState<SlippagePreset>('auto');
   const [isRotating, setIsRotating] = useState(false);
+  const [prevMatchedPrice, setPrevMatchedPrice] = useState(matchedPrice);
+
+  // Sync mode to limit when an order book row is clicked during render (pure React pattern)
+  if (prevMatchedPrice !== matchedPrice && matchedPrice) {
+    setPrevMatchedPrice(matchedPrice);
+    setMode('limit');
+  }
 
   const amountNum = parseFloat(inAmount) || 0;
   const rate = inToken.priceUsd / outToken.priceUsd;
@@ -79,7 +88,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
       timestamp: new Date().toLocaleTimeString(),
       executionMs: priorityFee === 'ultra' ? 240 : 380,
       mode,
-      limitTriggerRate: rate * 0.95,
+      limitTriggerRate: matchedPrice || (rate * 0.95),
       dcaFrequency: 'day',
       dcaOrders: 10
     };
@@ -279,6 +288,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             outToken={outToken}
             onOpenInTokenModal={onOpenInTokenModal}
             onOpenOutTokenModal={onOpenOutTokenModal}
+            targetPrice={matchedPrice}
           />
           <MorphButton
             amount={amountNum}

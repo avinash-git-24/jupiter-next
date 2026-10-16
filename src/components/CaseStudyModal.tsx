@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   X, 
   BookOpen, 
@@ -9,6 +9,7 @@ import {
   ShieldCheck, 
   Sparkles
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface CaseStudyModalProps {
   isOpen: boolean;
@@ -18,12 +19,21 @@ interface CaseStudyModalProps {
 export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'before-after' | 'rubric' | 'prototype'>('overview');
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-lg animate-fadeIn">
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-lg animate-fadeIn cursor-pointer">
       <div 
-        className="w-full max-w-4xl rounded-3xl bg-[#090d16] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="w-full max-w-4xl rounded-3xl bg-[#090d16] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] threeui-specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -55,26 +65,34 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
           </button>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 px-5 py-2.5 border-b border-white/5 bg-slate-950/40 text-xs overflow-x-auto scrollbar-none">
+        {/* Navigation Tabs with OriginKit Spring Slider */}
+        <div className="flex items-center gap-1.5 px-5 py-2.5 border-b border-white/5 bg-slate-950/40 text-xs overflow-x-auto scrollbar-none relative">
           {[
             { id: 'overview', label: '1. Executive Summary' },
             { id: 'before-after', label: '2. Before vs After UX Audit' },
             { id: 'rubric', label: '3. Judging Rubric Alignment' },
             { id: 'prototype', label: '4. Prototype Architecture' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 py-1.5 rounded-xl font-medium transition-all whitespace-nowrap cursor-pointer ${
-                activeTab === tab.id
-                  ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-white border border-[#00f2fe]/30 font-bold'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          ].map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`relative px-3.5 py-1.5 rounded-xl font-medium transition-colors whitespace-nowrap cursor-pointer z-10 ${
+                  isActive ? 'text-white font-bold' : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="caseStudyActiveTabPill"
+                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#00f2fe]/25 to-[#9945FF]/25 border border-[#00f2fe]/40 shadow-sm -z-10"
+                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                  />
+                )}
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Modal Scrollable Content */}
