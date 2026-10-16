@@ -50,7 +50,7 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
       </div>
 
       {/* Kinetic Curved SVG Pipe Flow Architecture (ThreeUI Interactive Graph Template) */}
-      <div className="relative p-4 rounded-2xl bg-[#04060a]/95 border border-white/10 overflow-hidden">
+      <div className="relative p-4 rounded-2xl bg-[#04060a]/95 border border-white/10 overflow-hidden min-h-[170px] flex flex-col justify-between">
         
         {/* Ambient Glow Orbs */}
         <div className="absolute top-1/4 left-1/4 w-32 h-24 bg-[#00f2fe]/10 rounded-full blur-3xl pointer-events-none" />
@@ -59,7 +59,7 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
         {/* ThreeUI Curved SVG Connector Cables Overlay */}
         <svg 
           className="absolute inset-0 w-full h-full pointer-events-none hidden md:block" 
-          viewBox="0 0 540 150" 
+          viewBox="0 0 500 170" 
           fill="none" 
           preserveAspectRatio="none"
         >
@@ -82,123 +82,120 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             </filter>
           </defs>
 
-          {/* Path 1: Input (75, 75) -> Orca Whirlpool (205, 38) -> Output (465, 75) */}
-          {/* Ambient Glow Path */}
+          {/* Path 1: Input (75, 80) -> Orca Whirlpool (185, 42) -> Output (425, 80) */}
           <path 
-            d="M 85 75 C 135 75, 160 38, 205 38" 
+            d="M 80 80 C 125 80, 145 42, 185 42" 
             stroke="#00f2fe" 
             strokeWidth="5" 
-            opacity="0.15" 
+            opacity="0.12" 
             filter="url(#glowBlur)"
           />
           <path 
-            d="M 335 38 C 380 38, 415 75, 455 75" 
+            d="M 315 42 C 355 42, 380 80, 420 80" 
             stroke="#14F195" 
             strokeWidth="5" 
-            opacity="0.15" 
+            opacity="0.12" 
             filter="url(#glowBlur)"
           />
 
-          {/* Sharp Foreground Flow Paths */}
+          {/* Foreground Animated Flow Lines */}
           <path 
-            id="flowPathUpperIn"
-            d="M 85 75 C 135 75, 160 38, 205 38" 
+            d="M 80 80 C 125 80, 145 42, 185 42" 
             stroke="url(#cableGrad1)" 
             strokeWidth="2.5" 
             className="animate-route-flow"
           />
           <path 
-            id="flowPathUpperOut"
-            d="M 335 38 C 380 38, 415 75, 455 75" 
+            d="M 315 42 C 355 42, 380 80, 420 80" 
             stroke="url(#cableGrad1)" 
             strokeWidth="2.5" 
             className="animate-route-flow"
           />
 
-          {/* Path 2: Input (75, 75) -> Raydium CPMM (205, 112) -> Output (465, 75) */}
-          {/* Ambient Glow Path */}
+          {/* Path 2: Input (75, 80) -> Raydium CPMM (185, 118) -> Output (425, 80) */}
           <path 
-            d="M 85 75 C 135 75, 160 112, 205 112" 
+            d="M 80 80 C 125 80, 145 118, 185 118" 
             stroke="#9945FF" 
             strokeWidth="5" 
-            opacity="0.15" 
+            opacity="0.12" 
             filter="url(#glowBlur)"
           />
           <path 
-            d="M 335 112 C 380 112, 415 75, 455 75" 
+            d="M 315 118 C 355 118, 380 80, 420 80" 
             stroke="#14F195" 
             strokeWidth="5" 
-            opacity="0.15" 
+            opacity="0.12" 
             filter="url(#glowBlur)"
           />
 
-          {/* Sharp Foreground Flow Paths */}
+          {/* Foreground Animated Flow Lines */}
           <path 
-            id="flowPathLowerIn"
-            d="M 85 75 C 135 75, 160 112, 205 112" 
+            d="M 80 80 C 125 80, 145 118, 185 118" 
             stroke="url(#cableGrad2)" 
             strokeWidth="2.5" 
             className="animate-route-flow"
           />
           <path 
-            id="flowPathLowerOut"
-            d="M 335 112 C 380 112, 415 75, 455 75" 
+            d="M 315 118 C 355 118, 380 80, 420 80" 
             stroke="url(#cableGrad2)" 
             strokeWidth="2.5" 
             className="animate-route-flow"
           />
 
-          {/* ThreeUI Traveling Light Photons / Energy Packets */}
+          {/* ThreeUI Traveling Photons */}
           <circle r="3.5" fill="#00f2fe" filter="url(#glowBlur)">
-            <animateMotion dur="1.8s" repeatCount="indefinite" path="M 85 75 C 135 75, 160 38, 205 38" />
+            <animateMotion dur="1.8s" repeatCount="indefinite" path="M 80 80 C 125 80, 145 42, 185 42" />
           </circle>
           <circle r="3.5" fill="#14F195" filter="url(#glowBlur)">
-            <animateMotion dur="1.8s" repeatCount="indefinite" path="M 335 38 C 380 38, 415 75, 455 75" />
+            <animateMotion dur="1.8s" repeatCount="indefinite" path="M 315 42 C 355 42, 380 80, 420 80" />
           </circle>
           <circle r="3.5" fill="#9945FF" filter="url(#glowBlur)">
-            <animateMotion dur="2.4s" repeatCount="indefinite" path="M 85 75 C 135 75, 160 112, 205 112" />
+            <animateMotion dur="2.4s" repeatCount="indefinite" path="M 80 80 C 125 80, 145 118, 185 118" />
           </circle>
           <circle r="3.5" fill="#14F195" filter="url(#glowBlur)">
-            <animateMotion dur="2.4s" repeatCount="indefinite" path="M 335 112 C 380 112, 415 75, 455 75" />
+            <animateMotion dur="2.4s" repeatCount="indefinite" path="M 315 118 C 355 118, 380 80, 420 80" />
           </circle>
         </svg>
 
         {/* Visual Multi-Node Flow Layout */}
-        <div className="flex flex-col md:flex-row items-center justify-between relative z-10 gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between relative z-10 gap-3 my-auto">
           
           {/* Node 1: Input Token */}
-          <div className="flex flex-col items-center gap-1.5 shrink-0 group">
+          <div className="flex flex-col items-center gap-1.5 shrink-0 group z-20">
             <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#9945FF] to-[#14F195] shadow-lg shadow-[#14F195]/20 group-hover:scale-105 transition-transform">
               <img 
                 src={inToken.icon} 
                 alt={inToken.symbol} 
-                className="w-11 h-11 rounded-xl bg-black object-cover" 
+                className="w-10 h-10 rounded-xl bg-black object-cover" 
               />
               <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#04060a] flex items-center justify-center">
                 <span className="text-[8px] font-bold text-black">✓</span>
               </div>
             </div>
-            <span className="text-xs font-bold text-white font-mono">
-              {inAmount || 0} {inToken.symbol}
-            </span>
+            
+            <div className="px-2 py-0.5 rounded-lg bg-slate-950/90 border border-white/10 shadow-sm text-center">
+              <span className="text-[11px] font-bold text-white font-mono block">
+                {inAmount || 0} {inToken.symbol}
+              </span>
+            </div>
           </div>
 
           {/* Center DEX Nodes: Orca & Raydium with Specular Glass */}
-          <div className="flex-1 w-full max-w-xs md:max-w-none flex flex-col gap-2.5 relative">
+          <div className="flex-1 w-full max-w-xs md:max-w-none flex flex-col gap-2 relative z-20">
             {splits.map((split, idx) => (
               <div 
                 key={idx} 
                 onMouseEnter={() => setHoveredDex(split.dexName)}
                 onMouseLeave={() => setHoveredDex(null)}
-                className={`relative flex items-center justify-between px-3.5 py-2.5 rounded-xl border transition-all cursor-pointer ${
+                className={`relative flex items-center justify-between px-3 py-2 rounded-xl border transition-all cursor-pointer ${
                   hoveredDex === split.dexName
-                    ? 'bg-slate-800/90 border-[#00f2fe]/60 shadow-lg shadow-[#00f2fe]/20 scale-[1.02]'
-                    : 'bg-slate-900/90 border-white/10 hover:border-white/20'
+                    ? 'bg-slate-800/95 border-[#00f2fe]/60 shadow-lg shadow-[#00f2fe]/20 scale-[1.02]'
+                    : 'bg-slate-900/90 border-white/10 hover:border-white/25'
                 }`}
               >
                 {/* Indicator dot */}
                 <div className="flex items-center gap-2">
-                  <div className={`w-2.5 h-2.5 rounded-full ${idx === 0 ? 'bg-[#00f2fe]' : 'bg-[#9945FF]'} shadow-sm`} />
+                  <div className={`w-2 h-2 rounded-full ${idx === 0 ? 'bg-[#00f2fe]' : 'bg-[#9945FF]'} shadow-sm`} />
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-slate-100 flex items-center gap-1">
                       {split.dexName}
@@ -210,8 +207,8 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md ${
+                <div className="flex items-center gap-1.5">
+                  <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md ${
                     idx === 0 ? 'bg-[#00f2fe]/15 text-[#00f2fe] border border-[#00f2fe]/30' : 'bg-purple-500/15 text-purple-300 border border-purple-500/30'
                   }`}>
                     {split.percentage}%
@@ -225,38 +222,41 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
           </div>
 
           {/* Node 2: Output Token */}
-          <div className="flex flex-col items-center gap-1.5 shrink-0 group">
+          <div className="flex flex-col items-center gap-1.5 shrink-0 group z-20">
             <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#00f2fe] to-[#4facfe] shadow-lg shadow-[#00f2fe]/25 group-hover:scale-105 transition-transform">
               <img 
                 src={outToken.icon} 
                 alt={outToken.symbol} 
-                className="w-11 h-11 rounded-xl bg-black object-cover" 
+                className="w-10 h-10 rounded-xl bg-black object-cover" 
               />
               <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#00f2fe] border-2 border-[#04060a] flex items-center justify-center">
                 <Zap className="w-2.5 h-2.5 text-black" />
               </div>
             </div>
-            <span className="text-xs font-bold text-emerald-400 font-mono">
-              ~{outAmount.toFixed(2)} {outToken.symbol}
-            </span>
+            
+            <div className="px-2 py-0.5 rounded-lg bg-slate-950/90 border border-white/10 shadow-sm text-center">
+              <span className="text-[11px] font-bold text-emerald-400 font-mono block whitespace-nowrap">
+                ~{outAmount.toFixed(2)} {outToken.symbol}
+              </span>
+            </div>
           </div>
 
         </div>
 
         {/* Bottom Details Toggle Bar */}
-        <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+        <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 z-10">
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 text-[#00f2fe]">
+            <span className="flex items-center gap-1 text-[#00f2fe] text-[11px]">
               <Layers className="w-3.5 h-3.5" />
               <span>Multi-Split Hop</span>
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1 text-emerald-400">
+            <span className="flex items-center gap-1 text-emerald-400 text-[11px]">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>0% Slippage Loss</span>
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1 text-slate-400 hidden sm:flex">
+            <span className="flex items-center gap-1 text-slate-400 hidden sm:flex text-[11px]">
               <Activity className="w-3.5 h-3.5 text-purple-400" />
               <span>Jito Bundle Protected</span>
             </span>
@@ -273,7 +273,7 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
 
         {/* Expanded Deep Telemetry */}
         {isExpanded && (
-          <div className="mt-3 p-3 rounded-xl bg-slate-900/90 border border-white/10 text-xs space-y-2 animate-fadeIn">
+          <div className="mt-3 p-3 rounded-xl bg-slate-900/95 border border-white/10 text-xs space-y-2 animate-fadeIn z-20">
             <div className="flex justify-between text-slate-400">
               <span>Routing Algorithm:</span>
               <span className="font-mono text-slate-200">Jupiter Direct Graph Search (DGS v3)</span>

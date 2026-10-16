@@ -4,6 +4,7 @@ import { POPULAR_TOKENS } from './data/tokens';
 import { Header } from './components/Header';
 import { TrendingTicker } from './components/TrendingTicker';
 import { TradingChart } from './components/TradingChart';
+import { RecentSwapsFeed } from './components/RecentSwapsFeed';
 import { SwapWidget } from './components/SwapWidget';
 import { TokenSelectModal } from './components/TokenSelectModal';
 import { ReceiptModal } from './components/ReceiptModal';
@@ -63,6 +64,13 @@ export function App() {
     } else {
       setInToken(token);
     }
+  };
+
+  const handleSelectPair = (inSymbol: string, outSymbol: string) => {
+    const foundIn = POPULAR_TOKENS.find(t => t.symbol === inSymbol);
+    const foundOut = POPULAR_TOKENS.find(t => t.symbol === outSymbol);
+    if (foundIn) setInToken(foundIn);
+    if (foundOut) setOutToken(foundOut);
   };
 
   return (
@@ -199,6 +207,12 @@ export function App() {
                     </p>
                   </div>
                 </div>
+
+                {/* Live Solana Aggregator Swaps Feed to Balance Column Height */}
+                <RecentSwapsFeed
+                  activeToken={inToken}
+                  onSelectPair={handleSelectPair}
+                />
               </div>
 
               {/* Right Column: Fluid Swap Widget & Execution (5 cols) */}
