@@ -13,7 +13,7 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
   activeSymbol
 }) => {
   return (
-    <div className="w-full border-b border-white/5 bg-[#06080d]/70 backdrop-blur-md overflow-x-auto scrollbar-none py-2 px-4">
+    <div className="w-full border-b border-white/10 bg-[#06080d]/80 backdrop-blur-md overflow-x-auto scrollbar-none py-2 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto flex items-center gap-3">
         
         {/* Ticker Lead Badge */}
@@ -23,7 +23,7 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
         </div>
 
         {/* Ticker Tokens List with OriginKit Spring Feedback */}
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
+        <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-none py-0.5 pr-8">
           {POPULAR_TOKENS.map((token) => {
             const isActive = activeSymbol === token.symbol;
             const isPositive = token.change24h >= 0;
@@ -40,11 +40,17 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
                     : 'bg-slate-900/60 border border-white/10 text-slate-300 hover:border-white/25 hover:bg-slate-900/90'
                 }`}
               >
-                <img 
-                  src={token.icon} 
-                  alt={token.symbol} 
-                  className="w-4 h-4 rounded-full object-cover bg-black" 
-                />
+                <div className="w-4 h-4 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden shrink-0">
+                  <img 
+                    src={token.icon} 
+                    alt={token.symbol} 
+                    className="w-full h-full object-cover rounded-full"
+                    onError={(e) => {
+                      // Fallback to text initials if image fails
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
                 <span className="font-bold text-white">{token.symbol}</span>
                 <span className="font-mono text-slate-400 text-[11px]">
                   ${token.priceUsd < 0.01 ? token.priceUsd.toFixed(6) : token.priceUsd.toFixed(2)}
