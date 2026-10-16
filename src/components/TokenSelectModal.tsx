@@ -40,7 +40,6 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
         className="w-full max-w-md rounded-3xl bg-[#0c101a] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] threeui-specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-white/10">
           <span className="font-semibold text-base text-white">Select a Token</span>
           <button
@@ -51,7 +50,6 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
           </button>
         </div>
 
-        {/* Search Bar */}
         <div className="p-4 border-b border-white/10 space-y-3">
           <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-2xl bg-slate-900 border border-white/10 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
             <Search className="w-4 h-4 text-slate-400" />
@@ -65,7 +63,6 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
             />
           </div>
 
-          {/* Quick Filter Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
             {POPULAR_TOKENS.slice(0, 5).map((t) => (
               <button
@@ -87,7 +84,6 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
           </div>
         </div>
 
-        {/* Token List */}
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
           {filteredTokens.map((t) => {
             const isSelected = selectedToken.symbol === t.symbol;
@@ -117,7 +113,6 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
                       <span className="text-xs text-slate-400">{t.name}</span>
                     </div>
                     
-                    {/* Mint Address with 1-Click Copy */}
                     {t.mintAddress && (
                       <div className="flex items-center gap-1 pt-0.5">
                         <span className="text-[10px] text-slate-500 font-mono">

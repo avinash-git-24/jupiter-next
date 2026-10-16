@@ -70,19 +70,16 @@ export const OrderBook: React.FC<OrderBookProps> = ({
     };
   });
 
-  // Recompute relative order book rows whenever token or price changes
   const [asks, setAsks] = useState<OrderBookRow[]>(() => generateAsks(basePrice));
   const [bids, setBids] = useState<OrderBookRow[]>(() => generateBids(basePrice));
   const [prevSymbol, setPrevSymbol] = useState(inToken.symbol);
 
-  // Sync state from props during render (React recommended pattern, avoiding cascading effect renders)
   if (prevSymbol !== inToken.symbol) {
     setPrevSymbol(inToken.symbol);
     setAsks(generateAsks(basePrice));
     setBids(generateBids(basePrice));
   }
 
-  // Micro-fluctuations to simulate live Solana order book matching
   useEffect(() => {
     const timer = setInterval(() => {
       setAsks((prev) =>
@@ -112,7 +109,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
   return (
     <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
       
-      {/* Header Bar */}
       <div className="flex items-center justify-between pb-3 border-b border-white/10">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400">
@@ -133,7 +129,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
           </div>
         </div>
 
-        {/* View Mode Switcher Pills */}
         <div className="relative flex items-center p-0.5 rounded-xl bg-slate-900 border border-white/10 text-xs font-mono">
           {(['both', 'bids', 'asks'] as const).map((mode) => {
             const isActive = viewMode === mode;
@@ -159,17 +154,14 @@ export const OrderBook: React.FC<OrderBookProps> = ({
         </div>
       </div>
 
-      {/* Table Column Headers */}
       <div className="grid grid-cols-3 text-[10px] font-mono uppercase tracking-wider text-slate-400 px-2">
         <span>Price ({outToken.symbol})</span>
         <span className="text-center">Size ({inToken.symbol})</span>
         <span className="text-right">Total ({outToken.symbol})</span>
       </div>
 
-      {/* Orders List Container */}
       <div className="space-y-1 font-mono text-xs">
         
-        {/* Asks (Sells in Red) */}
         {(viewMode === 'both' || viewMode === 'asks') && (
           <div className="space-y-0.5">
             {asks.slice(viewMode === 'both' ? 2 : 0).map((row, i) => (
@@ -178,7 +170,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
                 onClick={() => onSelectPrice && onSelectPrice(row.price)}
                 className="relative grid grid-cols-3 py-1 px-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group"
               >
-                {/* Horizontal Depth Fill Bar */}
                 <div
                   className="absolute inset-y-0 right-0 bg-rose-500/10 rounded-lg transition-all duration-500 pointer-events-none"
                   style={{ width: `${row.depthPct}%` }}
@@ -198,7 +189,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
           </div>
         )}
 
-        {/* Live Spread Indicator Bar */}
         {viewMode === 'both' && (
           <div className="my-2 py-2 px-3 rounded-xl bg-slate-950/80 border border-white/5 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center gap-2">
@@ -219,7 +209,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
           </div>
         )}
 
-        {/* Bids (Buys in Green) */}
         {(viewMode === 'both' || viewMode === 'bids') && (
           <div className="space-y-0.5">
             {bids.slice(0, viewMode === 'both' ? 3 : 5).map((row, i) => (
@@ -228,7 +217,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
                 onClick={() => onSelectPrice && onSelectPrice(row.price)}
                 className="relative grid grid-cols-3 py-1 px-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group"
               >
-                {/* Horizontal Depth Fill Bar */}
                 <div
                   className="absolute inset-y-0 right-0 bg-emerald-500/10 rounded-lg transition-all duration-500 pointer-events-none"
                   style={{ width: `${row.depthPct}%` }}
@@ -250,7 +238,6 @@ export const OrderBook: React.FC<OrderBookProps> = ({
 
       </div>
 
-      {/* Footer Status Bar */}
       <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-mono">
         <span className="flex items-center gap-1">
           <Activity className="w-3 h-3 text-cyan-400" />

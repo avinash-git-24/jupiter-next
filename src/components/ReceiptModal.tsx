@@ -17,10 +17,8 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
         className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden threeui-specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Glow Background */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-[#00f2fe]/15 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
@@ -28,7 +26,6 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
           <X className="w-5 h-5" />
         </button>
 
-        {/* Dynamic Mode Header Icon & Title */}
         <div className="flex flex-col items-center text-center mt-2 space-y-2">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-[#00f2fe] p-[2px] shadow-lg shadow-emerald-500/20">
             <div className="w-full h-full bg-[#0a0e17] rounded-[14px] flex items-center justify-center">
@@ -62,7 +59,6 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
           </p>
         </div>
 
-        {/* Swap Result Card */}
         <div className="my-5 p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -96,7 +92,6 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
           </div>
         </div>
 
-        {/* Execution Metadata Table */}
         <div className="space-y-2 text-xs text-slate-300 mb-6">
           <div className="flex justify-between py-1 border-b border-white/5">
             <span className="text-slate-400 flex items-center gap-1">
@@ -134,7 +129,6 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex items-center gap-3">
           <a
             href={`https://solscan.io/tx/${receipt.txSignature}`}

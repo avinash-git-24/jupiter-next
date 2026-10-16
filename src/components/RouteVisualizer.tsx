@@ -25,7 +25,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
   return (
     <div className="w-full rounded-2xl threeui-specular-card p-4 transition-all space-y-3.5 shadow-2xl relative overflow-hidden">
       
-      {/* Top Banner: ThreeUI Dynamic Value & Gas Saving Radar */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#00f2fe]/20 to-[#9945FF]/20 border border-[#00f2fe]/40 flex items-center justify-center text-[#00f2fe] shadow-lg shadow-[#00f2fe]/20">
@@ -42,21 +41,17 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
           </div>
         </div>
 
-        {/* Highlighted Value-Add Badge with ThreeUI Specular Sheen */}
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-xs font-semibold text-emerald-400 shadow-sm shadow-emerald-500/20">
           <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
           <span className="font-mono font-bold">+${savedUsd.toFixed(2)} saved</span>
         </div>
       </div>
 
-      {/* Kinetic Curved SVG Pipe Flow Architecture (ThreeUI Interactive Graph Template) */}
       <div className="relative p-4 rounded-2xl bg-[#04060a]/95 border border-white/10 overflow-hidden min-h-[170px] flex flex-col justify-between">
         
-        {/* Ambient Glow Orbs */}
         <div className="absolute top-1/4 left-1/4 w-32 h-24 bg-[#00f2fe]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-32 h-24 bg-[#9945FF]/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* ThreeUI Curved SVG Connector Cables Overlay */}
         <svg 
           className="absolute inset-0 w-full h-full pointer-events-none block" 
           viewBox="0 0 500 170" 
@@ -82,7 +77,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             </filter>
           </defs>
 
-          {/* Path 1: Input (75, 80) -> Orca Whirlpool (185, 42) -> Output (425, 80) */}
           <path 
             d="M 80 80 C 125 80, 145 42, 185 42" 
             stroke="#00f2fe" 
@@ -98,7 +92,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             filter="url(#glowBlur)"
           />
 
-          {/* Foreground Animated Flow Lines */}
           <path 
             d="M 80 80 C 125 80, 145 42, 185 42" 
             stroke="url(#cableGrad1)" 
@@ -112,7 +105,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             className="animate-route-flow"
           />
 
-          {/* Path 2: Input (75, 80) -> Raydium CPMM (185, 118) -> Output (425, 80) */}
           <path 
             d="M 80 80 C 125 80, 145 118, 185 118" 
             stroke="#9945FF" 
@@ -128,7 +120,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             filter="url(#glowBlur)"
           />
 
-          {/* Foreground Animated Flow Lines */}
           <path 
             d="M 80 80 C 125 80, 145 118, 185 118" 
             stroke="url(#cableGrad2)" 
@@ -142,7 +133,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             className="animate-route-flow"
           />
 
-          {/* ThreeUI Traveling Photons */}
           <circle r="3.5" fill="#00f2fe" filter="url(#glowBlur)">
             <animateMotion dur="1.8s" repeatCount="indefinite" path="M 80 80 C 125 80, 145 42, 185 42" />
           </circle>
@@ -157,10 +147,8 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
           </circle>
         </svg>
 
-        {/* Visual Multi-Node Flow Layout */}
         <div className="flex flex-col md:flex-row items-center justify-between relative z-10 gap-3 my-auto">
           
-          {/* Node 1: Input Token */}
           <div className="flex flex-col items-center gap-1.5 shrink-0 group z-20">
             <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#9945FF] to-[#14F195] shadow-lg shadow-[#14F195]/20 group-hover:scale-105 transition-transform">
               <img 
@@ -180,7 +168,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             </div>
           </div>
 
-          {/* Center DEX Nodes: Orca & Raydium with Specular Glass */}
           <div className="flex-1 w-full max-w-xs md:max-w-none flex flex-col gap-2 relative z-20">
             {splits.map((split, idx) => (
               <div 
@@ -193,7 +180,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
                     : 'bg-slate-900/90 border-white/10 hover:border-white/25'
                 }`}
               >
-                {/* Indicator dot */}
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${idx === 0 ? 'bg-[#00f2fe]' : 'bg-[#9945FF]'} shadow-sm`} />
                   <div className="flex flex-col">
@@ -221,7 +207,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
             ))}
           </div>
 
-          {/* Node 2: Output Token */}
           <div className="flex flex-col items-center gap-1.5 shrink-0 group z-20">
             <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#00f2fe] to-[#4facfe] shadow-lg shadow-[#00f2fe]/25 group-hover:scale-105 transition-transform">
               <img 
@@ -243,7 +228,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
 
         </div>
 
-        {/* Bottom Details Toggle Bar */}
         <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 z-10">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1 text-[#00f2fe] text-[11px]">
@@ -271,7 +255,6 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
           </button>
         </div>
 
-        {/* Expanded Deep Telemetry */}
         {isExpanded && (
           <div className="mt-3 p-3 rounded-xl bg-slate-900/95 border border-white/10 text-xs space-y-2 animate-fadeIn z-20">
             <div className="flex justify-between text-slate-400">

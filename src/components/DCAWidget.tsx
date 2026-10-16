@@ -26,7 +26,6 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Total Budget Card with OriginKit Inset */}
       <div className="p-4 rounded-2xl glass-input space-y-2 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
         <div className="flex justify-between text-xs text-slate-400">
           <span className="font-medium text-slate-300">Total Allocation Budget:</span>
@@ -57,7 +56,6 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         </div>
       </div>
 
-      {/* Target Token Card */}
       <div className="p-4 rounded-2xl glass-input space-y-2">
         <div className="flex justify-between text-xs text-slate-400">
           <span className="font-medium text-slate-300 flex items-center gap-1.5">
@@ -86,7 +84,6 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         </div>
       </div>
 
-      {/* Frequency & Order Matrix with OriginKit Sliding Pill */}
       <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-3">
         <div className="flex justify-between items-center text-xs">
           <span className="text-slate-400 flex items-center gap-1.5 font-medium">
@@ -118,7 +115,6 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
           </div>
         </div>
 
-        {/* Number of Orders Slider */}
         <div className="space-y-1.5 pt-1">
           <div className="flex justify-between text-xs text-slate-400">
             <span>Total Orders:</span>
@@ -138,7 +134,6 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
           </div>
         </div>
 
-        {/* Breakdown Summary */}
         <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 text-xs space-y-1.5">
           <div className="flex justify-between text-slate-300">
             <span>Per Order Size:</span>

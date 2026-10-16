@@ -26,16 +26,13 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
     <div className="w-full border-b border-white/10 bg-[#06080d]/85 backdrop-blur-md py-1.5 px-4 sm:px-6 relative z-30">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         
-        {/* Ticker Lead Badge */}
         <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-lg shrink-0 shadow-sm">
           <Flame className="w-3.5 h-3.5 animate-pulse text-amber-400" />
           <span>TRENDING</span>
         </div>
 
-        {/* Scrollable Container with Smooth Controls */}
         <div className="relative flex-1 flex items-center overflow-hidden">
           
-          {/* Scrollable Tokens List */}
           <div 
             ref={scrollRef}
             className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1 scroll-smooth w-full"
@@ -83,7 +80,6 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
 
         </div>
 
-        {/* Quick Nav Chevron Arrows for Narrow Screens */}
         <div className="hidden sm:flex items-center gap-1 shrink-0">
           <button
             onClick={() => scroll('left')}

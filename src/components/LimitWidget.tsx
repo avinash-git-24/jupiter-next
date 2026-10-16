@@ -29,7 +29,6 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Allocation Amount with OriginKit Inset Card */}
       <div className="p-4 rounded-2xl glass-input space-y-2 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
         <div className="flex justify-between text-xs text-slate-400">
           <span className="font-medium text-slate-300">You Allocate:</span>
@@ -60,7 +59,6 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      {/* Target Trigger Rate Controller with OriginKit Offsets */}
       <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-3">
         <div className="flex items-center justify-between text-xs text-slate-400">
           <span className="flex items-center gap-1.5 font-medium text-slate-300">
@@ -71,7 +69,6 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
           </span>
         </div>
 
-        {/* Quick Rate Offsets with Animated Sliding Indicator */}
         <div className="relative flex items-center p-1 rounded-xl bg-slate-900 border border-white/10 gap-1">
           {([-10, -5, -1, 5, 10] as const).map((pct) => {
             const isActive = rateOffset === pct;
@@ -104,7 +101,6 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
           })}
         </div>
 
-        {/* Target Rate Visual Display */}
         <div className="p-3 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-400">Execute Order When:</span>
@@ -134,7 +130,6 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      {/* Expiry Selector with OriginKit Sliding Pill */}
       <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-between text-xs">
         <span className="text-slate-400 flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5 text-slate-400" /> Auto-Cancel Expiry:
@@ -165,7 +160,6 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      {/* Estimated Output */}
       <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex justify-between items-center text-xs">
         <span className="text-slate-400">Total Output at Trigger:</span>
         <span className="font-mono text-sm font-bold text-emerald-400">

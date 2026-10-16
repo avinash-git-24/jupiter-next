@@ -22,10 +22,8 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
   const holdIntervalRef = useRef<number | null>(null);
   const wasHoldingRef = useRef(false);
 
-  // Purely derived state: zero cascading renders and 100% reactive to amount changes
   const state: ButtonActionState = internalState ?? (amount > 0 ? 'ready' : 'idle');
 
-  // Handle Hold-to-Confirm Physics with Spring Feedback
   const startHold = () => {
     if (state !== 'ready') return;
     wasHoldingRef.current = true;
@@ -54,7 +52,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
       if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
       setHoldProgress(0);
       setInternalState(null);
-      // Suppress immediate click event caused by releasing hold
       setTimeout(() => {
         wasHoldingRef.current = false;
       }, 150);
@@ -64,11 +61,9 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
   const triggerExecution = () => {
     setInternalState('routing');
     
-    // Simulate real Jito / Solana fast block inclusion
     setTimeout(() => {
       setInternalState('success');
       
-      // Confetti burst
       confetti({
         particleCount: 85,
         spread: 75,
@@ -76,7 +71,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
         colors: ['#00f2fe', '#4facfe', '#14F195', '#9945FF']
       });
 
-      // Call parent handler to show receipt
       setTimeout(() => {
         onExecuteSwap();
         setInternalState(null);
@@ -118,15 +112,12 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
             : 'bg-emerald-400 text-slate-950 font-bold shadow-xl shadow-emerald-500/30'
         }`}
       >
-        {/* ThreeUI Specular Top Light Bevel */}
         <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
 
-        {/* ThreeUI Ambient Shimmer Sweep Animation */}
         {state === 'ready' && (
           <div className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 animate-shimmer-pass pointer-events-none" />
         )}
 
-        {/* Hold-to-Confirm Glowing Liquid Energy Reservoir */}
         {state === 'holding' && (
           <div 
             className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/40 to-white/30 transition-all duration-75 shadow-[inset_0_0_20px_rgba(255,255,255,0.5)]"
@@ -135,7 +126,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
         )}
 
         <AnimatePresence mode="wait">
-          {/* State 1: Idle */}
           {state === 'idle' && (
             <motion.span 
               key="idle"
@@ -148,7 +138,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
             </motion.span>
           )}
 
-          {/* State 2: Ready */}
           {state === 'ready' && (
             <motion.span 
               key="ready"
@@ -163,7 +152,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
             </motion.span>
           )}
 
-          {/* State 3: Holding */}
           {state === 'holding' && (
             <motion.span 
               key="holding"
@@ -177,7 +165,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
             </motion.span>
           )}
 
-          {/* State 4: Routing Execution */}
           {state === 'routing' && (
             <motion.span 
               key="routing"
@@ -191,7 +178,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
             </motion.span>
           )}
 
-          {/* State 5: Success */}
           {state === 'success' && (
             <motion.span 
               key="success"
@@ -207,7 +193,6 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
         </AnimatePresence>
       </motion.button>
 
-      {/* Subtext instruction */}
       <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2 px-1 font-mono">
         <span>Click for instant swap, or hold to simulate hardware security</span>
         <span>Jito Anti-Frontrun Active</span>

@@ -103,7 +103,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
   const [filter, setFilter] = useState<'all' | 'whale' | 'active'>('all');
   const [swaps, setSwaps] = useState<SwapItem[]>(INITIAL_SWAPS);
 
-  // Simulate occasional live transactions streaming in
   useEffect(() => {
     const interval = setInterval(() => {
       const isBuy = Math.random() > 0.4;
@@ -141,7 +140,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
   return (
     <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
       
-      {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-xl bg-[#00f2fe]/10 border border-[#00f2fe]/30 flex items-center justify-center text-[#00f2fe]">
@@ -163,7 +161,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
           </div>
         </div>
 
-        {/* Filter Switcher */}
         <div className="relative flex items-center p-1 rounded-xl bg-slate-900 border border-white/10 text-xs font-mono">
           {(['all', 'whale', 'active'] as const).map((tab) => {
             const isActive = filter === tab;
@@ -190,7 +187,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
         </div>
       </div>
 
-      {/* Transactions List */}
       <div className="space-y-2">
         <AnimatePresence initial={false}>
           {displayedSwaps.map((item) => (
@@ -203,7 +199,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
               onClick={() => onSelectPair && onSelectPair(item.inSymbol, item.outSymbol)}
               className="flex items-center justify-between p-3 rounded-2xl bg-slate-950/70 border border-white/5 hover:border-[#00f2fe]/40 hover:bg-slate-900/80 transition-all cursor-pointer group"
             >
-              {/* Left Column: Action & Pair */}
               <div className="flex items-center gap-3">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
                   item.type === 'buy'
@@ -239,7 +234,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
                 </div>
               </div>
 
-              {/* Right Column: USD Value & Time */}
               <div className="text-right">
                 <div className="font-mono text-xs font-bold text-white group-hover:text-[#00f2fe] transition-colors">
                   ${item.valueUsd.toLocaleString()}
@@ -263,7 +257,6 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
         </AnimatePresence>
       </div>
 
-      {/* Bottom Summary Bar */}
       <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
         <span className="flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />

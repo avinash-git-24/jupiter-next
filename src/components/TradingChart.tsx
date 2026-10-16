@@ -30,7 +30,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
 
   const base = inToken.priceUsd;
 
-  // 18 realistic financial candles reflecting authentic Solana price action
   const candles: CandleData[] = [
     { time: '00:00', open: base * 0.965, high: base * 0.972, low: base * 0.960, close: base * 0.968, volume: 42000 },
     { time: '01:20', open: base * 0.968, high: base * 0.975, low: base * 0.964, close: base * 0.974, volume: 38000 },
@@ -52,7 +51,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
     { time: '22:40', open: base * 1.031, high: base * 1.042, low: base * 1.030, close: base * (1 + inToken.change24h / 100), volume: 112000 }
   ];
 
-  // Dynamic SVG scaling math
   const minPrice = Math.min(...candles.map((c) => c.low)) * 0.998;
   const maxPrice = Math.max(...candles.map((c) => c.high)) * 1.002;
   const priceRange = maxPrice - minPrice || 1;
@@ -69,14 +67,12 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
 
   const maxVolume = Math.max(...candles.map((c) => c.volume)) || 1;
 
-  // Generate EMA(20) line path
   const emaPoints = candles.map((c, i) => {
     const x = i * candleSpacing + candleSpacing / 2;
     const y = getY((c.high + c.low + c.close * 2) / 4);
     return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
   }).join(' ');
 
-  // Generate Area Line path
   const linePoints = candles.map((c, i) => {
     const x = i * candleSpacing + candleSpacing / 2;
     const y = getY(c.close);
@@ -90,10 +86,8 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
   return (
     <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 transition-all shadow-2xl relative overflow-hidden">
       
-      {/* Top Bar: Pair & Market Stats */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         
-        {/* Pair Identity */}
         <div className="flex items-center gap-3">
           <div className="flex items-center -space-x-2">
             <img src={inToken.icon} alt={inToken.symbol} className="w-8 h-8 rounded-full border-2 border-[#090d16] bg-black z-10" />
@@ -115,9 +109,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </div>
         </div>
 
-        {/* Chart View Toggles & Timeframe Selector */}
         <div className="flex items-center gap-2">
-          {/* Chart Type Toggle: Candles vs Line with OriginKit Spring Pill */}
           <div className="relative flex items-center p-0.5 rounded-xl bg-slate-900 border border-white/10">
             <button
               onClick={() => setChartType('candles')}
@@ -153,7 +145,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
             </button>
           </div>
 
-          {/* Timeframe Selector Pills */}
           <div className="relative flex items-center p-0.5 rounded-xl bg-slate-900 border border-white/10 text-xs font-mono">
             {(['15M', '1H', '4H', '1D', '1W'] as const).map((tf) => {
               const isActive = timeframe === tf;
@@ -181,7 +172,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
 
       </div>
 
-      {/* Main Metric Cards: Price & 24H Stats with ThreeUI Glass */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="p-3 rounded-2xl bg-slate-950/70 border border-white/5 space-y-0.5">
           <span className="text-[11px] text-slate-400 font-medium">Index Price</span>
@@ -225,13 +215,10 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
         </div>
       </div>
 
-      {/* Interactive Candlestick Chart Area */}
       <div className="relative rounded-2xl bg-slate-950/90 border border-white/10 p-4 overflow-hidden">
         
-        {/* Background Grid Lines */}
         <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
-        {/* Live OHLC Tooltip Bar */}
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono pb-2 border-b border-white/5">
           <div className="flex items-center gap-3 text-slate-300">
             <span className="text-slate-400">Time: <span className="text-white">{activeCandle.time}</span></span>
@@ -254,7 +241,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </div>
         </div>
 
-        {/* SVG Chart: Candlesticks & Volume Histogram */}
         <div className="relative w-full h-64 flex items-center pt-2">
           <svg
             viewBox={`0 0 ${svgWidth} ${chartHeight + volumeHeight}`}
@@ -275,7 +261,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
               </linearGradient>
             </defs>
 
-            {/* Price Grid Horizontal Guide Lines */}
             {[0.2, 0.4, 0.6, 0.8].map((pct, i) => (
               <line
                 key={i}
@@ -288,7 +273,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
               />
             ))}
 
-            {/* Separator between Candlesticks and Volume */}
             <line
               x1="0"
               y1={chartHeight}
@@ -297,7 +281,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
               stroke="rgba(255,255,255,0.08)"
             />
 
-            {/* MODE 1: REAL FINANCIAL CANDLESTICKS */}
             {chartType === 'candles' && (
               <g>
                 {candles.map((c, i) => {
@@ -314,7 +297,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                   const bodyTop = Math.min(yOpen, yClose);
                   const bodyHeight = Math.max(3, Math.abs(yClose - yOpen));
 
-                  // Volume bar calculation
                   const volBarHeight = (c.volume / maxVolume) * (volumeHeight - 8);
                   const volY = chartHeight + volumeHeight - volBarHeight;
 
@@ -325,7 +307,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                       onMouseEnter={() => setHoveredCandle(c)}
                       onMouseLeave={() => setHoveredCandle(null)}
                     >
-                      {/* Upper & Lower Wick Line */}
                       <line
                         x1={centerX}
                         y1={yHigh}
@@ -335,7 +316,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                         strokeWidth="1.5"
                       />
 
-                      {/* Candle Body */}
                       <rect
                         x={x}
                         y={bodyTop}
@@ -349,7 +329,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                         className="group-hover:fill-opacity-100 transition-all"
                       />
 
-                      {/* Volume Histogram Bar */}
                       <rect
                         x={x + 2}
                         y={volY}
@@ -365,7 +344,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
               </g>
             )}
 
-            {/* MODE 2: LINE AREA GRADIENT */}
             {chartType === 'line' && (
               <g>
                 <path d={areaD} fill="url(#areaGradient)" />
@@ -379,7 +357,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
               </g>
             )}
 
-            {/* Technical Indicator: EMA 20 Line Overlay */}
             {showEma && (
               <path
                 d={emaPoints}
@@ -393,7 +370,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </svg>
         </div>
 
-        {/* Chart Bottom Axis */}
         <div className="relative z-10 flex justify-between text-[10px] font-mono text-slate-400 pt-2 border-t border-white/5">
           <span>00:00</span>
           <span>04:00</span>
@@ -406,7 +382,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
 
       </div>
 
-      {/* Liquidity Depth Distribution Bar */}
       <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-white/5 space-y-2">
         <div className="flex justify-between items-center text-xs">
           <span className="text-slate-400 flex items-center gap-1.5 font-medium">
@@ -417,7 +392,6 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </span>
         </div>
 
-        {/* Stacked Pool Share Bar */}
         <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden flex">
           <div className="h-full bg-gradient-to-r from-[#00f2fe] to-[#4facfe] transition-all" style={{ width: '65%' }} title="Orca Whirlpool (65%)" />
           <div className="h-full bg-gradient-to-r from-[#9945FF] to-[#c084fc] transition-all" style={{ width: '35%' }} title="Raydium CPMM (35%)" />

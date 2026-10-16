@@ -21,12 +21,11 @@ export function App() {
   const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
   const [isTokenModalOpen, setIsTokenModalOpen] = useState(false);
   const [tokenModalTarget, setTokenModalTarget] = useState<'in' | 'out'>('in');
-  const [inToken, setInToken] = useState<Token>(POPULAR_TOKENS[0]); // SOL
-  const [outToken, setOutToken] = useState<Token>(POPULAR_TOKENS[1]); // USDC
+  const [inToken, setInToken] = useState<Token>(POPULAR_TOKENS[0]);
+  const [outToken, setOutToken] = useState<Token>(POPULAR_TOKENS[1]);
   const [receipt, setReceipt] = useState<TransactionReceipt | null>(null);
   const [matchedPrice, setMatchedPrice] = useState<number | null>(null);
 
-  // Global keyboard shortcuts (Esc to close any modal)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -88,15 +87,12 @@ export function App() {
   return (
     <div className="min-h-screen bg-[#040609] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-[#00f2fe]/30 selection:text-[#00f2fe]">
       
-      {/* Background Subtle Grid & Ambient Glows */}
       <div className="fixed inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
-      {/* Atmospheric Ambient Spotlights */}
       <div className="fixed top-0 left-1/4 w-[650px] h-[500px] bg-[#00f2fe]/6 rounded-full blur-[160px] pointer-events-none -z-10" />
       <div className="fixed top-1/3 right-1/4 w-[600px] h-[600px] bg-[#9945FF]/7 rounded-full blur-[180px] pointer-events-none -z-10" />
       <div className="fixed bottom-0 left-1/3 w-[650px] h-[400px] bg-[#14F195]/5 rounded-full blur-[160px] pointer-events-none -z-10" />
 
-      {/* Persistent Navigation Header */}
       <Header
         isMobileView={isMobileView}
         setIsMobileView={setIsMobileView}
@@ -104,16 +100,13 @@ export function App() {
         connectedWallet="avinash...7x89"
       />
 
-      {/* Live Trending Tokens Ticker */}
       <TrendingTicker
         onSelectToken={handleSelectTrendingToken}
         activeSymbol={inToken.symbol}
       />
 
-      {/* Main Container */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8 flex flex-col justify-center relative z-10">
         
-        {/* VIEWPORT MODE: MOBILE PHONE MOCKUP */}
         {isMobileView ? (
           <MobileFrame>
             <div className="space-y-4">
@@ -136,10 +129,8 @@ export function App() {
             </div>
           </MobileFrame>
         ) : (
-          /* VIEWPORT MODE: EXPANSIVE DUAL-COLUMN PRO TERMINAL */
           <div className="space-y-6 animate-fadeIn">
             
-            {/* Top Header Protocol Bar */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-1.5">
@@ -176,30 +167,24 @@ export function App() {
               </button>
             </div>
 
-            {/* Expansive Two-Column Trading Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
-              {/* Left Column: Candlestick Chart + Order Book + Live Swaps Feed (7 cols) */}
               <div className="lg:col-span-7 space-y-6">
                 
-                {/* 1. Real Candlestick Chart */}
                 <TradingChart inToken={inToken} outToken={outToken} />
 
-                {/* 2. Real Solana CLMM Order Book */}
                 <OrderBook 
                   inToken={inToken} 
                   outToken={outToken} 
                   onSelectPrice={(p) => setMatchedPrice(p)}
                 />
 
-                {/* 3. Live Solana Aggregator Swaps Feed */}
                 <RecentSwapsFeed
                   activeToken={inToken}
                   onSelectPair={handleSelectPair}
                 />
               </div>
 
-              {/* Right Column: Fluid Swap Widget & Execution (5 cols) */}
               <div className="lg:col-span-5 sticky top-20">
                 <SwapWidget
                   inToken={inToken}
@@ -219,7 +204,6 @@ export function App() {
 
       </main>
 
-      {/* Footer & Source Credentials */}
       <footer className="w-full border-t border-white/5 py-6 px-4 bg-[#05070b]/90 backdrop-blur-md relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center gap-2">
@@ -249,7 +233,6 @@ export function App() {
         </div>
       </footer>
 
-      {/* Modals */}
       <TokenSelectModal
         isOpen={isTokenModalOpen}
         onClose={() => setIsTokenModalOpen(false)}

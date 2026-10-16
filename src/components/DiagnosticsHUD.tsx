@@ -33,19 +33,15 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
   return (
     <div className="w-full rounded-2xl threeui-specular-card p-4 space-y-3.5 shadow-2xl relative overflow-hidden">
       
-      {/* HUD Header with Live Radar Sweep */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           
-          {/* ThreeUI Circular Holographic Radar Screen */}
           <div className="relative w-7 h-7 rounded-full bg-slate-950 border border-[#00f2fe]/40 overflow-hidden flex items-center justify-center shadow-md shadow-[#00f2fe]/20">
-            {/* Concentric rings */}
             <div className="absolute inset-1 rounded-full border border-[#00f2fe]/20" />
             <div className="absolute inset-2 rounded-full border border-[#00f2fe]/30" />
             <div className="absolute w-full h-[0.5px] bg-[#00f2fe]/25" />
             <div className="absolute h-full w-[0.5px] bg-[#00f2fe]/25" />
             
-            {/* Rotating Radar Sweep Cone */}
             <div 
               className="absolute inset-0 animate-radar-sweep pointer-events-none"
               style={{
@@ -53,7 +49,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
               }}
             />
 
-            {/* Center Blip */}
             <div className="relative w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400" />
           </div>
 
@@ -68,7 +63,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
           </div>
         </div>
         
-        {/* OriginKit status chip */}
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] text-emerald-400 font-mono font-bold">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -78,10 +72,8 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
         </div>
       </div>
 
-      {/* Safety Radar Grid: Token Verification & Honeypot Checks */}
       <div className="grid grid-cols-3 gap-2 text-[11px]">
         
-        {/* Metric 1 */}
         <div className="p-2.5 rounded-xl bg-slate-950/70 border border-white/5 flex flex-col gap-1 hover:border-white/10 transition-colors">
           <div className="flex items-center justify-between text-slate-400 text-[10px]">
             <span>Mint Authority</span>
@@ -92,7 +84,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
           </span>
         </div>
 
-        {/* Metric 2 */}
         <div className="p-2.5 rounded-xl bg-slate-950/70 border border-white/5 flex flex-col gap-1 hover:border-white/10 transition-colors">
           <div className="flex items-center justify-between text-slate-400 text-[10px]">
             <span>Liquidity Lock</span>
@@ -103,7 +94,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
           </span>
         </div>
 
-        {/* Metric 3 */}
         <div className="p-2.5 rounded-xl bg-slate-950/70 border border-white/5 flex flex-col gap-1 hover:border-white/10 transition-colors">
           <div className="flex items-center justify-between text-slate-400 text-[10px]">
             <span>Price Impact</span>
@@ -118,7 +108,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
 
       </div>
 
-      {/* Priority Fee & Jito MEV Bundle Selector with OriginKit Sliding Pill */}
       <div className="p-3 rounded-xl bg-slate-950/80 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0">
@@ -142,7 +131,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
           </div>
         </div>
 
-        {/* OriginKit Sliding Segmented Pill for Priority Fee */}
         <div className="relative flex items-center p-1 rounded-xl bg-slate-900 border border-white/10 text-xs">
           {(['fast', 'turbo', 'ultra'] as PriorityFeeLevel[]).map((level) => {
             const isActive = priorityFee === level;
@@ -168,7 +156,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
         </div>
       </div>
 
-      {/* Dynamic Slippage Selector with OriginKit Sliding Pill & Custom Input */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs px-1 gap-2">
         <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
           <Sliders className="w-3.5 h-3.5 text-slate-400" />
@@ -202,7 +189,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
               );
             })}
 
-            {/* Custom Slippage Button */}
             <button
               onClick={() => {
                 setIsEditingCustom(true);
@@ -223,7 +209,6 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
             </button>
           </div>
 
-          {/* Inline Custom Input when active */}
           {(isEditingCustom || slippage === 'custom') && (
             <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-900 border border-[#00f2fe]/40 text-[10px] font-mono">
               <input

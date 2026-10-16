@@ -34,7 +34,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   const [isRotating, setIsRotating] = useState(false);
   const [prevMatchedPrice, setPrevMatchedPrice] = useState(matchedPrice);
 
-  // Sync mode to limit when an order book row is clicked during render (pure React pattern)
   if (prevMatchedPrice !== matchedPrice && matchedPrice) {
     setPrevMatchedPrice(matchedPrice);
     setMode('limit');
@@ -98,7 +97,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   return (
     <div className="w-full rounded-3xl threeui-specular-card p-5 sm:p-6 transition-all space-y-4 shadow-2xl relative overflow-hidden">
       
-      {/* OriginKit Signature Animated Sliding Tabs Template */}
       <div className="relative flex items-center p-1 rounded-2xl bg-slate-950/90 border border-white/10 text-xs shadow-inner">
         {(['swap', 'limit', 'dca'] as SwapMode[]).map((tabMode) => {
           const isActive = mode === tabMode;
@@ -131,11 +129,9 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
         </div>
       </div>
 
-      {/* MODE 1: MARKET SWAP */}
       {mode === 'swap' && (
         <div className="space-y-3.5">
           
-          {/* OriginKit Inset Input Card with Glow Focus Ring */}
           <div className="p-4 rounded-2xl glass-input space-y-2.5 relative overflow-hidden group focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
             
             <div className="flex justify-between items-center text-xs text-slate-400">
@@ -177,7 +173,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
               </button>
             </div>
 
-            {/* Price USD & OriginKit Spring Percent Pills */}
             <div className="flex justify-between items-center pt-1 text-xs">
               <span className="text-[11px] text-slate-400 font-mono">
                 ≈ ${(amountNum * inToken.priceUsd).toFixed(2)} USD
@@ -199,7 +194,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             </div>
           </div>
 
-          {/* ThreeUI 3D Specular Tactile Reversible Swap Button */}
           <div className="flex justify-center -my-2.5 relative z-10">
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -214,7 +208,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             </motion.button>
           </div>
 
-          {/* OriginKit Output Card */}
           <div className="p-4 rounded-2xl glass-input space-y-2.5 relative overflow-hidden group">
             <div className="flex justify-between items-center text-xs text-slate-400">
               <span className="font-medium text-slate-300 flex items-center gap-1.5">
@@ -250,7 +243,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             </div>
           </div>
 
-          {/* ThreeUI Curved Pipe Route Visualizer */}
           <RouteVisualizer
             inToken={inToken}
             outToken={outToken}
@@ -260,7 +252,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             splits={splits}
           />
 
-          {/* ThreeUI Diagnostics HUD Radar */}
           <DiagnosticsHUD
             priorityFee={priorityFee}
             setPriorityFee={setPriorityFee}
@@ -269,7 +260,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             priceImpactPct={amountNum > 10 ? 0.42 : 0.02}
           />
 
-          {/* ThreeUI Specular Liquid Morph Button */}
           <MorphButton
             amount={amountNum}
             onExecuteSwap={handleExecute}
@@ -280,7 +270,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
         </div>
       )}
 
-      {/* MODE 2: LIMIT ORDER */}
       {mode === 'limit' && (
         <div className="space-y-4">
           <LimitWidget
@@ -299,7 +288,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
         </div>
       )}
 
-      {/* MODE 3: DOLLAR COST AVERAGING (DCA) */}
       {mode === 'dca' && (
         <div className="space-y-4">
           <DCAWidget

@@ -36,7 +36,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
         className="w-full max-w-4xl rounded-3xl bg-[#090d16] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] threeui-specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-white/5 bg-slate-950/60">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00f2fe] via-[#4facfe] to-[#9945FF] p-[1px] flex items-center justify-center">
@@ -65,7 +64,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
           </button>
         </div>
 
-        {/* Navigation Tabs with OriginKit Spring Slider */}
         <div className="flex items-center gap-1.5 px-5 py-2.5 border-b border-white/5 bg-slate-950/40 text-xs overflow-x-auto scrollbar-none relative">
           {[
             { id: 'overview', label: '1. Executive Summary' },
@@ -95,14 +93,11 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
           })}
         </div>
 
-        {/* Modal Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 text-sm text-slate-300">
           
-          {/* TAB 1: EXECUTIVE SUMMARY */}
           {activeTab === 'overview' && (
             <div className="space-y-6 animate-fadeIn">
               
-              {/* Question 1 Answer */}
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
                 <span className="text-[11px] font-bold text-[#00f2fe] uppercase tracking-wider">
                   Superteam Form Question 1
@@ -133,7 +128,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              {/* Question 2 Answer */}
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
                 <span className="text-[11px] font-bold text-[#00f2fe] uppercase tracking-wider">
                   Superteam Form Question 2
@@ -146,7 +140,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 </blockquote>
               </div>
 
-              {/* Redesign Goals */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div className="p-3.5 rounded-xl bg-gradient-to-b from-[#00f2fe]/10 to-transparent border border-[#00f2fe]/20 space-y-1">
                   <span className="font-bold text-[#00f2fe]">1. Radical Clarity</span>
@@ -165,11 +158,9 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
             </div>
           )}
 
-          {/* TAB 2: BEFORE VS AFTER UX AUDIT */}
           {activeTab === 'before-after' && (
             <div className="space-y-5 animate-fadeIn">
               
-              {/* Feature 1 Comparison */}
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold font-mono">
@@ -207,7 +198,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              {/* Feature 2 Comparison */}
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold font-mono">
@@ -245,7 +235,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              {/* Feature 3 Comparison */}
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold font-mono">
@@ -286,7 +275,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
             </div>
           )}
 
-          {/* TAB 3: JUDGING RUBRIC ALIGNMENT */}
           {activeTab === 'rubric' && (
             <div className="space-y-4 animate-fadeIn">
               <p className="text-xs text-slate-400">
@@ -347,7 +335,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
             </div>
           )}
 
-          {/* TAB 4: PROTOTYPE ARCHITECTURE */}
           {activeTab === 'prototype' && (
             <div className="space-y-4 animate-fadeIn text-xs">
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
@@ -377,7 +364,6 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
 
         </div>
 
-        {/* Footer Actions */}
         <div className="p-4 border-t border-white/5 bg-slate-950/80 flex items-center justify-between text-xs">
           <span className="text-slate-400 hidden sm:inline">
             Superteam India • Solana Summit India Track

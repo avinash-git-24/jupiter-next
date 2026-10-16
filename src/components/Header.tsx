@@ -25,7 +25,6 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="w-full border-b border-white/10 bg-[#080b11]/85 backdrop-blur-xl sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         
-        {/* Brand Logo & Name */}
         <div className="flex items-center gap-3">
           <div className="relative group cursor-pointer">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00f2fe] via-[#4facfe] to-[#9945FF] p-[1.5px] shadow-lg shadow-[#00f2fe]/20">
@@ -51,7 +50,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Live Network Telemetry (Proof of Solana Native UX) */}
         <div className="hidden lg:flex items-center gap-6 px-4 py-1.5 rounded-full bg-slate-900/80 border border-white/10 text-xs text-slate-300 shadow-inner">
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
@@ -79,10 +77,8 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Right CTA Group: View Switcher, Case Study & Wallet */}
         <div className="flex items-center gap-2.5 sm:gap-3">
           
-          {/* OriginKit Animated Viewport Switcher Pill */}
           <div className="relative flex items-center p-1 rounded-xl bg-slate-900/90 border border-white/10">
             <button
               onClick={() => setIsMobileView(false)}
@@ -118,7 +114,6 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* ThreeUI Case Study Trigger Button with Specular Glow */}
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -133,7 +128,6 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </motion.button>
 
-          {/* Connected Wallet Pill with OriginKit styling */}
           <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/25 transition-all cursor-pointer">
             <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 shrink-0"></div>
             <span className="font-mono text-xs text-slate-200">
