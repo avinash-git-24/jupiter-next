@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { RouteSplit, Token } from '../types';
-import { Zap, ChevronDown, ChevronUp, Layers, ShieldCheck } from 'lucide-react';
+import { Zap, ChevronDown, ChevronUp, Layers, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface RouteVisualizerProps {
   inToken: Token;
@@ -22,136 +22,153 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="w-full rounded-2xl bg-gradient-to-b from-slate-900/90 to-[#0b0f19]/90 border border-white/10 p-4 transition-all">
-      {/* Top Value Banner: Savings & Optimization Badge */}
-      <div className="flex items-center justify-between gap-2 mb-3">
+    <div className="w-full rounded-2xl bg-gradient-to-b from-[#0b0f19] to-[#070a12] border border-white/10 p-4 transition-all space-y-3.5 shadow-lg">
+      
+      {/* Top Banner: Dynamic Savings Badge */}
+      <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-[#00f2fe]/10 border border-[#00f2fe]/30 flex items-center justify-center text-[#00f2fe]">
-            <Zap className="w-3.5 h-3.5 animate-pulse" />
+          <div className="w-7 h-7 rounded-xl bg-[#00f2fe]/10 border border-[#00f2fe]/30 flex items-center justify-center text-[#00f2fe] shadow-sm shadow-[#00f2fe]/20">
+            <Zap className="w-4 h-4 animate-pulse" />
           </div>
-          <span className="text-xs font-semibold text-white tracking-wide">
-            Kinetic Split-Hop Router
-          </span>
+          <div>
+            <div className="text-xs font-bold text-white flex items-center gap-1.5">
+              <span>Kinetic Split-Hop Engine</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/15 text-purple-300 font-mono">
+                Multi-Hop
+              </span>
+            </div>
+            <p className="text-[10px] text-slate-400">Optimal liquidity graph routing</p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-[11px] font-medium text-emerald-400">
-          <span>⚡ Saved</span>
-          <span className="font-mono font-bold">+${savedUsd.toFixed(2)}</span>
-          <span className="text-slate-400 text-[10px]">vs direct pool</span>
+        {/* Highlighted Value-Add Badge */}
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-medium text-emerald-400 shadow-sm shadow-emerald-500/10">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+          <span className="font-bold font-mono">+${savedUsd.toFixed(2)} saved</span>
         </div>
       </div>
 
-      {/* SVG Kinetic Flow Diagram */}
-      <div className="relative py-2 px-2 overflow-hidden rounded-xl bg-slate-950/60 border border-white/5">
+      {/* Kinetic SVG Flow Architecture */}
+      <div className="relative p-3.5 rounded-2xl bg-[#04060a]/90 border border-white/5 overflow-hidden">
         
-        {/* Node & Flow Grid */}
-        <div className="flex items-center justify-between relative z-10">
+        {/* Subtle Background Glows */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-28 h-20 bg-[#00f2fe]/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-28 h-20 bg-[#9945FF]/10 rounded-full blur-2xl pointer-events-none" />
+
+        {/* Visual Multi-Node Flow Layout */}
+        <div className="flex items-center justify-between relative z-10 gap-3">
           
-          {/* Source Token Node */}
-          <div className="flex flex-col items-center gap-1.5">
-            <div className="relative p-1 rounded-full bg-gradient-to-tr from-[#9945FF] to-[#14F195] shadow-lg shadow-[#14F195]/20">
+          {/* Node 1: Input Token */}
+          <div className="flex flex-col items-center gap-1.5 shrink-0">
+            <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#9945FF] to-[#14F195] shadow-lg shadow-[#14F195]/20">
               <img 
                 src={inToken.icon} 
                 alt={inToken.symbol} 
-                className="w-8 h-8 rounded-full bg-black object-cover" 
+                className="w-10 h-10 rounded-xl bg-black object-cover" 
               />
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#04060a] flex items-center justify-center">
+                <span className="text-[8px] font-bold text-black">✓</span>
+              </div>
             </div>
-            <span className="text-[11px] font-bold text-white font-mono">
+            <span className="text-xs font-bold text-white font-mono">
               {inAmount || 0} {inToken.symbol}
             </span>
           </div>
 
-          {/* Center Multi-Hop Route Splits */}
-          <div className="flex-1 px-4 flex flex-col gap-2">
+          {/* Animated Connecting Splines & DEX Split Nodes */}
+          <div className="flex-1 flex flex-col gap-2 relative">
             {splits.map((split, idx) => (
               <div 
                 key={idx} 
-                className="relative flex items-center justify-between px-3 py-1.5 rounded-lg bg-slate-900/80 border border-white/10 hover:border-[#00f2fe]/40 transition-colors group cursor-default"
+                className="relative flex items-center justify-between px-3 py-2 rounded-xl bg-slate-900/90 border border-white/10 hover:border-[#00f2fe]/50 transition-all group"
               >
-                {/* Flow line animation */}
-                <div 
-                  className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-[#00f2fe]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity animate-pulse"
-                />
+                {/* Animated Flow Light Beam */}
+                <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#00f2fe] animate-ping" />
 
                 <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00f2fe] animate-ping" />
-                  <span className="text-[11px] font-medium text-slate-200">
+                  <div className={`w-2 h-2 rounded-full ${idx === 0 ? 'bg-[#00f2fe]' : 'bg-[#9945FF]'}`} />
+                  <span className="text-xs font-semibold text-slate-200">
                     {split.dexName}
                   </span>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">
                     ({split.poolType})
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#00f2fe]/15 text-[#00f2fe] font-bold">
+                  <span className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md ${
+                    idx === 0 ? 'bg-[#00f2fe]/15 text-[#00f2fe]' : 'bg-purple-500/15 text-purple-300'
+                  }`}>
                     {split.percentage}%
                   </span>
                   <span className="text-[10px] font-mono text-slate-400">
-                    ~{split.latencyMs}ms
+                    {split.latencyMs}ms
                   </span>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Destination Token Node */}
-          <div className="flex flex-col items-center gap-1.5">
-            <div className="relative p-1 rounded-full bg-gradient-to-tr from-[#00f2fe] to-[#4facfe] shadow-lg shadow-[#00f2fe]/20">
+          {/* Node 2: Output Token */}
+          <div className="flex flex-col items-center gap-1.5 shrink-0">
+            <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#00f2fe] to-[#4facfe] shadow-lg shadow-[#00f2fe]/25">
               <img 
                 src={outToken.icon} 
                 alt={outToken.symbol} 
-                className="w-8 h-8 rounded-full bg-black object-cover" 
+                className="w-10 h-10 rounded-xl bg-black object-cover" 
               />
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#00f2fe] border-2 border-[#04060a] flex items-center justify-center">
+                <Zap className="w-2.5 h-2.5 text-black" />
+              </div>
             </div>
-            <span className="text-[11px] font-bold text-white font-mono">
+            <span className="text-xs font-bold text-emerald-400 font-mono">
               ~{outAmount.toFixed(2)} {outToken.symbol}
             </span>
           </div>
 
         </div>
 
-        {/* Dynamic Route Insights Footer Accordion */}
-        <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px]">
-          <div className="flex items-center gap-3 text-slate-400">
-            <span className="flex items-center gap-1">
-              <Layers className="w-3 h-3 text-[#00f2fe]" />
-              2 Hops Split
+        {/* Bottom Details Toggle Bar */}
+        <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1 text-[#00f2fe]">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Multi-Split Hop</span>
             </span>
             <span>•</span>
             <span className="flex items-center gap-1 text-emerald-400">
-              <ShieldCheck className="w-3 h-3" />
-              0% Slippage Loss
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>0% Slippage Loss</span>
             </span>
           </div>
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors cursor-pointer text-[11px]"
           >
-            <span>{isExpanded ? 'Hide Details' : 'Inspect Routing'}</span>
-            {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+            <span>{isExpanded ? 'Hide Routing' : 'Inspect Routing'}</span>
+            {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
         </div>
 
-        {/* Expanded Deep Inspection Details */}
+        {/* Expanded Deep Telemetry */}
         {isExpanded && (
-          <div className="mt-3 p-3 rounded-lg bg-slate-900/90 border border-white/10 text-xs space-y-2 animate-fadeIn">
+          <div className="mt-3 p-3 rounded-xl bg-slate-900 border border-white/10 text-xs space-y-2 animate-fadeIn">
             <div className="flex justify-between text-slate-400">
-              <span>Smart Router Execution:</span>
-              <span className="font-mono text-slate-200">Jupiter v3 Graph Engine</span>
+              <span>Routing Algorithm:</span>
+              <span className="font-mono text-slate-200">Jupiter Direct Graph Search (DGS v3)</span>
             </div>
             <div className="flex justify-between text-slate-400">
-              <span>Direct Pool Price:</span>
-              <span className="font-mono text-slate-200">1 {inToken.symbol} = {(outAmount / (inAmount || 1) * 0.985).toFixed(4)} {outToken.symbol}</span>
+              <span>Direct Pool Route Price:</span>
+              <span className="font-mono text-slate-300">1 {inToken.symbol} = {(outAmount / (inAmount || 1) * 0.985).toFixed(4)} {outToken.symbol}</span>
             </div>
             <div className="flex justify-between text-slate-400">
-              <span>Optimized Split Price:</span>
-              <span className="font-mono text-emerald-400 font-semibold">1 {inToken.symbol} = {(outAmount / (inAmount || 1)).toFixed(4)} {outToken.symbol}</span>
+              <span>Multi-Hop Optimized Price:</span>
+              <span className="font-mono text-emerald-400 font-bold">1 {inToken.symbol} = {(outAmount / (inAmount || 1)).toFixed(4)} {outToken.symbol}</span>
             </div>
             <div className="flex justify-between text-slate-400">
-              <span>Gas Efficiency:</span>
-              <span className="font-mono text-slate-200">0.000005 SOL ($0.0007)</span>
+              <span>Solana Network Gas:</span>
+              <span className="font-mono text-slate-200">0.000005 SOL (~$0.0007)</span>
             </div>
           </div>
         )}

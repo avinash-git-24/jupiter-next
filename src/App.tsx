@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { Token, TransactionReceipt } from './types';
 import { POPULAR_TOKENS } from './data/tokens';
 import { Header } from './components/Header';
+import { TrendingTicker } from './components/TrendingTicker';
+import { TradingChart } from './components/TradingChart';
 import { SwapWidget } from './components/SwapWidget';
 import { TokenSelectModal } from './components/TokenSelectModal';
 import { ReceiptModal } from './components/ReceiptModal';
@@ -12,7 +14,7 @@ import {
   BookOpen, 
   ShieldCheck, 
   Zap, 
-  ExternalLink 
+  ExternalLink
 } from 'lucide-react';
 
 export function App() {
@@ -54,13 +56,25 @@ export function App() {
     }
   };
 
+  const handleSelectTrendingToken = (token: Token) => {
+    if (token.symbol === outToken.symbol) {
+      setOutToken(inToken);
+      setInToken(token);
+    } else {
+      setInToken(token);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-[#00f2fe]/30 selection:text-[#00f2fe]">
+    <div className="min-h-screen bg-[#05070b] text-slate-100 flex flex-col relative overflow-x-hidden selection:bg-[#00f2fe]/30 selection:text-[#00f2fe]">
       
-      {/* Ambient Gradient Background Glows */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[500px] bg-[#00f2fe]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[600px] bg-[#9945FF]/10 rounded-full blur-[160px] pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-1/3 w-[600px] h-[400px] bg-[#14F195]/8 rounded-full blur-[140px] pointer-events-none -z-10" />
+      {/* Background Animated Futuristic Grid Pattern */}
+      <div className="fixed inset-0 bg-grid-pattern opacity-60 pointer-events-none" />
+
+      {/* Ambient Radial Lights */}
+      <div className="fixed top-0 left-1/4 w-[700px] h-[550px] bg-[#00f2fe]/8 rounded-full blur-[160px] pointer-events-none -z-10" />
+      <div className="fixed top-1/3 right-1/4 w-[650px] h-[650px] bg-[#9945FF]/9 rounded-full blur-[180px] pointer-events-none -z-10" />
+      <div className="fixed bottom-0 left-1/3 w-[700px] h-[450px] bg-[#14F195]/7 rounded-full blur-[160px] pointer-events-none -z-10" />
 
       {/* Persistent Navigation Header */}
       <Header
@@ -70,98 +84,144 @@ export function App() {
         connectedWallet="avinash...7x89"
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-10 flex flex-col items-center justify-center">
+      {/* Live Trending Tokens Ticker */}
+      <TrendingTicker
+        onSelectToken={handleSelectTrendingToken}
+        activeSymbol={inToken.symbol}
+      />
+
+      {/* Main Container */}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8 flex flex-col justify-center relative z-10">
         
-        {/* Hero Title & Motivation Banner */}
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#00f2fe]/15 via-purple-500/15 to-[#14F195]/15 border border-[#00f2fe]/30 text-xs font-semibold text-white shadow-lg shadow-[#00f2fe]/10">
-            <Sparkles className="w-3.5 h-3.5 text-[#00f2fe]" />
-            <span>Superteam India Redesign Bounty</span>
-            <span className="text-slate-400">•</span>
-            <span className="text-[#00f2fe] font-mono">1,500 USDC Pool</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Jupiter <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#9945FF]">Next</span>
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-400 max-w-lg mx-auto">
-            Zero-anxiety trading on Solana. Kinetic split-routing, tactile hold-to-confirm execution, and embedded Jito MEV protection.
-          </p>
-        </div>
-
-        {/* Viewport Render (Desktop Mode vs iPhone 16 Pro Frame) */}
+        {/* VIEWPORT MODE: MOBILE PHONE MOCKUP */}
         {isMobileView ? (
           <MobileFrame>
-            <SwapWidget
-              inToken={inToken}
-              outToken={outToken}
-              onOpenInTokenModal={handleOpenInToken}
-              onOpenOutTokenModal={handleOpenOutToken}
-              onSwapTokens={handleSwapTokens}
-              onExecuteReceipt={(rec) => setReceipt(rec)}
-            />
+            <div className="space-y-4">
+              <div className="text-center py-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#00f2fe]/10 border border-[#00f2fe]/25 text-[10px] font-bold text-[#00f2fe] font-mono">
+                  Jupiter Next Mobile
+                </span>
+                <h2 className="text-xl font-bold text-white mt-1">Instant Swap</h2>
+              </div>
+
+              <SwapWidget
+                inToken={inToken}
+                outToken={outToken}
+                onOpenInTokenModal={handleOpenInToken}
+                onOpenOutTokenModal={handleOpenOutToken}
+                onSwapTokens={handleSwapTokens}
+                onExecuteReceipt={(rec) => setReceipt(rec)}
+              />
+            </div>
           </MobileFrame>
         ) : (
-          <div className="w-full flex justify-center animate-fadeIn">
-            <SwapWidget
-              inToken={inToken}
-              outToken={outToken}
-              onOpenInTokenModal={handleOpenInToken}
-              onOpenOutTokenModal={handleOpenOutToken}
-              onSwapTokens={handleSwapTokens}
-              onExecuteReceipt={(rec) => setReceipt(rec)}
-            />
+          /* VIEWPORT MODE: EXPANSIVE DUAL-COLUMN PRO TERMINAL */
+          <div className="space-y-8 animate-fadeIn">
+            
+            {/* Top Header Banner */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#00f2fe]/15 via-purple-500/15 to-[#14F195]/15 border border-[#00f2fe]/30 text-xs font-semibold text-white shadow-lg shadow-[#00f2fe]/10 mb-2">
+                  <Sparkles className="w-3.5 h-3.5 text-[#00f2fe]" />
+                  <span>Superteam India Redesign Bounty</span>
+                  <span className="text-slate-400">•</span>
+                  <span className="text-[#00f2fe] font-mono">1,500 USDC Pool</span>
+                </div>
+
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                  Jupiter <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#9945FF]">Next</span>
+                  <span className="text-xs ml-3 font-mono text-[#00f2fe] px-2.5 py-1 rounded-full bg-[#00f2fe]/10 border border-[#00f2fe]/20 align-middle">
+                    Pro Terminal
+                  </span>
+                </h1>
+                <p className="text-sm text-slate-400 mt-1 max-w-xl">
+                  Next-generation Solana aggregator. Kinetic split-routing, tactile hold-to-confirm execution, and Jito MEV protection.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsCaseStudyOpen(true)}
+                className="self-start md:self-auto flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#00f2fe]/15 to-[#9945FF]/15 hover:from-[#00f2fe]/25 hover:to-[#9945FF]/25 border border-[#00f2fe]/40 text-xs font-bold text-white transition-all shadow-lg shadow-[#00f2fe]/10 cursor-pointer group"
+              >
+                <BookOpen className="w-4 h-4 text-[#00f2fe] group-hover:scale-110 transition-transform" />
+                <span>Read Full UX Case Study</span>
+                <span className="px-1.5 py-0.5 bg-[#00f2fe]/20 text-[#00f2fe] text-[9px] font-bold rounded">
+                  Before/After
+                </span>
+              </button>
+            </div>
+
+            {/* Expansive Two-Column Trading Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              {/* Left Column: Irfan Trading Chart & Market Analytics (7 cols) */}
+              <div className="lg:col-span-7 space-y-6">
+                <TradingChart inToken={inToken} outToken={outToken} />
+
+                {/* 3 Value Pillars for Judges */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div 
+                    onClick={() => setIsCaseStudyOpen(true)}
+                    className="p-3.5 rounded-2xl glass-card cursor-pointer group space-y-1"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold text-white">
+                      <Zap className="w-3.5 h-3.5 text-[#00f2fe] group-hover:scale-110 transition-transform" />
+                      <span>Kinetic Routing</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      Visualizes real-time split liquidity (Orca + Raydium) and shows savings vs direct pool.
+                    </p>
+                  </div>
+
+                  <div 
+                    onClick={() => setIsCaseStudyOpen(true)}
+                    className="p-3.5 rounded-2xl glass-card cursor-pointer group space-y-1"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold text-white">
+                      <Sparkles className="w-3.5 h-3.5 text-purple-400 group-hover:scale-110 transition-transform" />
+                      <span>Jup Morph Button</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      Fuse-inspired hold-to-confirm prevents fat-finger slippage and celebrates on-chain finality.
+                    </p>
+                  </div>
+
+                  <div 
+                    onClick={() => setIsCaseStudyOpen(true)}
+                    className="p-3.5 rounded-2xl glass-card cursor-pointer group space-y-1"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold text-white">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform" />
+                      <span>MEV Shield HUD</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      Real-time honeypot check, mint authority audit, and 1-click Jito bundle accelerator.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Fluid Swap Widget & Execution (5 cols) */}
+              <div className="lg:col-span-5">
+                <SwapWidget
+                  inToken={inToken}
+                  outToken={outToken}
+                  onOpenInTokenModal={handleOpenInToken}
+                  onOpenOutTokenModal={handleOpenOutToken}
+                  onSwapTokens={handleSwapTokens}
+                  onExecuteReceipt={(rec) => setReceipt(rec)}
+                />
+              </div>
+
+            </div>
+
           </div>
         )}
-
-        {/* Key Features Callout Pills for Judges */}
-        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-4xl w-full">
-          <div 
-            onClick={() => setIsCaseStudyOpen(true)}
-            className="p-4 rounded-2xl glass-panel hover:border-[#00f2fe]/40 transition-all cursor-pointer group space-y-1"
-          >
-            <div className="flex items-center gap-2 text-xs font-bold text-white">
-              <Zap className="w-4 h-4 text-[#00f2fe] group-hover:scale-110 transition-transform" />
-              <span>Kinetic Split Routing</span>
-            </div>
-            <p className="text-[11px] text-slate-400">
-              Visualizes real-time liquidity splits (Orca + Raydium) and highlights savings vs direct pool.
-            </p>
-          </div>
-
-          <div 
-            onClick={() => setIsCaseStudyOpen(true)}
-            className="p-4 rounded-2xl glass-panel hover:border-purple-500/40 transition-all cursor-pointer group space-y-1"
-          >
-            <div className="flex items-center gap-2 text-xs font-bold text-white">
-              <Sparkles className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform" />
-              <span>Fuse Multi-Action Button</span>
-            </div>
-            <p className="text-[11px] text-slate-400">
-              Hold-to-confirm physical feedback prevents accidental slippage and celebrate on-chain finality.
-            </p>
-          </div>
-
-          <div 
-            onClick={() => setIsCaseStudyOpen(true)}
-            className="p-4 rounded-2xl glass-panel hover:border-emerald-500/40 transition-all cursor-pointer group space-y-1"
-          >
-            <div className="flex items-center gap-2 text-xs font-bold text-white">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
-              <span>Telemetry & Safety Radar</span>
-            </div>
-            <p className="text-[11px] text-slate-400">
-              Real-time audit badges, honeypot safety checks, and 1-click Jito bundle MEV shield.
-            </p>
-          </div>
-        </div>
 
       </main>
 
       {/* Footer & Source Credentials */}
-      <footer className="w-full border-t border-white/5 py-6 px-4 bg-slate-950/80 backdrop-blur-md">
+      <footer className="w-full border-t border-white/5 py-6 px-4 bg-[#05070b]/90 backdrop-blur-md relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span>Built by <strong>Avinash Kumar (@avinash-git-24)</strong></span>

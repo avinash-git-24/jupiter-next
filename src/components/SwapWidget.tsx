@@ -5,7 +5,7 @@ import { DiagnosticsHUD } from './DiagnosticsHUD';
 import { MorphButton } from './MorphButton';
 import { DCAWidget } from './DCAWidget';
 import { LimitWidget } from './LimitWidget';
-import { ArrowDownUp } from 'lucide-react';
+import { ArrowDownUp, ChevronDown } from 'lucide-react';
 
 interface SwapWidgetProps {
   onOpenInTokenModal: () => void;
@@ -82,26 +82,26 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto rounded-3xl glass-panel-elevated p-4 sm:p-6 transition-all space-y-4">
+    <div className="w-full rounded-3xl glass-panel-elevated p-5 sm:p-6 transition-all space-y-4 shadow-2xl">
       
       {/* Unified Mode Switcher Tabs */}
-      <div className="flex items-center p-1 rounded-2xl bg-slate-950/70 border border-white/5 text-xs">
+      <div className="flex items-center p-1 rounded-2xl bg-slate-950/80 border border-white/10 text-xs shadow-inner">
         <button
           onClick={() => setMode('swap')}
-          className={`flex-1 py-2 rounded-xl font-bold transition-all cursor-pointer ${
+          className={`flex-1 py-2.5 rounded-xl font-bold transition-all cursor-pointer ${
             mode === 'swap'
-              ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-[#00f2fe] border border-[#00f2fe]/30 shadow-sm'
+              ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-[#00f2fe] border border-[#00f2fe]/40 shadow-sm'
               : 'text-slate-400 hover:text-white'
           }`}
         >
-          Market Swap
+          Instant Swap
         </button>
 
         <button
           onClick={() => setMode('limit')}
-          className={`flex-1 py-2 rounded-xl font-medium transition-all cursor-pointer ${
+          className={`flex-1 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${
             mode === 'limit'
-              ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-[#00f2fe] border border-[#00f2fe]/30 font-bold shadow-sm'
+              ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-[#00f2fe] border border-[#00f2fe]/40 font-bold shadow-sm'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -110,18 +110,18 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
 
         <button
           onClick={() => setMode('dca')}
-          className={`flex-1 py-2 rounded-xl font-medium transition-all cursor-pointer ${
+          className={`flex-1 py-2.5 rounded-xl font-medium transition-all cursor-pointer ${
             mode === 'dca'
-              ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-[#00f2fe] border border-[#00f2fe]/30 font-bold shadow-sm'
+              ? 'bg-gradient-to-r from-[#00f2fe]/20 to-[#9945FF]/20 text-[#00f2fe] border border-[#00f2fe]/40 font-bold shadow-sm'
               : 'text-slate-400 hover:text-white'
           }`}
         >
           DCA
         </button>
 
-        <div className="relative flex-1 py-2 rounded-xl text-center text-slate-500 text-xs cursor-not-allowed">
+        <div className="relative flex-1 py-2.5 rounded-xl text-center text-slate-500 text-xs cursor-not-allowed">
           <span>Perps</span>
-          <span className="absolute -top-1 right-2 text-[8px] bg-purple-500/20 text-purple-400 border border-purple-500/30 px-1 rounded-full font-bold">
+          <span className="absolute -top-1.5 right-1.5 text-[8px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-1 rounded-full font-bold">
             100x
           </span>
         </div>
@@ -129,17 +129,20 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
 
       {/* MODE 1: MARKET SWAP */}
       {mode === 'swap' && (
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           
           {/* Input Card */}
-          <div className="p-4 rounded-2xl glass-input space-y-2">
+          <div className="p-4 rounded-2xl glass-input space-y-2.5 relative overflow-hidden group">
+            
             <div className="flex justify-between items-center text-xs text-slate-400">
-              <span>You Pay:</span>
-              <div className="flex items-center gap-1.5">
-                <span className="font-mono">Balance: {inToken.balance.toLocaleString()} {inToken.symbol}</span>
+              <span className="font-medium text-slate-300">You Pay</span>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[11px]">
+                  Balance: {inToken.balance.toLocaleString()} {inToken.symbol}
+                </span>
                 <button 
                   onClick={() => handleQuickPercent(1)}
-                  className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] text-[#00f2fe] font-bold hover:bg-white/20 transition-colors cursor-pointer"
+                  className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold hover:bg-[#00f2fe]/25 border border-[#00f2fe]/30 transition-all cursor-pointer"
                 >
                   MAX
                 </button>
@@ -152,16 +155,16 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
                 value={inAmount}
                 onChange={(e) => setInAmount(e.target.value)}
                 placeholder="0.0"
-                className="w-full bg-transparent text-3xl font-mono font-bold text-white focus:outline-none placeholder:text-slate-600"
+                className="w-full bg-transparent text-3xl sm:text-4xl font-mono font-extrabold text-white focus:outline-none placeholder:text-slate-600"
               />
 
               <button
                 onClick={onOpenInTokenModal}
-                className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-800/90 border border-white/10 hover:border-[#00f2fe]/40 transition-all cursor-pointer shrink-0 shadow-md group"
+                className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/50 hover:bg-slate-800 transition-all cursor-pointer shrink-0 shadow-lg group/btn"
               >
-                <img src={inToken.icon} alt={inToken.symbol} className="w-6 h-6 rounded-full group-hover:scale-105 transition-transform" />
+                <img src={inToken.icon} alt={inToken.symbol} className="w-6 h-6 rounded-full group-hover/btn:scale-110 transition-transform" />
                 <span className="font-bold text-sm text-white">{inToken.symbol}</span>
-                <span className="text-slate-400 text-xs">▼</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover/btn:text-white transition-colors" />
               </button>
             </div>
 
@@ -171,12 +174,12 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
                 ≈ ${(amountNum * inToken.priceUsd).toFixed(2)} USD
               </span>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 {[0.25, 0.5, 0.75].map((pct) => (
                   <button
                     key={pct}
                     onClick={() => handleQuickPercent(pct)}
-                    className="px-2 py-0.5 rounded-lg bg-slate-900 border border-white/5 hover:border-white/20 text-[10px] font-mono text-slate-400 hover:text-white transition-all cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg bg-slate-900 border border-white/5 hover:border-[#00f2fe]/30 text-[10px] font-mono text-slate-400 hover:text-white transition-all cursor-pointer"
                   >
                     {pct * 100}%
                   </button>
@@ -186,43 +189,47 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
           </div>
 
           {/* 180° Rotating Reversible Swap Button */}
-          <div className="flex justify-center -my-2 relative z-10">
+          <div className="flex justify-center -my-2.5 relative z-10">
             <button
               onClick={handleFlip}
-              className={`p-2.5 rounded-2xl bg-slate-900 border border-white/15 text-[#00f2fe] hover:bg-slate-800 hover:border-[#00f2fe]/50 shadow-xl shadow-black/50 transition-all cursor-pointer ${
+              className={`p-3 rounded-2xl bg-slate-900 border border-white/15 text-[#00f2fe] hover:bg-slate-800 hover:border-[#00f2fe]/60 shadow-xl shadow-black/60 transition-all cursor-pointer group ${
                 isRotating ? 'rotate-180' : ''
               }`}
               title="Reverse Token Direction"
             >
-              <ArrowDownUp className="w-4 h-4" />
+              <ArrowDownUp className="w-4 h-4 group-hover:scale-110 transition-transform" />
             </button>
           </div>
 
           {/* Output Card */}
-          <div className="p-4 rounded-2xl glass-input space-y-2">
+          <div className="p-4 rounded-2xl glass-input space-y-2.5">
             <div className="flex justify-between items-center text-xs text-slate-400">
-              <span>You Receive (Estimated):</span>
-              <span className="font-mono">Balance: {outToken.balance.toLocaleString()} {outToken.symbol}</span>
+              <span className="font-medium text-slate-300">You Receive (Estimated)</span>
+              <span className="font-mono text-[11px]">
+                Balance: {outToken.balance.toLocaleString()} {outToken.symbol}
+              </span>
             </div>
 
             <div className="flex items-center justify-between gap-3">
-              <div className="text-3xl font-mono font-bold text-emerald-400">
+              <div className="text-3xl sm:text-4xl font-mono font-extrabold text-emerald-400">
                 ~{outAmount.toFixed(2)}
               </div>
 
               <button
                 onClick={onOpenOutTokenModal}
-                className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-800/90 border border-white/10 hover:border-[#00f2fe]/40 transition-all cursor-pointer shrink-0 shadow-md group"
+                className="flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/50 hover:bg-slate-800 transition-all cursor-pointer shrink-0 shadow-lg group/btn"
               >
-                <img src={outToken.icon} alt={outToken.symbol} className="w-6 h-6 rounded-full group-hover:scale-105 transition-transform" />
+                <img src={outToken.icon} alt={outToken.symbol} className="w-6 h-6 rounded-full group-hover/btn:scale-110 transition-transform" />
                 <span className="font-bold text-sm text-white">{outToken.symbol}</span>
-                <span className="text-slate-400 text-xs">▼</span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover/btn:text-white transition-colors" />
               </button>
             </div>
 
             <div className="flex justify-between items-center pt-1 text-[11px] text-slate-400 font-mono">
               <span>≈ ${(outAmount * outToken.priceUsd).toFixed(2)} USD</span>
-              <span className="text-emerald-400">1 {inToken.symbol} = {rate.toFixed(4)} {outToken.symbol}</span>
+              <span className="text-emerald-400 font-semibold">
+                1 {inToken.symbol} = {rate.toFixed(4)} {outToken.symbol}
+              </span>
             </div>
           </div>
 
@@ -236,7 +243,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             splits={splits}
           />
 
-          {/* Feature 2: Transaction Health & Safety Radar HUD */}
+          {/* Feature 2: ThreeUI Diagnostics HUD */}
           <DiagnosticsHUD
             priorityFee={priorityFee}
             setPriorityFee={setPriorityFee}
