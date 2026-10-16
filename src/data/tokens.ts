@@ -10,6 +10,7 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 9,
     isVerified: true,
     change24h: 3.45,
+    mintAddress: 'So11111111111111111111111111111111111111112',
   },
   {
     symbol: 'USDC',
@@ -20,6 +21,7 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 6,
     isVerified: true,
     change24h: 0.01,
+    mintAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
   },
   {
     symbol: 'JUP',
@@ -30,6 +32,7 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 6,
     isVerified: true,
     change24h: 6.82,
+    mintAddress: 'JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN',
   },
   {
     symbol: 'JTO',
@@ -40,6 +43,7 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 9,
     isVerified: true,
     change24h: 2.14,
+    mintAddress: 'jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL',
   },
   {
     symbol: 'BONK',
@@ -50,6 +54,7 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 5,
     isVerified: true,
     change24h: -1.25,
+    mintAddress: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
   },
   {
     symbol: 'RAY',
@@ -60,6 +65,7 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 6,
     isVerified: true,
     change24h: 4.90,
+    mintAddress: '4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R',
   },
   {
     symbol: 'WIF',
@@ -70,5 +76,6 @@ export const POPULAR_TOKENS: Token[] = [
     decimals: 6,
     isVerified: true,
     change24h: 8.12,
+    mintAddress: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm',
   },
 ];

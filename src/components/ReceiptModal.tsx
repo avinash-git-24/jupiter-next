@@ -1,5 +1,5 @@
 import type { TransactionReceipt } from '../types';
-import { Check, ExternalLink, ShieldCheck, X, Layers } from 'lucide-react';
+import { Check, ExternalLink, ShieldCheck, X, Layers, Target, Repeat, Clock } from 'lucide-react';
 
 interface ReceiptModalProps {
   receipt: TransactionReceipt | null;
@@ -9,10 +9,12 @@ interface ReceiptModalProps {
 export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) => {
   if (!receipt) return null;
 
+  const mode = receipt.mode || 'swap';
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
       <div 
-        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden"
+        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden threeui-specular-card"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Background */}
@@ -26,19 +28,37 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
           <X className="w-5 h-5" />
         </button>
 
-        {/* Success Icon Badge */}
+        {/* Dynamic Mode Header Icon & Title */}
         <div className="flex flex-col items-center text-center mt-2 space-y-2">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-[#00f2fe] p-[2px] shadow-lg shadow-emerald-500/20">
             <div className="w-full h-full bg-[#0a0e17] rounded-[14px] flex items-center justify-center">
-              <Check className="w-7 h-7 text-emerald-400 stroke-[3]" />
+              {mode === 'limit' ? (
+                <Target className="w-7 h-7 text-[#00f2fe]" />
+              ) : mode === 'dca' ? (
+                <Repeat className="w-7 h-7 text-purple-400" />
+              ) : (
+                <Check className="w-7 h-7 text-emerald-400 stroke-[3]" />
+              )}
             </div>
           </div>
 
           <h3 className="text-xl font-bold text-white tracking-tight">
-            Transaction Confirmed!
+            {mode === 'limit'
+              ? 'Limit Order Placed!'
+              : mode === 'dca'
+              ? 'DCA Strategy Initiated!'
+              : 'Transaction Confirmed!'}
           </h3>
           <p className="text-xs text-slate-400">
-            Executed seamlessly on Solana in <span className="text-[#00f2fe] font-mono font-medium">{receipt.executionMs}ms</span>
+            {mode === 'limit' ? (
+              <span>Order registered on Solana CLMM order book</span>
+            ) : mode === 'dca' ? (
+              <span>Automated DCA program deployed on Solana</span>
+            ) : (
+              <span>
+                Executed seamlessly on Solana in <span className="text-[#00f2fe] font-mono font-medium">{receipt.executionMs}ms</span>
+              </span>
+            )}
           </p>
         </div>
 
@@ -63,9 +83,15 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
           </div>
 
           <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs">
-            <span className="text-slate-400">Jup Route Advantage:</span>
+            <span className="text-slate-400">
+              {mode === 'limit' ? 'Trigger Rate Set:' : mode === 'dca' ? 'Recurring Interval:' : 'Route Advantage:'}
+            </span>
             <span className="text-emerald-400 font-bold font-mono">
-              +${receipt.savedUsd.toFixed(2)} saved
+              {mode === 'limit'
+                ? `1 ${receipt.inToken.symbol} = $${(receipt.limitTriggerRate || (receipt.outAmount / receipt.inAmount)).toFixed(2)}`
+                : mode === 'dca'
+                ? `${receipt.dcaOrders || 10} orders every ${receipt.dcaFrequency || 'day'}`
+                : `+$${receipt.savedUsd.toFixed(2)} saved`}
             </span>
           </div>
         </div>
@@ -81,9 +107,12 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
 
           <div className="flex justify-between py-1 border-b border-white/5">
             <span className="text-slate-400 flex items-center gap-1">
-              <Layers className="w-3.5 h-3.5 text-slate-400" /> Route Execution:
+              {mode === 'dca' ? <Clock className="w-3.5 h-3.5 text-purple-400" /> : <Layers className="w-3.5 h-3.5 text-slate-400" />}
+              {mode === 'dca' ? 'Schedule Status:' : 'Route Execution:'}
             </span>
-            <span className="font-mono text-slate-200">65% Orca + 35% Raydium</span>
+            <span className="font-mono text-slate-200">
+              {mode === 'dca' ? 'Active (Next in ~24h)' : '65% Orca + 35% Raydium'}
+            </span>
           </div>
 
           <div className="flex justify-between py-1 border-b border-white/5">

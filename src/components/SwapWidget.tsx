@@ -77,7 +77,11 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
       routeSplits: splits,
       feePaidSol: priorityFee === 'ultra' ? 0.00001 : priorityFee === 'turbo' ? 0.000005 : 0.000002,
       timestamp: new Date().toLocaleTimeString(),
-      executionMs: priorityFee === 'ultra' ? 240 : 380
+      executionMs: priorityFee === 'ultra' ? 240 : 380,
+      mode,
+      limitTriggerRate: rate * 0.95,
+      dcaFrequency: 'day',
+      dcaOrders: 10
     };
     onExecuteReceipt(receipt);
   };

@@ -27,6 +27,8 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
   priceImpactPct
 }) => {
   const [jitoEnabled, setJitoEnabled] = useState(true);
+  const [customSlippage, setCustomSlippage] = useState('1.0');
+  const [isEditingCustom, setIsEditingCustom] = useState(false);
 
   return (
     <div className="w-full rounded-2xl threeui-specular-card p-4 space-y-3.5 shadow-2xl relative overflow-hidden">
@@ -166,35 +168,77 @@ export const DiagnosticsHUD: React.FC<DiagnosticsHUDProps> = ({
         </div>
       </div>
 
-      {/* Dynamic Slippage Selector with OriginKit Sliding Pill */}
-      <div className="flex items-center justify-between text-xs px-1">
+      {/* Dynamic Slippage Selector with OriginKit Sliding Pill & Custom Input */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs px-1 gap-2">
         <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
           <Sliders className="w-3.5 h-3.5 text-slate-400" />
           <span>Dynamic Slippage Engine:</span>
         </div>
 
-        <div className="relative flex items-center p-0.5 rounded-lg bg-slate-950 border border-white/10">
-          {(['auto', '0.1', '0.5'] as SlippagePreset[]).map((val) => {
-            const isActive = slippage === val;
-            return (
-              <button
-                key={val}
-                onClick={() => setSlippage(val)}
-                className={`relative z-10 px-2.5 py-1 rounded text-[10px] font-mono transition-colors cursor-pointer ${
-                  isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="slippagePill"
-                    className="absolute inset-0 rounded bg-white/10 border border-[#00f2fe]/40 -z-10 shadow-sm"
-                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-                  />
-                )}
-                {val === 'auto' ? 'Auto Dynamic' : `${val}%`}
-              </button>
-            );
-          })}
+        <div className="flex items-center gap-1.5">
+          <div className="relative flex items-center p-0.5 rounded-lg bg-slate-950 border border-white/10">
+            {(['auto', '0.1', '0.5'] as SlippagePreset[]).map((val) => {
+              const isActive = slippage === val && !isEditingCustom;
+              return (
+                <button
+                  key={val}
+                  onClick={() => {
+                    setIsEditingCustom(false);
+                    setSlippage(val);
+                  }}
+                  className={`relative z-10 px-2.5 py-1 rounded text-[10px] font-mono transition-colors cursor-pointer ${
+                    isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="slippagePill"
+                      className="absolute inset-0 rounded bg-white/10 border border-[#00f2fe]/40 -z-10 shadow-sm"
+                      transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                    />
+                  )}
+                  {val === 'auto' ? 'Auto Dynamic' : `${val}%`}
+                </button>
+              );
+            })}
+
+            {/* Custom Slippage Button */}
+            <button
+              onClick={() => {
+                setIsEditingCustom(true);
+                setSlippage('custom');
+              }}
+              className={`relative z-10 px-2.5 py-1 rounded text-[10px] font-mono transition-colors cursor-pointer ${
+                isEditingCustom || slippage === 'custom' ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {(isEditingCustom || slippage === 'custom') && (
+                <motion.div
+                  layoutId="slippagePill"
+                  className="absolute inset-0 rounded bg-white/10 border border-[#00f2fe]/40 -z-10 shadow-sm"
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                />
+              )}
+              Custom
+            </button>
+          </div>
+
+          {/* Inline Custom Input when active */}
+          {(isEditingCustom || slippage === 'custom') && (
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-900 border border-[#00f2fe]/40 text-[10px] font-mono">
+              <input
+                type="number"
+                step="0.1"
+                min="0.05"
+                max="50"
+                value={customSlippage}
+                onChange={(e) => setCustomSlippage(e.target.value)}
+                className="w-10 bg-transparent text-white font-bold focus:outline-none text-right"
+                autoFocus
+              />
+              <span className="text-slate-400">%</span>
+            </div>
+          )}
         </div>
       </div>
 

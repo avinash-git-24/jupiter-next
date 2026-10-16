@@ -7,6 +7,7 @@ export interface Token {
   decimals: number;
   isVerified: boolean;
   change24h: number;
+  mintAddress?: string;
 }
 
 export type SwapMode = 'swap' | 'limit' | 'dca' | 'perps';
@@ -37,4 +38,8 @@ export interface TransactionReceipt {
   feePaidSol: number;
   timestamp: string;
   executionMs: number;
+  mode?: SwapMode;
+  limitTriggerRate?: number;
+  dcaFrequency?: string;
+  dcaOrders?: number;
 }
