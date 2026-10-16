@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Token } from '../types';
-import { TrendingUp, Clock } from 'lucide-react';
+import { Clock, ChevronDown, Repeat } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface DCAWidgetProps {
   inToken: Token;
@@ -25,11 +26,11 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Total Budget Card */}
-      <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
+      {/* Total Budget Card with OriginKit Inset */}
+      <div className="p-4 rounded-2xl glass-input space-y-2 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
         <div className="flex justify-between text-xs text-slate-400">
-          <span>I want to allocate total:</span>
-          <span className="font-mono">Balance: {inToken.balance} {inToken.symbol}</span>
+          <span className="font-medium text-slate-300">Total Allocation Budget:</span>
+          <span className="font-mono text-slate-400">Balance: {inToken.balance} {inToken.symbol}</span>
         </div>
 
         <div className="flex items-center justify-between gap-3">
@@ -43,10 +44,11 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
 
           <button
             onClick={onOpenInTokenModal}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer group"
           >
             <img src={inToken.icon} alt={inToken.symbol} className="w-5 h-5 rounded-full" />
             <span className="font-bold text-sm text-white">{inToken.symbol}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
           </button>
         </div>
 
@@ -56,59 +58,71 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
       </div>
 
       {/* Target Token Card */}
-      <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
+      <div className="p-4 rounded-2xl glass-input space-y-2">
         <div className="flex justify-between text-xs text-slate-400">
-          <span>To buy recurringly:</span>
-          <span>Target Asset</span>
+          <span className="font-medium text-slate-300 flex items-center gap-1.5">
+            <Repeat className="w-3.5 h-3.5 text-purple-400" /> Recurring Acquisition:
+          </span>
+          <span className="text-[10px] text-slate-400 font-mono">Target Asset</span>
         </div>
 
         <div className="flex items-center justify-between gap-3">
-          <div className="text-xl font-mono font-bold text-slate-200">
+          <div className="text-xl font-mono font-bold text-emerald-400">
             ~{estimatedReceiveTotal.toFixed(2)}
           </div>
 
           <button
             onClick={onOpenOutTokenModal}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer group"
           >
             <img src={outToken.icon} alt={outToken.symbol} className="w-5 h-5 rounded-full" />
             <span className="font-bold text-sm text-white">{outToken.symbol}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
           </button>
         </div>
 
         <div className="text-[11px] text-slate-400 font-mono">
-          Projected average execution price: ${outToken.priceUsd.toFixed(2)}
+          Projected average benchmark: ${outToken.priceUsd.toFixed(2)}
         </div>
       </div>
 
-      {/* Frequency & Order Matrix Slider */}
-      <div className="p-4 rounded-2xl bg-slate-950/70 border border-white/5 space-y-3">
+      {/* Frequency & Order Matrix with OriginKit Sliding Pill */}
+      <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-3">
         <div className="flex justify-between items-center text-xs">
           <span className="text-slate-400 flex items-center gap-1.5 font-medium">
             <Clock className="w-3.5 h-3.5 text-[#00f2fe]" /> Execution Interval:
           </span>
-          <div className="flex gap-1 p-0.5 rounded-lg bg-slate-900 border border-white/5">
-            {(['hour', 'day', 'week'] as const).map((f) => (
-              <button
-                key={f}
-                onClick={() => setFrequency(f)}
-                className={`px-2.5 py-0.5 rounded text-[11px] capitalize font-medium transition-all cursor-pointer ${
-                  frequency === f
-                    ? 'bg-[#00f2fe]/20 text-[#00f2fe] font-bold'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                Every {f}
-              </button>
-            ))}
+
+          <div className="relative flex items-center p-0.5 rounded-lg bg-slate-900 border border-white/10">
+            {(['hour', 'day', 'week'] as const).map((f) => {
+              const isActive = frequency === f;
+              return (
+                <button
+                  key={f}
+                  onClick={() => setFrequency(f)}
+                  className={`relative z-10 px-2.5 py-1 rounded text-[11px] capitalize font-medium transition-colors cursor-pointer ${
+                    isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="dcaFrequencyPill"
+                      className="absolute inset-0 rounded bg-[#00f2fe]/20 border border-[#00f2fe]/40 -z-10 shadow-sm"
+                      transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                    />
+                  )}
+                  Every {f}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Number of Orders Slider */}
-        <div className="space-y-1.5">
+        <div className="space-y-1.5 pt-1">
           <div className="flex justify-between text-xs text-slate-400">
-            <span>Total Split Orders:</span>
-            <span className="font-mono text-white font-bold">{totalOrders} orders</span>
+            <span>Total Orders:</span>
+            <span className="font-mono text-[#00f2fe] font-bold">{totalOrders} orders</span>
           </div>
           <input
             type="range"
@@ -125,7 +139,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         </div>
 
         {/* Breakdown Summary */}
-        <div className="p-3 rounded-xl bg-slate-900/60 border border-white/5 text-xs space-y-1.5">
+        <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 text-xs space-y-1.5">
           <div className="flex justify-between text-slate-300">
             <span>Per Order Size:</span>
             <span className="font-mono text-[#00f2fe] font-semibold">
@@ -138,14 +152,6 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
               {totalOrders} {frequency}s ({frequency === 'hour' ? `${(totalOrders / 24).toFixed(1)} days` : `${totalOrders} days`})
             </span>
           </div>
-        </div>
-      </div>
-
-      {/* Visual Accumulation Curve Simulation */}
-      <div className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-500/10 via-[#00f2fe]/10 to-emerald-500/10 border border-[#00f2fe]/20 text-xs flex items-center gap-3">
-        <TrendingUp className="w-5 h-5 text-emerald-400 shrink-0" />
-        <div className="text-[11px] text-slate-300">
-          <span className="font-bold text-white">DCA Volatility Protection:</span> By spreading into {totalOrders} orders, you eliminate local peak slippage and average out Solana market variance.
         </div>
       </div>
     </div>

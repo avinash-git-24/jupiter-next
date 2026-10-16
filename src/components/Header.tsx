@@ -6,6 +6,7 @@ import {
   Zap, 
   ShieldCheck
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface HeaderProps {
   isMobileView: boolean;
@@ -21,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   connectedWallet
 }) => {
   return (
-    <header className="w-full border-b border-white/5 bg-[#080b11]/80 backdrop-blur-xl sticky top-0 z-40">
+    <header className="w-full border-b border-white/10 bg-[#080b11]/85 backdrop-blur-xl sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         
         {/* Brand Logo & Name */}
@@ -40,18 +41,18 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
                 Jupiter <span className="text-[#00f2fe]">Next</span>
               </span>
-              <span className="px-2 py-0.5 text-[10px] font-semibold bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/20 rounded-full">
+              <span className="px-2 py-0.5 text-[10px] font-semibold bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/30 rounded-full font-mono">
                 v3.0 Fluid
               </span>
             </div>
             <p className="text-[11px] text-slate-400 hidden sm:block">
-              Superteam India Redesign Concept
+              Superteam India Redesign Submission
             </p>
           </div>
         </div>
 
         {/* Live Network Telemetry (Proof of Solana Native UX) */}
-        <div className="hidden lg:flex items-center gap-6 px-4 py-1.5 rounded-full bg-slate-900/60 border border-white/5 text-xs text-slate-300">
+        <div className="hidden lg:flex items-center gap-6 px-4 py-1.5 rounded-full bg-slate-900/80 border border-white/10 text-xs text-slate-300 shadow-inner">
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -81,36 +82,48 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Right CTA Group: View Switcher, Case Study & Wallet */}
         <div className="flex items-center gap-2.5 sm:gap-3">
           
-          {/* Desktop vs Mobile Toggle */}
-          <div className="flex items-center p-1 rounded-xl bg-slate-900/80 border border-white/10">
+          {/* OriginKit Animated Viewport Switcher Pill */}
+          <div className="relative flex items-center p-1 rounded-xl bg-slate-900/90 border border-white/10">
             <button
               onClick={() => setIsMobileView(false)}
-              className={`p-1.5 rounded-lg transition-all ${
-                !isMobileView 
-                  ? 'bg-[#00f2fe]/20 text-[#00f2fe] shadow-sm' 
-                  : 'text-slate-400 hover:text-white'
+              className={`relative z-10 p-1.5 rounded-lg transition-colors cursor-pointer ${
+                !isMobileView ? 'text-[#00f2fe]' : 'text-slate-400 hover:text-white'
               }`}
               title="Desktop View (1440px)"
             >
+              {!isMobileView && (
+                <motion.div
+                  layoutId="viewportModePill"
+                  className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                />
+              )}
               <Monitor className="w-4 h-4" />
             </button>
             <button
               onClick={() => setIsMobileView(true)}
-              className={`p-1.5 rounded-lg transition-all ${
-                isMobileView 
-                  ? 'bg-[#00f2fe]/20 text-[#00f2fe] shadow-sm' 
-                  : 'text-slate-400 hover:text-white'
+              className={`relative z-10 p-1.5 rounded-lg transition-colors cursor-pointer ${
+                isMobileView ? 'text-[#00f2fe]' : 'text-slate-400 hover:text-white'
               }`}
               title="Mobile View (390px iPhone Frame)"
             >
+              {isMobileView && (
+                <motion.div
+                  layoutId="viewportModePill"
+                  className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
+                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                />
+              )}
               <Smartphone className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Case Study Deck Trigger Button (Judge Magnet) */}
-          <button
+          {/* ThreeUI Case Study Trigger Button with Specular Glow */}
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             onClick={onOpenCaseStudy}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/15 via-[#00f2fe]/15 to-emerald-500/15 hover:from-purple-500/25 hover:to-emerald-500/25 border border-[#00f2fe]/30 hover:border-[#00f2fe]/60 text-xs font-medium text-white transition-all shadow-lg shadow-[#00f2fe]/10 group"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/15 via-[#00f2fe]/15 to-emerald-500/15 hover:from-purple-500/25 hover:to-emerald-500/25 border border-[#00f2fe]/40 hover:border-[#00f2fe]/70 text-xs font-medium text-white transition-all shadow-lg shadow-[#00f2fe]/10 group cursor-pointer"
           >
             <BookOpen className="w-3.5 h-3.5 text-[#00f2fe] group-hover:scale-110 transition-transform" />
             <span className="hidden sm:inline">UX Case Study</span>
@@ -118,11 +131,11 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="px-1.5 py-0.2 bg-[#00f2fe]/20 text-[#00f2fe] text-[9px] font-bold rounded">
               Before/After
             </span>
-          </button>
+          </motion.button>
 
-          {/* Connected Wallet Pill */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/20 transition-all cursor-pointer">
-            <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+          {/* Connected Wallet Pill with OriginKit styling */}
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/25 transition-all cursor-pointer">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></div>
             <span className="font-mono text-xs text-slate-200">
               {connectedWallet}
             </span>

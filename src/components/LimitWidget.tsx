@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Token } from '../types';
-import { Target, Clock } from 'lucide-react';
+import { Target, Clock, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface LimitWidgetProps {
   inToken: Token;
@@ -26,11 +27,11 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Allocation Amount */}
-      <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
+      {/* Allocation Amount with OriginKit Inset Card */}
+      <div className="p-4 rounded-2xl glass-input space-y-2 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
         <div className="flex justify-between text-xs text-slate-400">
-          <span>You Pay:</span>
-          <span className="font-mono">Balance: {inToken.balance} {inToken.symbol}</span>
+          <span className="font-medium text-slate-300">You Allocate:</span>
+          <span className="font-mono text-slate-400">Balance: {inToken.balance} {inToken.symbol}</span>
         </div>
 
         <div className="flex items-center justify-between gap-3">
@@ -44,10 +45,11 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
           <button
             onClick={onOpenInTokenModal}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer group"
           >
             <img src={inToken.icon} alt={inToken.symbol} className="w-5 h-5 rounded-full" />
             <span className="font-bold text-sm text-white">{inToken.symbol}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
           </button>
         </div>
 
@@ -56,8 +58,8 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      {/* Target Trigger Rate Controller */}
-      <div className="p-4 rounded-2xl bg-slate-950/70 border border-white/5 space-y-3">
+      {/* Target Trigger Rate Controller with OriginKit Offsets */}
+      <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-3">
         <div className="flex items-center justify-between text-xs text-slate-400">
           <span className="flex items-center gap-1.5 font-medium text-slate-300">
             <Target className="w-3.5 h-3.5 text-[#00f2fe]" /> Target Trigger Rate:
@@ -67,23 +69,37 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
           </span>
         </div>
 
-        {/* Quick Rate Offsets */}
-        <div className="flex items-center gap-1.5">
-          {([-10, -5, -1, 5, 10] as const).map((pct) => (
-            <button
-              key={pct}
-              onClick={() => setRateOffset(pct)}
-              className={`flex-1 py-1.5 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
-                rateOffset === pct
-                  ? pct < 0 
-                    ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40 font-bold' 
-                    : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold'
-                  : 'bg-slate-900 border border-white/5 text-slate-400 hover:text-white'
-              }`}
-            >
-              {pct > 0 ? `+${pct}%` : `${pct}%`}
-            </button>
-          ))}
+        {/* Quick Rate Offsets with Animated Sliding Indicator */}
+        <div className="relative flex items-center p-1 rounded-xl bg-slate-900 border border-white/10 gap-1">
+          {([-10, -5, -1, 5, 10] as const).map((pct) => {
+            const isActive = rateOffset === pct;
+            return (
+              <button
+                key={pct}
+                onClick={() => setRateOffset(pct)}
+                className={`relative z-10 flex-1 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer text-center ${
+                  isActive
+                    ? pct < 0
+                      ? 'text-rose-400 font-bold'
+                      : 'text-emerald-400 font-bold'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="limitRateOffsetPill"
+                    className={`absolute inset-0 rounded-lg border -z-10 shadow-sm ${
+                      pct < 0
+                        ? 'bg-rose-500/20 border-rose-500/40'
+                        : 'bg-emerald-500/20 border-emerald-500/40'
+                    }`}
+                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                  />
+                )}
+                {pct > 0 ? `+${pct}%` : `${pct}%`}
+              </button>
+            );
+          })}
         </div>
 
         {/* Target Rate Visual Display */}
@@ -92,7 +108,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
             <span className="text-[10px] text-slate-400">Execute Order When:</span>
             <div className="font-mono text-sm font-bold text-white flex items-center gap-1.5">
               <span>1 {inToken.symbol} = {targetRate.toFixed(4)} {outToken.symbol}</span>
-              <span className={`text-xs px-1.5 py-0.2 rounded font-medium ${
+              <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
                 rateOffset < 0 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'
               }`}>
                 ({rateOffset > 0 ? `+${rateOffset}% higher` : `${rateOffset}% dip`})
@@ -110,31 +126,39 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      {/* Expiry Selector */}
-      <div className="p-3 rounded-xl bg-slate-900/60 border border-white/5 flex items-center justify-between text-xs">
+      {/* Expiry Selector with OriginKit Sliding Pill */}
+      <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-between text-xs">
         <span className="text-slate-400 flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5 text-slate-400" /> Auto-Cancel Expiry:
         </span>
 
-        <div className="flex gap-1">
-          {(['1d', '7d', '30d', 'never'] as const).map((exp) => (
-            <button
-              key={exp}
-              onClick={() => setExpiry(exp)}
-              className={`px-2 py-0.5 rounded text-[11px] uppercase font-mono transition-all cursor-pointer ${
-                expiry === exp
-                  ? 'bg-[#00f2fe]/20 text-[#00f2fe] font-bold'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              {exp}
-            </button>
-          ))}
+        <div className="relative flex items-center p-0.5 rounded-lg bg-slate-950 border border-white/10">
+          {(['1d', '7d', '30d', 'never'] as const).map((exp) => {
+            const isActive = expiry === exp;
+            return (
+              <button
+                key={exp}
+                onClick={() => setExpiry(exp)}
+                className={`relative z-10 px-2.5 py-1 rounded text-[11px] uppercase font-mono transition-colors cursor-pointer ${
+                  isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="limitExpiryPill"
+                    className="absolute inset-0 rounded bg-white/10 border border-[#00f2fe]/40 -z-10 shadow-sm"
+                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                  />
+                )}
+                {exp}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Estimated Output */}
-      <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5 flex justify-between items-center text-xs">
+      <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex justify-between items-center text-xs">
         <span className="text-slate-400">Total Output at Trigger:</span>
         <span className="font-mono text-sm font-bold text-emerald-400">
           ~{estimatedOut.toFixed(2)} {outToken.symbol}

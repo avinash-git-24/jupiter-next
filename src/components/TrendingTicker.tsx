@@ -1,6 +1,7 @@
 import type { Token } from '../types';
 import { POPULAR_TOKENS } from '../data/tokens';
 import { Flame, TrendingUp, TrendingDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface TrendingTickerProps {
   onSelectToken: (token: Token) => void;
@@ -12,29 +13,31 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
   activeSymbol
 }) => {
   return (
-    <div className="w-full border-b border-white/5 bg-[#06080d]/60 backdrop-blur-md overflow-x-auto scrollbar-none py-2 px-4">
+    <div className="w-full border-b border-white/5 bg-[#06080d]/70 backdrop-blur-md overflow-x-auto scrollbar-none py-2 px-4">
       <div className="max-w-7xl mx-auto flex items-center gap-3">
         
         {/* Ticker Lead Badge */}
-        <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-lg shrink-0">
+        <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-xl shrink-0 shadow-sm">
           <Flame className="w-3.5 h-3.5 animate-pulse" />
           <span>TRENDING</span>
         </div>
 
-        {/* Ticker Tokens List */}
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
+        {/* Ticker Tokens List with OriginKit Spring Feedback */}
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-0.5">
           {POPULAR_TOKENS.map((token) => {
             const isActive = activeSymbol === token.symbol;
             const isPositive = token.change24h >= 0;
 
             return (
-              <button
+              <motion.button
                 key={token.symbol}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={() => onSelectToken(token)}
-                className={`flex items-center gap-2 px-2.5 py-1 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer ${
                   isActive
-                    ? 'bg-[#00f2fe]/15 border border-[#00f2fe]/40 text-white shadow-sm'
-                    : 'bg-slate-900/40 border border-white/5 text-slate-300 hover:border-white/20 hover:bg-slate-900/80'
+                    ? 'bg-[#00f2fe]/15 border border-[#00f2fe]/50 text-white shadow-md shadow-[#00f2fe]/10'
+                    : 'bg-slate-900/60 border border-white/10 text-slate-300 hover:border-white/25 hover:bg-slate-900/90'
                 }`}
               >
                 <img 
@@ -52,7 +55,7 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
                   {isPositive ? <TrendingUp className="w-2.5 h-2.5 mr-0.5" /> : <TrendingDown className="w-2.5 h-2.5 mr-0.5" />}
                   {isPositive ? '+' : ''}{token.change24h}%
                 </span>
-              </button>
+              </motion.button>
             );
           })}
         </div>

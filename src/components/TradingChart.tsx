@@ -4,6 +4,7 @@ import {
   TrendingUp, 
   Layers
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface TradingChartProps {
   inToken: Token;
@@ -47,10 +48,10 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
   const areaD = `${pathD} L 550 120 L 0 120 Z`;
 
   return (
-    <div className="w-full rounded-3xl glass-panel-elevated p-5 space-y-5 transition-all">
+    <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-5 transition-all shadow-2xl relative overflow-hidden">
       
       {/* Top Bar: Pair & Market Stats */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         
         {/* Pair Identity */}
         <div className="flex items-center gap-3">
@@ -64,38 +65,46 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
               <h2 className="text-lg font-bold text-white tracking-tight">
                 {inToken.symbol} / {outToken.symbol}
               </h2>
-              <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/10 text-[#00f2fe] text-[10px] font-bold font-mono">
+              <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/20 text-[10px] font-bold font-mono">
                 Solana DEX Aggregate
               </span>
             </div>
             <p className="text-xs text-slate-400">
-              Live Pyth & Jupiter On-Chain Feed
+              Live Pyth and Jupiter On-Chain Feed
             </p>
           </div>
         </div>
 
-        {/* Timeframe Selector Pills (Irfan Trading Chart Inspiration) */}
-        <div className="flex items-center p-1 rounded-xl bg-slate-900/80 border border-white/5 text-xs font-mono">
-          {(['15M', '1H', '4H', '1D', '1W'] as const).map((tf) => (
-            <button
-              key={tf}
-              onClick={() => setTimeframe(tf)}
-              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-                timeframe === tf
-                  ? 'bg-[#00f2fe]/20 text-[#00f2fe] font-bold shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              {tf}
-            </button>
-          ))}
+        {/* OriginKit Sliding Timeframe Selector Pills */}
+        <div className="relative flex items-center p-1 rounded-xl bg-slate-900/90 border border-white/10 text-xs font-mono">
+          {(['15M', '1H', '4H', '1D', '1W'] as const).map((tf) => {
+            const isActive = timeframe === tf;
+            return (
+              <button
+                key={tf}
+                onClick={() => setTimeframe(tf)}
+                className={`relative z-10 px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
+                  isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="chartTimeframePill"
+                    className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
+                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+                  />
+                )}
+                {tf}
+              </button>
+            );
+          })}
         </div>
 
       </div>
 
-      {/* Main Metric Cards: Price & 24H Stats */}
+      {/* Main Metric Cards: Price & 24H Stats with ThreeUI Glass */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3 rounded-2xl bg-slate-950/60 border border-white/5 space-y-0.5">
+        <div className="p-3 rounded-2xl bg-slate-950/70 border border-white/5 space-y-0.5 hover:border-white/10 transition-colors">
           <span className="text-[11px] text-slate-400 font-medium">Index Price</span>
           <div className="text-xl font-bold font-mono text-white">
             ${inToken.priceUsd < 0.01 ? inToken.priceUsd.toFixed(6) : inToken.priceUsd.toFixed(2)}
@@ -106,7 +115,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </div>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-950/60 border border-white/5 space-y-0.5">
+        <div className="p-3 rounded-2xl bg-slate-950/70 border border-white/5 space-y-0.5 hover:border-white/10 transition-colors">
           <span className="text-[11px] text-slate-400 font-medium">24h Volume</span>
           <div className="text-xl font-bold font-mono text-white">
             $1.42B
@@ -116,7 +125,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </span>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-950/60 border border-white/5 space-y-0.5">
+        <div className="p-3 rounded-2xl bg-slate-950/70 border border-white/5 space-y-0.5 hover:border-white/10 transition-colors">
           <span className="text-[11px] text-slate-400 font-medium">24h High / Low</span>
           <div className="text-sm font-bold font-mono text-slate-200">
             ${(basePrice * 1.04).toFixed(2)} / ${(basePrice * 0.96).toFixed(2)}
@@ -126,7 +135,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
           </span>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-950/60 border border-white/5 space-y-0.5">
+        <div className="p-3 rounded-2xl bg-slate-950/70 border border-white/5 space-y-0.5 hover:border-white/10 transition-colors">
           <span className="text-[11px] text-slate-400 font-medium">Aggregate Liquidity</span>
           <div className="text-xl font-bold font-mono text-[#00f2fe]">
             $384.5M
@@ -138,7 +147,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
       </div>
 
       {/* Interactive SVG Chart Area with Gradient Fill */}
-      <div className="relative h-64 w-full rounded-2xl bg-slate-950/80 border border-white/5 p-4 overflow-hidden flex flex-col justify-between">
+      <div className="relative h-64 w-full rounded-2xl bg-slate-950/90 border border-white/10 p-4 overflow-hidden flex flex-col justify-between">
         
         {/* Background Grid Lines */}
         <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
@@ -221,7 +230,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
       </div>
 
       {/* Liquidity Depth Distribution Bar (Irfan Decluttering UX) */}
-      <div className="p-3 rounded-2xl bg-slate-950/60 border border-white/5 space-y-2">
+      <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-white/5 space-y-2">
         <div className="flex justify-between items-center text-xs">
           <span className="text-slate-400 flex items-center gap-1.5 font-medium">
             <Layers className="w-3.5 h-3.5 text-[#00f2fe]" /> Live Liquidity Depth Split
