@@ -23,7 +23,7 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
   const [hoveredDex, setHoveredDex] = useState<string | null>(null);
 
   return (
-    <div className="w-full rounded-2xl threeui-specular-card p-4 transition-all space-y-3.5 shadow-2xl relative overflow-hidden">
+    <div className="w-full rounded-2xl specular-card p-4 transition-all space-y-3.5 shadow-2xl relative overflow-hidden">
       
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">

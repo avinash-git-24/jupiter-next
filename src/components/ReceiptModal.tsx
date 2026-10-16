@@ -14,7 +14,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ receipt, onClose }) 
   return (
     <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn cursor-pointer">
       <div 
-        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden threeui-specular-card cursor-default"
+        className="w-full max-w-md rounded-3xl bg-gradient-to-b from-[#0f1422] to-[#080b12] border border-white/10 shadow-2xl p-6 relative overflow-hidden specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-[#00f2fe]/15 rounded-full blur-3xl pointer-events-none" />

@@ -138,7 +138,7 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
   });
 
   return (
-    <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
+    <div className="w-full rounded-3xl specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
       
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
         <div className="flex items-center gap-2.5">

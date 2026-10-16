@@ -1,7 +1,9 @@
 {
   "name": "jupiter-next",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Fluid Solana DEX Terminal prototype featuring kinetic split-hop routing, live telemetry diagnostics, and CLMM order books",
+  "author": "Avinash Kumar (@avinash-git-24)",
   "type": "module",
   "scripts": {
     "dev": "vite",

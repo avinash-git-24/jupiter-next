@@ -106,7 +106,7 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
           state === 'idle'
             ? 'bg-slate-900/60 border border-white/5 text-slate-500 cursor-not-allowed shadow-none'
             : state === 'ready' || state === 'holding'
-            ? 'bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#9945FF] text-slate-950 threeui-button-tactile font-bold hover:brightness-110'
+            ? 'bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#9945FF] text-slate-950 tactile-button font-bold hover:brightness-110'
             : state === 'routing'
             ? 'bg-slate-900 border border-[#00f2fe]/40 text-[#00f2fe] shadow-lg shadow-[#00f2fe]/20'
             : 'bg-emerald-400 text-slate-950 font-bold shadow-xl shadow-emerald-500/30'

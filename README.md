@@ -11,7 +11,7 @@
 We redesigned **Jupiter Exchange (jup.ag)**, the flagship liquidity aggregator of the Solana ecosystem. We redesigned 4 core features:
 1. **Kinetic Multi-Hop Route Visualizer**: Dynamic animated SVG flow paths showing real-time split liquidity (e.g. 65% Orca Whirlpool + 35% Raydium CPMM) with an explicit value-add savings badge (`+$3.82 saved vs direct pool`).
 2. **Jup Morph Dynamic Execution Button**: Fuse-inspired state-morphing button (`Idle -> Ready -> Hold to Confirm -> Jito MEV Routing -> Success Confetti Celebration`).
-3. **Safety & Telemetry Diagnostics HUD**: ThreeUI-inspired telemetry card providing real-time Honeypot verification, Mint Authority checks, Liquidity Lock ratio, and 1-click Jito Bundle MEV protection.
+3. **Safety & Telemetry Diagnostics HUD**: High-frequency telemetry card providing real-time Honeypot verification, Mint Authority checks, Liquidity Lock ratio, and 1-click Jito Bundle MEV protection.
 4. **Unified Execution Matrix**: Seamless mode switching between Market Swap, Dollar Cost Averaging (DCA with visual accumulation curves), and Limit Orders (with dip/peak trigger offsets).
 
 ### Question 2: What was the biggest problem you found in the current design, in 2-3 sentences?
@@ -24,8 +24,8 @@ Despite handling billions in volume, Jupiter suffers from high cognitive load an
 | Dimension | Current Jupiter (Before) | Jupiter Next (After) |
 | :--- | :--- | :--- |
 | **Routing Transparency** | Route splits are buried in a tiny text accordion (`1 SOL = 154.2 USDC via 2 hops`). Users do not understand why trades split. | Animated SVG Bezier flow paths visually show split liquidity across Orca and Raydium with explicit dollar savings. |
-| **Transaction Feedback** | Static "Swap" button with abrupt modal triggers. Accidental taps on mobile cause unintended execution. | Fuse-inspired Hold-to-Confirm button with radial progress ring, real-time Jito bundle status, and confetti celebration. |
-| **Security & MEV** | Slippage and priority fees hidden in nested settings. Users get blindsided by high price impact on volatile tokens. | Dedicated ThreeUI Diagnostics HUD with Mint Authority check, Liquidity Lock %, Price Impact gauge, and 1-click Jito Shield. |
+| **Transaction Feedback** | Static "Swap" button with abrupt modal triggers. Accidental taps on mobile cause unintended execution. | Hold-to-Confirm dynamic button with radial progress ring, real-time Jito bundle status, and confetti celebration. |
+| **Security & MEV** | Slippage and priority fees hidden in nested settings. Users get blindsided by high price impact on volatile tokens. | Dedicated Telemetry Diagnostics HUD with Mint Authority check, Liquidity Lock %, Price Impact gauge, and 1-click Jito Shield. |
 | **DeFi Unification** | DCA and Limit orders feel like separate, intimidating sub-applications. | Unified execution matrix in a single glass container with interactive DCA schedules and limit offset pills. |
 | **Mobile Ergonomics** | Cluttered view on mobile requiring vertical scrolling across modals. | Responsive iPhone 16 Pro layout with bottom-anchored thumb controls and haptic feedback animations. |
 
@@ -35,7 +35,7 @@ Despite handling billions in volume, Jupiter suffers from high cognitive load an
 
 1. **Real Problem Solving**: Solves transaction anxiety, front-running MEV sandwiching, and routing opacity on Solana.
 2. **Design Rationale & Clarity**: Progressive disclosure keeps high-frequency controls upfront while diagnostics remain instantly accessible.
-3. **Craft, Polish & Taste**: Deep obsidian theme (`#07090e`), subtle glass refraction (`backdrop-blur-2xl`), specular borders, and spring physics inspired by ThreeUI and OriginKit.
+3. **Craft, Polish & Taste**: Deep obsidian theme (`#07090e`), subtle glass refraction (`backdrop-blur-2xl`), specular borders, and tactile spring physics.
 4. **New User Intuition**: Eliminates fear for beginners by clearly explaining "what goes in, where it routes, and what comes out safely."
 
 ---

@@ -95,7 +95,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   };
 
   return (
-    <div className="w-full rounded-3xl threeui-specular-card p-5 sm:p-6 transition-all space-y-4 shadow-2xl relative overflow-hidden">
+    <div className="w-full rounded-3xl specular-card p-5 sm:p-6 transition-all space-y-4 shadow-2xl relative overflow-hidden">
       
       <div className="relative flex items-center p-1 rounded-2xl bg-slate-950/90 border border-white/10 text-xs shadow-inner">
         {(['swap', 'limit', 'dca'] as SwapMode[]).map((tabMode) => {
@@ -199,7 +199,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={handleFlip}
-              className={`p-3 rounded-2xl bg-slate-900 border border-white/20 text-[#00f2fe] hover:bg-slate-800 hover:border-[#00f2fe]/60 shadow-xl shadow-black/80 transition-all cursor-pointer group threeui-specular-card ${
+              className={`p-3 rounded-2xl bg-slate-900 border border-white/20 text-[#00f2fe] hover:bg-slate-800 hover:border-[#00f2fe]/60 shadow-xl shadow-black/80 transition-all cursor-pointer group specular-card ${
                 isRotating ? 'rotate-180 transition-transform duration-300' : ''
               }`}
               title="Reverse Token Direction"

@@ -107,7 +107,7 @@ export const OrderBook: React.FC<OrderBookProps> = ({
   const spreadPct = ((spreadVal / (basePrice || 1)) * 100).toFixed(3);
 
   return (
-    <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
+    <div className="w-full rounded-3xl specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
       
       <div className="flex items-center justify-between pb-3 border-b border-white/10">
         <div className="flex items-center gap-2">

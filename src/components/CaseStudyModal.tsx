@@ -33,7 +33,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
   return (
     <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-lg animate-fadeIn cursor-pointer">
       <div 
-        className="w-full max-w-4xl rounded-3xl bg-[#090d16] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] threeui-specular-card cursor-default"
+        className="w-full max-w-4xl rounded-3xl bg-[#090d16] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-5 border-b border-white/5 bg-slate-950/60">
@@ -119,7 +119,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span><strong>3. Safety & MEV Diagnostics HUD:</strong> ThreeUI-inspired telemetry for front-run protection.</span>
+                    <span><strong>3. Safety & MEV Diagnostics HUD:</strong> Real-time on-chain telemetry for front-run protection.</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 flex items-center gap-2">
                     <Layers className="w-4 h-4 text-purple-400 shrink-0" />
@@ -241,7 +241,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                     FEATURE 3
                   </span>
                   <h4 className="text-sm font-bold text-white">
-                    MEV Protection & Token Safety Radar (ThreeUI Diagnostics)
+                    MEV Protection & Token Safety Radar (On-Chain Diagnostics)
                   </h4>
                 </div>
 
@@ -264,7 +264,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                       <span>Jupiter Next (After)</span>
                     </div>
                     <ul className="list-disc list-inside text-[11px] text-slate-300 space-y-1">
-                      <li><strong>ThreeUI Telemetry HUD:</strong> Dedicated card displaying Mint Authority Revocation, Liquidity Lock %, and Price Impact Gauge.</li>
+                      <li><strong>Safety Diagnostics HUD:</strong> Dedicated card displaying Mint Authority Revocation, Liquidity Lock %, and Price Impact Gauge.</li>
                       <li><strong>1-Click Jito Bundle Selector:</strong> Simplified priority fee toggle (Fast, Turbo, Ultra) with guaranteed anti-sandwiching.</li>
                       <li><strong>Dynamic Slippage:</strong> Automatically calculates optimal tolerance based on block congestion.</li>
                     </ul>

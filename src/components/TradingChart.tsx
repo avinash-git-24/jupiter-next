@@ -84,7 +84,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
   const activeCandle = hoveredCandle || candles[candles.length - 1];
 
   return (
-    <div className="w-full rounded-3xl threeui-specular-card p-5 space-y-4 transition-all shadow-2xl relative overflow-hidden">
+    <div className="w-full rounded-3xl specular-card p-5 space-y-4 transition-all shadow-2xl relative overflow-hidden">
       
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         
