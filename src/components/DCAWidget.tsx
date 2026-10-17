@@ -163,7 +163,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
           <div className="flex justify-between text-slate-300">
             <span>Total Time Span:</span>
             <span className="font-mono text-slate-200">
-              {totalOrders} {frequency}s ({frequency === 'hour' ? `${(totalOrders / 24).toFixed(1)} days` : `${totalOrders} days`})
+              {totalOrders} {frequency}s ({frequency === 'hour' ? `${(totalOrders / 24).toFixed(1)} days` : frequency === 'week' ? `${totalOrders * 7} days` : `${totalOrders} days`})
             </span>
           </div>
         </div>

@@ -29,15 +29,29 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
   const [internalAmount, setInternalAmount] = useState('10');
   const [expiry, setExpiry] = useState<'1d' | '7d' | '30d' | 'never'>('7d');
   const [internalOffset, setInternalOffset] = useState<-1 | -5 | -10 | 5 | 10>(-5);
+  const [activeSource, setActiveSource] = useState<'matched' | 'offset'>('offset');
+  const [lastTargetPrice, setLastTargetPrice] = useState(targetPrice);
+
+  if (targetPrice !== lastTargetPrice && targetPrice) {
+    setLastTargetPrice(targetPrice);
+    setActiveSource('matched');
+  }
 
   const inAmount = amountProp !== undefined ? amountProp : internalAmount;
   const setInAmount = onAmountChange || setInternalAmount;
   const rateOffset = rateOffsetProp !== undefined ? rateOffsetProp : internalOffset;
   const setRateOffset = onRateOffsetChange || setInternalOffset;
 
+  const handleOffsetClick = (pct: -1 | -5 | -10 | 5 | 10) => {
+    setActiveSource('offset');
+    setRateOffset(pct);
+  };
+
   const amountNumber = parseFloat(inAmount) || 0;
   const currentRate = inToken.priceUsd / outToken.priceUsd;
-  const targetRate = targetPrice ? targetPrice : currentRate * (1 + rateOffset / 100);
+  const targetRate = (activeSource === 'matched' && targetPrice)
+    ? targetPrice
+    : currentRate * (1 + rateOffset / 100);
   const estimatedOut = amountNumber * targetRate;
 
   return (
@@ -88,7 +102,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
             return (
               <button
                 key={pct}
-                onClick={() => setRateOffset(pct)}
+                onClick={() => handleOffsetClick(pct)}
                 className={`relative z-10 flex-1 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer text-center ${
                   isActive
                     ? pct < 0
@@ -119,7 +133,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
             <span className="text-[10px] text-slate-400">Execute Order When:</span>
             <div className="font-mono text-sm font-bold text-white flex items-center gap-1.5 flex-wrap">
               <span>1 {inToken.symbol} = {targetRate.toFixed(4)} {outToken.symbol}</span>
-              {targetPrice ? (
+              {activeSource === 'matched' && targetPrice ? (
                 <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-[#c7f284]/15 text-[#c7f284] border border-[#c7f284]/30">
                   CLMM Matched Price
                 </span>
