@@ -27,6 +27,8 @@ Despite handling billions in volume, Jupiter suffers from high cognitive load an
 
 ## 2. Before vs After UX Audit
 
+![Jupiter Before vs After Comparison](public/jupiter-before-vs-after.png)
+
 | Dimension | Current Jupiter (Before) | Jupiter Next (After) |
 | :--- | :--- | :--- |
 | **Routing Transparency** | Route splits are buried in a tiny text accordion (`1 SOL = 154.2 USDC via 2 hops`). Users do not understand why trades split. | Animated SVG Bezier flow paths visually show split liquidity across Orca and Raydium with explicit dollar savings. |
