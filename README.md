@@ -1,4 +1,7 @@
 # Jupiter Next (Jup 3.0: Fluid DeFi)
+
+![Jupiter Next Terminal Preview](public/hero-preview.png)
+
 **Live Interactive Demo:** [https://jupiter-next-amber.vercel.app](https://jupiter-next-amber.vercel.app)  
 **Video Walkthrough (Direct 1080p):** [https://jupiter-next-amber.vercel.app/jupiter-next-demo.webm](https://jupiter-next-amber.vercel.app/jupiter-next-demo.webm)  
 **GitHub Repository:** [https://github.com/avinash-git-24/jupiter-next](https://github.com/avinash-git-24/jupiter-next)  
