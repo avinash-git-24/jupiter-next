@@ -39,7 +39,8 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
           >
             {POPULAR_TOKENS.map((token) => {
               const isActive = activeSymbol === token.symbol;
-              const isPositive = token.change24h >= 0;
+              const isZero = token.symbol === 'USDC' || Math.abs(token.change24h) < 0.05;
+              const isPositive = token.change24h > 0;
 
               return (
                 <motion.button
@@ -68,10 +69,10 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
                     ${token.priceUsd < 0.01 ? token.priceUsd.toFixed(5) : token.priceUsd.toFixed(2)}
                   </span>
                   <span className={`text-[10px] font-mono flex items-center font-semibold ${
-                    isPositive ? 'text-emerald-400' : 'text-rose-400'
+                    isZero ? 'text-slate-400' : isPositive ? 'text-[#c7f284]' : 'text-rose-400'
                   }`}>
-                    {isPositive ? <TrendingUp className="w-2.5 h-2.5 mr-0.5" /> : <TrendingDown className="w-2.5 h-2.5 mr-0.5" />}
-                    {isPositive ? '+' : ''}{token.change24h.toFixed(1)}%
+                    {!isZero && (isPositive ? <TrendingUp className="w-2.5 h-2.5 mr-0.5" /> : <TrendingDown className="w-2.5 h-2.5 mr-0.5" />)}
+                    {isZero ? '0.00%' : `${isPositive ? '+' : ''}${token.change24h.toFixed(1)}%`}
                   </span>
                 </motion.button>
               );

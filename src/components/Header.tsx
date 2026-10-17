@@ -16,6 +16,7 @@ interface HeaderProps {
   onOpenCaseStudy: () => void;
   connectedWallet: string;
   onOpenPortfolio?: () => void;
+  onOpenSearch?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -23,7 +24,8 @@ export const Header: React.FC<HeaderProps> = ({
   setIsMobileView,
   onOpenCaseStudy,
   connectedWallet,
-  onOpenPortfolio
+  onOpenPortfolio,
+  onOpenSearch
 }) => {
   return (
     <header className="w-full border-b border-white/5 bg-[#080b11]/90 backdrop-blur-xl sticky top-0 z-40 select-none">
@@ -49,15 +51,19 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           <div className="hidden xl:flex items-center relative ml-4">
-            <div className="relative flex items-center">
-              <Search className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+            <div 
+              onClick={onOpenSearch}
+              className="relative flex items-center cursor-pointer group"
+              title="Search tokens (Press /)"
+            >
+              <Search className="w-4 h-4 text-slate-500 group-hover:text-[#c7f284] absolute left-3 transition-colors pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search tokens, pairs, markets..."
                 readOnly
-                className="w-72 pl-9 pr-10 py-1.5 rounded-xl bg-[#131924] border border-white/10 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-[#c7f284]/40 cursor-pointer transition-all"
+                className="w-72 pl-9 pr-10 py-1.5 rounded-xl bg-[#131924] border border-white/10 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none group-hover:border-[#c7f284]/50 cursor-pointer transition-all"
               />
-              <span className="absolute right-2.5 px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] font-mono text-slate-400">
+              <span className="absolute right-2.5 px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] font-mono text-slate-400 group-hover:text-white transition-colors">
                 /
               </span>
             </div>

@@ -42,10 +42,15 @@ export function App() {
         setIsPortfolioOpen(false);
         setIsPerpsOpen(false);
       }
+      if (e.key === '/' && !isTokenModalOpen && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) {
+        e.preventDefault();
+        setTokenModalTarget('in');
+        setIsTokenModalOpen(true);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isTokenModalOpen]);
 
   const handleSidebarSelect = (tab: 'swap' | 'limit' | 'dca' | 'perps' | 'portfolio') => {
     setActiveTab(tab);
@@ -138,6 +143,10 @@ export function App() {
           onOpenCaseStudy={() => setIsCaseStudyOpen(true)}
           connectedWallet="avinash...7x89"
           onOpenPortfolio={() => setIsPortfolioOpen(true)}
+          onOpenSearch={() => {
+            setTokenModalTarget('in');
+            setIsTokenModalOpen(true);
+          }}
         />
 
         <TrendingTicker
