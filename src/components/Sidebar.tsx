@@ -89,7 +89,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         >
           <BookOpen className="w-5 h-5 transition-transform group-hover:scale-110" />
           <span className="text-[9px] font-semibold tracking-tight mt-0.5 scale-90">Audit</span>
-          <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#c7f284] shadow-[0_0_6px_#c7f284]" />
         </button>
 
         <button
