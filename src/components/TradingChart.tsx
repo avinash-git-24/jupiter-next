@@ -414,15 +414,15 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
             </svg>
           </div>
 
-          <div className="w-16 border-l border-white/5 relative flex flex-col justify-between py-2 text-[10px] font-mono text-slate-400 select-none pl-2">
+          <div className="w-20 border-l border-white/5 relative flex flex-col justify-between py-2 text-[10px] font-mono select-none pl-2 shrink-0">
             {priceTiers.map((tier, idx) => (
-              <span key={idx} className="block leading-none text-slate-500">
+              <span key={idx} className="block leading-none text-slate-300 font-semibold">
                 ${formatPrice(tier.price)}
               </span>
             ))}
 
             <div 
-              className="absolute left-0 -translate-y-1/2 px-1.5 py-0.5 rounded-l-none rounded-r-md bg-[#c7f284] text-[#080b11] font-black text-[9px] shadow-md shadow-[#c7f284]/30 flex items-center z-20 pointer-events-none"
+              className="absolute left-0 -translate-y-1/2 px-2 py-0.5 rounded-r-md bg-[#c7f284] text-[#080b11] font-black text-[10px] shadow-lg shadow-[#c7f284]/30 flex items-center z-20 pointer-events-none"
               style={{ top: `${Math.max(10, Math.min(chartHeight - 10, currentY))}px` }}
             >
               ${formatPrice(currentPrice)}

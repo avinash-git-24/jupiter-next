@@ -260,6 +260,27 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             </div>
           </div>
 
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#131924] border border-white/5 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#c7f284] animate-pulse" />
+              <span className="text-slate-300 font-mono text-[11px]">
+                Route: 3 hops via Orca (65%) + Raydium (35%)
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[#c7f284] font-mono font-bold text-[11px]">
+                +${savedUsd.toFixed(2)} saved
+              </span>
+            </div>
+          </div>
+
+          <MorphButton
+            amount={amountNum}
+            onExecuteSwap={handleExecute}
+            inSymbol={inToken.symbol}
+            outSymbol={outToken.symbol}
+          />
+
           <RouteVisualizer
             inToken={inToken}
             outToken={outToken}
@@ -275,13 +296,6 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             slippage={slippage}
             setSlippage={setSlippage}
             priceImpactPct={amountNum > 10 ? 0.42 : 0.02}
-          />
-
-          <MorphButton
-            amount={amountNum}
-            onExecuteSwap={handleExecute}
-            inSymbol={inToken.symbol}
-            outSymbol={outToken.symbol}
           />
 
         </div>

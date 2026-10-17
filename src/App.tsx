@@ -164,16 +164,17 @@ export function App() {
                   </p>
                 </div>
 
-                <button
-                  onClick={() => setIsCaseStudyOpen(true)}
-                  className="self-start md:self-auto flex items-center gap-2 px-4 py-2 rounded-xl bg-[#131924] hover:bg-[#1a2233] border border-[#c7f284]/40 text-xs font-bold text-white transition-all shadow-md shadow-[#c7f284]/10 cursor-pointer group"
-                >
-                  <BookOpen className="w-4 h-4 text-[#c7f284] group-hover:scale-110 transition-transform" />
-                  <span>UX Case Study Deck</span>
-                  <span className="px-1.5 py-0.5 bg-[#c7f284]/20 text-[#c7f284] text-[9px] font-extrabold rounded">
-                    Before vs After
-                  </span>
-                </button>
+                <div className="hidden sm:flex items-center gap-3 px-3.5 py-2 rounded-xl bg-[#0f141f] border border-white/5 text-xs font-mono">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-400">24h Aggregate Vol:</span>
+                    <span className="text-[#c7f284] font-bold">$1.42B</span>
+                  </div>
+                  <span className="text-slate-600">•</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-400">Jupiter Split Saved:</span>
+                    <span className="text-[#14F195] font-bold">+$4.03</span>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
