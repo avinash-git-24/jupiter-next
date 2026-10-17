@@ -8,6 +8,12 @@ interface DCAWidgetProps {
   outToken: Token;
   onOpenInTokenModal: () => void;
   onOpenOutTokenModal: () => void;
+  totalAmount?: string;
+  onTotalAmountChange?: (val: string) => void;
+  orders?: number;
+  onOrdersChange?: (val: number) => void;
+  frequency?: 'hour' | 'day' | 'week';
+  onFrequencyChange?: (val: 'hour' | 'day' | 'week') => void;
 }
 
 export const DCAWidget: React.FC<DCAWidgetProps> = ({
@@ -15,10 +21,23 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
   outToken,
   onOpenInTokenModal,
   onOpenOutTokenModal,
+  totalAmount: totalAmountProp,
+  onTotalAmountChange,
+  orders: ordersProp,
+  onOrdersChange,
+  frequency: frequencyProp,
+  onFrequencyChange
 }) => {
-  const [totalAmount, setTotalAmount] = useState('500');
-  const [frequency, setFrequency] = useState<'hour' | 'day' | 'week'>('day');
-  const [totalOrders, setTotalOrders] = useState(10);
+  const [internalAmount, setInternalAmount] = useState('500');
+  const [internalFrequency, setInternalFrequency] = useState<'hour' | 'day' | 'week'>('day');
+  const [internalOrders, setInternalOrders] = useState(10);
+
+  const totalAmount = totalAmountProp !== undefined ? totalAmountProp : internalAmount;
+  const setTotalAmount = onTotalAmountChange || setInternalAmount;
+  const frequency = frequencyProp !== undefined ? frequencyProp : internalFrequency;
+  const setFrequency = onFrequencyChange || setInternalFrequency;
+  const totalOrders = ordersProp !== undefined ? ordersProp : internalOrders;
+  const setTotalOrders = onOrdersChange || setInternalOrders;
 
   const amountNumber = parseFloat(totalAmount) || 0;
   const orderAmount = totalOrders > 0 ? amountNumber / totalOrders : 0;

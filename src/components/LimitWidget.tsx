@@ -9,6 +9,10 @@ interface LimitWidgetProps {
   onOpenInTokenModal: () => void;
   onOpenOutTokenModal: () => void;
   targetPrice?: number | null;
+  amount?: string;
+  onAmountChange?: (val: string) => void;
+  rateOffset?: -1 | -5 | -10 | 5 | 10;
+  onRateOffsetChange?: (val: -1 | -5 | -10 | 5 | 10) => void;
 }
 
 export const LimitWidget: React.FC<LimitWidgetProps> = ({
@@ -16,11 +20,20 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
   outToken,
   onOpenInTokenModal,
   onOpenOutTokenModal,
-  targetPrice
+  targetPrice,
+  amount: amountProp,
+  onAmountChange,
+  rateOffset: rateOffsetProp,
+  onRateOffsetChange
 }) => {
-  const [inAmount, setInAmount] = useState('10');
+  const [internalAmount, setInternalAmount] = useState('10');
   const [expiry, setExpiry] = useState<'1d' | '7d' | '30d' | 'never'>('7d');
-  const [rateOffset, setRateOffset] = useState<-1 | -5 | -10 | 5 | 10>(-5);
+  const [internalOffset, setInternalOffset] = useState<-1 | -5 | -10 | 5 | 10>(-5);
+
+  const inAmount = amountProp !== undefined ? amountProp : internalAmount;
+  const setInAmount = onAmountChange || setInternalAmount;
+  const rateOffset = rateOffsetProp !== undefined ? rateOffsetProp : internalOffset;
+  const setRateOffset = onRateOffsetChange || setInternalOffset;
 
   const amountNumber = parseFloat(inAmount) || 0;
   const currentRate = inToken.priceUsd / outToken.priceUsd;

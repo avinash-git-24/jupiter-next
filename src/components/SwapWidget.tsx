@@ -29,6 +29,11 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
 }) => {
   const [mode, setMode] = useState<SwapMode>('swap');
   const [inAmount, setInAmount] = useState('1.5');
+  const [limitAmount, setLimitAmount] = useState('5');
+  const [limitRateOffset, setLimitRateOffset] = useState<-1 | -5 | -10 | 5 | 10>(-5);
+  const [dcaAmount, setDcaAmount] = useState('50');
+  const [dcaOrders, setDcaOrders] = useState(10);
+  const [dcaFrequency, setDcaFrequency] = useState<'hour' | 'day' | 'week'>('day');
   const [priorityFee, setPriorityFee] = useState<PriorityFeeLevel>('turbo');
   const [slippage, setSlippage] = useState<SlippagePreset>('auto');
   const [isRotating, setIsRotating] = useState(false);
@@ -75,21 +80,27 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   };
 
   const handleExecute = () => {
+    const isLimit = mode === 'limit';
+    const isDca = mode === 'dca';
+    const activeInAmount = isLimit ? (parseFloat(limitAmount) || 0) : isDca ? (parseFloat(dcaAmount) || 0) : amountNum;
+    const targetTrigger = matchedPrice || (rate * (1 + limitRateOffset / 100));
+    const activeOutAmount = isLimit ? activeInAmount * targetTrigger : isDca ? (activeInAmount * inToken.priceUsd) / outToken.priceUsd : outAmount;
+
     const receipt: TransactionReceipt = {
       txSignature: '4ZkF9x8Nm2Pq7wLtV5bY1sX9dJ0vKw3mRt8pLa9cQm2bZ1xQ4v7wLa0m9pQr8sT',
-      inAmount: amountNum,
+      inAmount: activeInAmount,
       inToken,
-      outAmount,
+      outAmount: activeOutAmount,
       outToken,
-      savedUsd,
+      savedUsd: isLimit || isDca ? 0 : savedUsd,
       routeSplits: splits,
       feePaidSol: priorityFee === 'ultra' ? 0.00001 : priorityFee === 'turbo' ? 0.000005 : 0.000002,
       timestamp: new Date().toLocaleTimeString(),
       executionMs: priorityFee === 'ultra' ? 240 : 380,
       mode,
-      limitTriggerRate: matchedPrice || (rate * 0.95),
-      dcaFrequency: 'day',
-      dcaOrders: 10
+      limitTriggerRate: targetTrigger,
+      dcaFrequency,
+      dcaOrders
     };
     onExecuteReceipt(receipt);
   };
@@ -278,9 +289,13 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             onOpenInTokenModal={onOpenInTokenModal}
             onOpenOutTokenModal={onOpenOutTokenModal}
             targetPrice={matchedPrice}
+            amount={limitAmount}
+            onAmountChange={setLimitAmount}
+            rateOffset={limitRateOffset}
+            onRateOffsetChange={setLimitRateOffset}
           />
           <MorphButton
-            amount={amountNum}
+            amount={parseFloat(limitAmount) || 0}
             onExecuteSwap={handleExecute}
             inSymbol={inToken.symbol}
             outSymbol={outToken.symbol}
@@ -295,9 +310,15 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             outToken={outToken}
             onOpenInTokenModal={onOpenInTokenModal}
             onOpenOutTokenModal={onOpenOutTokenModal}
+            totalAmount={dcaAmount}
+            onTotalAmountChange={setDcaAmount}
+            orders={dcaOrders}
+            onOrdersChange={setDcaOrders}
+            frequency={dcaFrequency}
+            onFrequencyChange={setDcaFrequency}
           />
           <MorphButton
-            amount={amountNum}
+            amount={parseFloat(dcaAmount) || 0}
             onExecuteSwap={handleExecute}
             inSymbol={inToken.symbol}
             outSymbol={outToken.symbol}
