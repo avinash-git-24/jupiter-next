@@ -16,6 +16,9 @@ interface SwapWidgetProps {
   onSwapTokens: () => void;
   onExecuteReceipt: (receipt: TransactionReceipt) => void;
   matchedPrice?: number | null;
+  activeMode?: SwapMode;
+  onModeChange?: (mode: SwapMode) => void;
+  onOpenPerps?: () => void;
 }
 
 export const SwapWidget: React.FC<SwapWidgetProps> = ({
@@ -25,9 +28,17 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   outToken,
   onSwapTokens,
   onExecuteReceipt,
-  matchedPrice
+  matchedPrice,
+  activeMode,
+  onModeChange,
+  onOpenPerps
 }) => {
-  const [mode, setMode] = useState<SwapMode>('swap');
+  const [internalMode, setInternalMode] = useState<SwapMode>('swap');
+  const mode = activeMode !== undefined ? activeMode : internalMode;
+  const setMode = (m: SwapMode) => {
+    setInternalMode(m);
+    if (onModeChange) onModeChange(m);
+  };
   const [inAmount, setInAmount] = useState('1.5');
   const [limitAmount, setLimitAmount] = useState('5');
   const [limitRateOffset, setLimitRateOffset] = useState<-1 | -5 | -10 | 5 | 10>(-5);
@@ -126,12 +137,15 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             );
           })}
 
-          <div className="relative px-3 py-1.5 text-slate-500 text-xs font-bold cursor-not-allowed">
+          <button
+            onClick={onOpenPerps}
+            className="relative px-3 py-1.5 text-slate-400 hover:text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
+          >
             <span>Perps</span>
-            <span className="ml-1 text-[8px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-1 rounded-full">
+            <span className="text-[8px] bg-purple-500/20 text-purple-300 border border-purple-500/40 px-1 rounded-full">
               100x
             </span>
-          </div>
+          </button>
         </div>
 
         <div className="flex items-center gap-1.5 text-slate-400">

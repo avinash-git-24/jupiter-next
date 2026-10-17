@@ -15,13 +15,15 @@ interface HeaderProps {
   setIsMobileView: (val: boolean) => void;
   onOpenCaseStudy: () => void;
   connectedWallet: string;
+  onOpenPortfolio?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   isMobileView,
   setIsMobileView,
   onOpenCaseStudy,
-  connectedWallet
+  connectedWallet,
+  onOpenPortfolio
 }) => {
   return (
     <header className="w-full border-b border-white/5 bg-[#080b11]/90 backdrop-blur-xl sticky top-0 z-40 select-none">
@@ -121,9 +123,13 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </motion.button>
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0f141f] border border-white/10 hover:border-[#c7f284]/30 transition-all cursor-pointer">
+          <div 
+            onClick={onOpenPortfolio}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0f141f] border border-white/10 hover:border-[#c7f284]/50 transition-all cursor-pointer group"
+            title="View Solana Portfolio"
+          >
             <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] shrink-0" />
-            <span className="font-mono text-xs text-slate-200 font-semibold">
+            <span className="font-mono text-xs text-slate-200 group-hover:text-[#c7f284] font-semibold transition-colors">
               <span className="inline sm:hidden">...{connectedWallet.slice(-4)}</span>
               <span className="hidden sm:inline">{connectedWallet}</span>
             </span>

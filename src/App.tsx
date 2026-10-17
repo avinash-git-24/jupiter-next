@@ -11,6 +11,8 @@ import { SwapWidget } from './components/SwapWidget';
 import { TokenSelectModal } from './components/TokenSelectModal';
 import { ReceiptModal } from './components/ReceiptModal';
 import { CaseStudyModal } from './components/CaseStudyModal';
+import { PortfolioModal } from './components/PortfolioModal';
+import { PerpsModal } from './components/PerpsModal';
 import { MobileFrame } from './components/MobileFrame';
 import { 
   BookOpen, 
@@ -28,17 +30,45 @@ export function App() {
   const [receipt, setReceipt] = useState<TransactionReceipt | null>(null);
   const [matchedPrice, setMatchedPrice] = useState<number | null>(null);
 
+  const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
+  const [isPerpsOpen, setIsPerpsOpen] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsTokenModalOpen(false);
         setReceipt(null);
         setIsCaseStudyOpen(false);
+        setIsPortfolioOpen(false);
+        setIsPerpsOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  const handleSidebarSelect = (tab: 'swap' | 'limit' | 'dca' | 'perps' | 'portfolio') => {
+    setActiveTab(tab);
+    if (tab === 'portfolio') {
+      setIsPortfolioOpen(true);
+    } else if (tab === 'perps') {
+      setIsPerpsOpen(true);
+    }
+  };
+
+  const handleClosePortfolio = () => {
+    setIsPortfolioOpen(false);
+    if (activeTab === 'portfolio') {
+      setActiveTab('swap');
+    }
+  };
+
+  const handleClosePerps = () => {
+    setIsPerpsOpen(false);
+    if (activeTab === 'perps') {
+      setActiveTab('swap');
+    }
+  };
 
   const handleSwapTokens = () => {
     const temp = inToken;
@@ -95,7 +125,7 @@ export function App() {
 
       <Sidebar
         activeTab={activeTab}
-        onSelectTab={setActiveTab}
+        onSelectTab={handleSidebarSelect}
         isMobileView={isMobileView}
         setIsMobileView={setIsMobileView}
         onOpenCaseStudy={() => setIsCaseStudyOpen(true)}
@@ -107,6 +137,7 @@ export function App() {
           setIsMobileView={setIsMobileView}
           onOpenCaseStudy={() => setIsCaseStudyOpen(true)}
           connectedWallet="avinash...7x89"
+          onOpenPortfolio={() => setIsPortfolioOpen(true)}
         />
 
         <TrendingTicker
@@ -134,6 +165,9 @@ export function App() {
                   onSwapTokens={handleSwapTokens}
                   onExecuteReceipt={(rec) => setReceipt(rec)}
                   matchedPrice={matchedPrice}
+                  activeMode={activeTab === 'limit' ? 'limit' : activeTab === 'dca' ? 'dca' : 'swap'}
+                  onModeChange={(m) => setActiveTab(m)}
+                  onOpenPerps={() => setIsPerpsOpen(true)}
                 />
               </div>
             </MobileFrame>
@@ -203,6 +237,9 @@ export function App() {
                     onSwapTokens={handleSwapTokens}
                     onExecuteReceipt={(rec) => setReceipt(rec)}
                     matchedPrice={matchedPrice}
+                    activeMode={activeTab === 'limit' ? 'limit' : activeTab === 'dca' ? 'dca' : 'swap'}
+                    onModeChange={(m) => setActiveTab(m)}
+                    onOpenPerps={() => setIsPerpsOpen(true)}
                   />
                 </div>
 
@@ -258,6 +295,23 @@ export function App() {
       <CaseStudyModal
         isOpen={isCaseStudyOpen}
         onClose={() => setIsCaseStudyOpen(false)}
+      />
+
+      <PortfolioModal
+        isOpen={isPortfolioOpen}
+        onClose={handleClosePortfolio}
+        onSelectTokenToSwap={(selected) => {
+          setInToken(selected);
+          setActiveTab('swap');
+          setIsPortfolioOpen(false);
+        }}
+        walletAddress="avinash...7x89"
+      />
+
+      <PerpsModal
+        isOpen={isPerpsOpen}
+        onClose={handleClosePerps}
+        indexPrice={inToken.priceUsd}
       />
 
     </div>
