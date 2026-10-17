@@ -9,13 +9,15 @@ interface MorphButtonProps {
   onExecuteSwap: () => void;
   inSymbol: string;
   outSymbol: string;
+  customLabel?: string;
 }
 
 export const MorphButton: React.FC<MorphButtonProps> = ({
   amount,
   onExecuteSwap,
   inSymbol,
-  outSymbol
+  outSymbol,
+  customLabel
 }) => {
   const [internalState, setInternalState] = useState<'holding' | 'routing' | 'success' | null>(null);
   const [holdProgress, setHoldProgress] = useState(0);
@@ -147,7 +149,7 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
               className="flex items-center gap-2 font-bold tracking-wide text-slate-950"
             >
               <Sparkles className="w-4 h-4 text-slate-950 fill-slate-950/20" />
-              <span>Instant Swap {inSymbol} to {outSymbol}</span>
+              <span>{customLabel || `Instant Swap ${inSymbol} to ${outSymbol}`}</span>
               <ArrowRight className="w-4 h-4" />
             </motion.span>
           )}

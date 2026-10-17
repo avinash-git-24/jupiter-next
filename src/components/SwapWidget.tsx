@@ -333,6 +333,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             onExecuteSwap={handleExecute}
             inSymbol={inToken.symbol}
             outSymbol={outToken.symbol}
+            customLabel="Place Limit Order"
           />
         </div>
       )}
@@ -356,6 +357,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             onExecuteSwap={handleExecute}
             inSymbol={inToken.symbol}
             outSymbol={outToken.symbol}
+            customLabel="Start DCA Accumulation"
           />
         </div>
       )}
