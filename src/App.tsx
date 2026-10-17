@@ -101,7 +101,7 @@ export function App() {
         onOpenCaseStudy={() => setIsCaseStudyOpen(true)}
       />
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-16">
         <Header
           isMobileView={isMobileView}
           setIsMobileView={setIsMobileView}

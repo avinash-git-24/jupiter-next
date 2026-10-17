@@ -35,7 +35,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="hidden lg:flex flex-col items-center justify-between w-16 py-4 bg-[#080b11] border-r border-white/5 shrink-0 z-30 select-none sticky top-0 h-screen">
+    <aside className="hidden lg:flex flex-col items-center justify-between w-16 py-4 bg-[#080b11] border-r border-white/5 shrink-0 z-30 select-none fixed left-0 top-0 h-screen">
       <div className="flex flex-col items-center gap-6 w-full">
         <button 
           onClick={() => onSelectTab('swap')}
