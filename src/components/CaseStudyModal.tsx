@@ -33,20 +33,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
   return (
     <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-lg animate-fadeIn cursor-pointer">
       <div 
-        className="w-full max-w-4xl rounded-3xl bg-[#090d16] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] specular-card cursor-default"
+        className="w-full max-w-4xl rounded-3xl bg-[#0f141f] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] specular-card cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-5 border-b border-white/5 bg-slate-950/60">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00f2fe] via-[#4facfe] to-[#9945FF] p-[1px] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#c7f284] via-[#14F195] to-[#9945FF] p-[1px] flex items-center justify-center">
               <div className="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
-                <BookOpen className="w-4 h-4 text-[#00f2fe]" />
+                <BookOpen className="w-4 h-4 text-[#c7f284]" />
               </div>
             </div>
             <div>
               <h2 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
                 <span>Jupiter Next (Jup 3.0: Fluid DeFi)</span>
-                <span className="px-2 py-0.5 text-[10px] bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/20 rounded-full font-mono font-medium">
+                <span className="px-2 py-0.5 text-[10px] bg-[#c7f284]/10 text-[#c7f284] border border-[#c7f284]/20 rounded-full font-mono font-medium">
                   UX Case Study
                 </span>
               </h2>
@@ -83,7 +83,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 {isActive && (
                   <motion.div
                     layoutId="caseStudyActiveTabPill"
-                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#00f2fe]/25 to-[#9945FF]/25 border border-[#00f2fe]/40 shadow-sm -z-10"
+                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#c7f284]/25 to-[#9945FF]/25 border border-[#c7f284]/40 shadow-sm -z-10"
                     transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                   />
                 )}
@@ -99,7 +99,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
             <div className="space-y-6 animate-fadeIn">
               
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
-                <span className="text-[11px] font-bold text-[#00f2fe] uppercase tracking-wider">
+                <span className="text-[11px] font-bold text-[#c7f284] uppercase tracking-wider">
                   Superteam Form Question 1
                 </span>
                 <h3 className="text-sm font-bold text-white">
@@ -114,7 +114,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                     <span><strong>1. Kinetic Multi-Hop Routing:</strong> Real-time split-pool liquidity visualizer with savings counter.</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-[#00f2fe] shrink-0" />
+                    <Sparkles className="w-4 h-4 text-[#c7f284] shrink-0" />
                     <span><strong>2. Jup Morph Action Button:</strong> Fuse-inspired hold-to-confirm button with celebration state.</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 flex items-center gap-2">
@@ -129,20 +129,20 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
-                <span className="text-[11px] font-bold text-[#00f2fe] uppercase tracking-wider">
+                <span className="text-[11px] font-bold text-[#c7f284] uppercase tracking-wider">
                   Superteam Form Question 2
                 </span>
                 <h3 className="text-sm font-bold text-white">
                   What was the biggest problem you found in the current design, in 2–3 sentences?
                 </h3>
-                <blockquote className="p-3 rounded-xl bg-slate-950/70 border-l-2 border-[#00f2fe] text-xs text-slate-200 italic leading-relaxed">
+                <blockquote className="p-3 rounded-xl bg-slate-950/70 border-l-2 border-[#c7f284] text-xs text-slate-200 italic leading-relaxed">
                   "Despite handling billions in volume, Jupiter suffers from high cognitive load and transaction anxiety. Intelligent routing savings are buried in opaque text accordions, critical MEV and slippage protections require digging into nested settings, and static CTA buttons provide zero feedback during high-stakes on-chain settlement."
                 </blockquote>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <div className="p-3.5 rounded-xl bg-gradient-to-b from-[#00f2fe]/10 to-transparent border border-[#00f2fe]/20 space-y-1">
-                  <span className="font-bold text-[#00f2fe]">1. Radical Clarity</span>
+                <div className="p-3.5 rounded-xl bg-gradient-to-b from-[#c7f284]/10 to-transparent border border-[#c7f284]/20 space-y-1">
+                  <span className="font-bold text-[#c7f284]">1. Radical Clarity</span>
                   <p className="text-[11px] text-slate-400">Transform cryptic routing algorithms into intuitive visual stories showing exactly how much money Jupiter saves users.</p>
                 </div>
                 <div className="p-3.5 rounded-xl bg-gradient-to-b from-purple-500/10 to-transparent border border-purple-500/20 space-y-1">
@@ -163,7 +163,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
               
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold font-mono">
+                  <span className="px-2 py-0.5 rounded-md bg-[#c7f284]/15 text-[#c7f284] text-[10px] font-bold font-mono">
                     FEATURE 1
                   </span>
                   <h4 className="text-sm font-bold text-white">
@@ -200,7 +200,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
 
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold font-mono">
+                  <span className="px-2 py-0.5 rounded-md bg-[#c7f284]/15 text-[#c7f284] text-[10px] font-bold font-mono">
                     FEATURE 2
                   </span>
                   <h4 className="text-sm font-bold text-white">
@@ -237,7 +237,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
 
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md bg-[#00f2fe]/15 text-[#00f2fe] text-[10px] font-bold font-mono">
+                  <span className="px-2 py-0.5 rounded-md bg-[#c7f284]/15 text-[#c7f284] text-[10px] font-bold font-mono">
                     FEATURE 3
                   </span>
                   <h4 className="text-sm font-bold text-white">
@@ -285,10 +285,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 
                 <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-[#00f2fe] text-sm flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#00f2fe]" /> 1. Real Problem Solving
+                    <span className="font-bold text-[#c7f284] text-sm flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#c7f284]" /> 1. Real Problem Solving
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#00f2fe]/10 text-[#00f2fe] font-bold">10/10 Focus</span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#c7f284]/10 text-[#c7f284] font-bold">10/10 Focus</span>
                   </div>
                   <p className="text-slate-300 text-xs leading-relaxed">
                     Solana trades settle in under 400 milliseconds, but existing UIs treat swaps like slow Ethereum transactions. By introducing Jito MEV bundling into the main HUD, visual route splits, and instant feedback, we solve real financial anxiety, slippage failures, and front-running risks.
@@ -338,7 +338,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
           {activeTab === 'prototype' && (
             <div className="space-y-4 animate-fadeIn text-xs">
               <div className="p-4 rounded-2xl bg-slate-900/80 border border-white/5 space-y-2">
-                <span className="font-bold text-[#00f2fe] text-sm">Interactive Prototype Stack:</span>
+                <span className="font-bold text-[#c7f284] text-sm">Interactive Prototype Stack:</span>
                 <p className="text-slate-300 leading-relaxed">
                   Unlike traditional static Figma submissions, this redesign is backed by an interactive, responsive React application built with:
                 </p>
@@ -350,7 +350,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#00f2fe]/10 via-[#4facfe]/10 to-[#9945FF]/10 border border-[#00f2fe]/20 space-y-2">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#c7f284]/10 via-[#14F195]/10 to-[#9945FF]/10 border border-[#c7f284]/20 space-y-2">
                 <span className="font-bold text-white text-sm">Interactive Features to Test in this Live App:</span>
                 <ul className="list-disc list-inside space-y-1 text-slate-300">
                   <li><strong>Device Viewport Switcher:</strong> Click the monitor/phone icon in the top header to preview Desktop vs Mobile iPhone 16 Pro view.</li>
@@ -371,7 +371,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
 
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-slate-950 font-bold text-xs hover:brightness-110 transition-all cursor-pointer ml-auto"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#c7f284] to-[#14F195] text-slate-950 font-bold text-xs hover:brightness-110 transition-all cursor-pointer ml-auto"
           >
             Explore Live Prototype
           </button>

@@ -48,6 +48,7 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
   const [priorityFee, setPriorityFee] = useState<PriorityFeeLevel>('turbo');
   const [slippage, setSlippage] = useState<SlippagePreset>('auto');
   const [isRotating, setIsRotating] = useState(false);
+  const [isRouteOpen, setIsRouteOpen] = useState(true);
   const [prevMatchedPrice, setPrevMatchedPrice] = useState(matchedPrice);
 
   if (prevMatchedPrice !== matchedPrice && matchedPrice) {
@@ -274,19 +275,24 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#131924] border border-white/5 text-xs">
+          <button
+            type="button"
+            onClick={() => setIsRouteOpen(!isRouteOpen)}
+            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#131924] border border-white/5 hover:border-white/10 text-xs transition-colors cursor-pointer"
+          >
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#c7f284] animate-pulse" />
               <span className="text-slate-300 font-mono text-[11px]">
                 Route: 3 hops via Orca (65%) + Raydium (35%)
               </span>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className="text-[#c7f284] font-mono font-bold text-[11px]">
                 +${savedUsd.toFixed(2)} saved
               </span>
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isRouteOpen ? 'rotate-180' : ''}`} />
             </div>
-          </div>
+          </button>
 
           <MorphButton
             amount={amountNum}
@@ -295,22 +301,26 @@ export const SwapWidget: React.FC<SwapWidgetProps> = ({
             outSymbol={outToken.symbol}
           />
 
-          <RouteVisualizer
-            inToken={inToken}
-            outToken={outToken}
-            inAmount={amountNum}
-            outAmount={outAmount}
-            savedUsd={savedUsd}
-            splits={splits}
-          />
+          {isRouteOpen && (
+            <div className="space-y-4 animate-fadeIn">
+              <RouteVisualizer
+                inToken={inToken}
+                outToken={outToken}
+                inAmount={amountNum}
+                outAmount={outAmount}
+                savedUsd={savedUsd}
+                splits={splits}
+              />
 
-          <DiagnosticsHUD
-            priorityFee={priorityFee}
-            setPriorityFee={setPriorityFee}
-            slippage={slippage}
-            setSlippage={setSlippage}
-            priceImpactPct={amountNum > 10 ? 0.42 : 0.02}
-          />
+              <DiagnosticsHUD
+                priorityFee={priorityFee}
+                setPriorityFee={setPriorityFee}
+                slippage={slippage}
+                setSlippage={setSlippage}
+                priceImpactPct={amountNum > 10 ? 0.42 : 0.02}
+              />
+            </div>
+          )}
 
         </div>
       )}

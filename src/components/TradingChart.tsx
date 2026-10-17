@@ -175,7 +175,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
   const isOverallPositive = priceChange >= 0;
 
   return (
-    <div className="w-full rounded-2xl bg-[#0d111c] border border-white/10 p-4 space-y-2.5 shadow-2xl select-none text-slate-200">
+    <div className="w-full rounded-2xl bg-[#0f141f] border border-white/5 p-4 space-y-2.5 shadow-2xl select-none text-slate-200">
       
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-white/5">
         <div className="flex items-center gap-3">
@@ -466,7 +466,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
         </div>
 
         <div className="w-20 border-l border-white/5 relative flex flex-col justify-between py-2 text-[10px] font-mono select-none pl-2 shrink-0">
-          <div className="self-start px-1 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[8px] font-bold">
+          <div className="self-start px-1 py-0.5 rounded bg-[#c7f284]/15 text-[#c7f284] border border-[#c7f284]/30 text-[8px] font-bold font-mono">
             High ${formatPrice(highCandle.high)}
           </div>
 
@@ -483,7 +483,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
             ${formatPrice(currentPrice)}
           </div>
 
-          <div className="self-start px-1 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[8px] font-bold">
+          <div className="self-start px-1 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 text-[8px] font-bold font-mono">
             Low ${formatPrice(lowCandle.low)}
           </div>
         </div>

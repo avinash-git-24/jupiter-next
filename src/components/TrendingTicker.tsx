@@ -23,8 +23,8 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
   };
 
   return (
-    <div className="w-full border-b border-white/10 bg-[#06080d]/85 backdrop-blur-md py-1.5 px-4 sm:px-6 relative z-30">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+    <div className="w-full border-b border-white/10 bg-[#080b11]/85 backdrop-blur-md py-1.5 px-4 sm:px-6 relative z-30">
+      <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-3">
         
         <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-lg shrink-0 shadow-sm">
           <Flame className="w-3.5 h-3.5 animate-pulse text-amber-400" />

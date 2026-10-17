@@ -45,7 +45,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="p-4 rounded-2xl glass-input space-y-2 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
+      <div className="p-4 rounded-2xl bg-[#131924] border border-white/5 space-y-2 focus-within:border-[#c7f284]/50 focus-within:ring-1 focus-within:ring-[#c7f284]/20 transition-all">
         <div className="flex justify-between text-xs text-slate-400">
           <span className="font-medium text-slate-300">Total Allocation Budget:</span>
           <span className="font-mono text-slate-400">Balance: {inToken.balance} {inToken.symbol}</span>
@@ -62,7 +62,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
 
           <button
             onClick={onOpenInTokenModal}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer group"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#1a2233] border border-white/10 hover:border-[#c7f284]/40 transition-colors cursor-pointer group"
           >
             <img src={inToken.icon} alt={inToken.symbol} className="w-5 h-5 rounded-full" />
             <span className="font-bold text-sm text-white">{inToken.symbol}</span>
@@ -75,7 +75,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         </div>
       </div>
 
-      <div className="p-4 rounded-2xl glass-input space-y-2">
+      <div className="p-4 rounded-2xl bg-[#131924] border border-white/5 space-y-2">
         <div className="flex justify-between text-xs text-slate-400">
           <span className="font-medium text-slate-300 flex items-center gap-1.5">
             <Repeat className="w-3.5 h-3.5 text-purple-400" /> Recurring Acquisition:
@@ -84,13 +84,13 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         </div>
 
         <div className="flex items-center justify-between gap-3">
-          <div className="text-xl font-mono font-bold text-emerald-400">
+          <div className="text-xl font-mono font-bold text-[#c7f284]">
             ~{estimatedReceiveTotal.toFixed(2)}
           </div>
 
           <button
             onClick={onOpenOutTokenModal}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer group"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#1a2233] border border-white/10 hover:border-[#c7f284]/40 transition-colors cursor-pointer group"
           >
             <img src={outToken.icon} alt={outToken.symbol} className="w-5 h-5 rounded-full" />
             <span className="font-bold text-sm text-white">{outToken.symbol}</span>
@@ -103,13 +103,13 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         </div>
       </div>
 
-      <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-3">
+      <div className="p-4 rounded-2xl bg-[#131924] border border-white/5 space-y-3">
         <div className="flex justify-between items-center text-xs">
           <span className="text-slate-400 flex items-center gap-1.5 font-medium">
-            <Clock className="w-3.5 h-3.5 text-[#00f2fe]" /> Execution Interval:
+            <Clock className="w-3.5 h-3.5 text-[#c7f284]" /> Execution Interval:
           </span>
 
-          <div className="relative flex items-center p-0.5 rounded-lg bg-slate-900 border border-white/10">
+          <div className="relative flex items-center p-0.5 rounded-lg bg-[#0a0e17] border border-white/10">
             {(['hour', 'day', 'week'] as const).map((f) => {
               const isActive = frequency === f;
               return (
@@ -117,13 +117,13 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
                   key={f}
                   onClick={() => setFrequency(f)}
                   className={`relative z-10 px-2.5 py-1 rounded text-[11px] capitalize font-medium transition-colors cursor-pointer ${
-                    isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-white'
+                    isActive ? 'text-[#c7f284] font-bold' : 'text-slate-400 hover:text-white'
                   }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="dcaFrequencyPill"
-                      className="absolute inset-0 rounded bg-[#00f2fe]/20 border border-[#00f2fe]/40 -z-10 shadow-sm"
+                      className="absolute inset-0 rounded bg-[#c7f284]/15 border border-[#c7f284]/30 -z-10 shadow-sm"
                       transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                     />
                   )}
@@ -137,7 +137,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
         <div className="space-y-1.5 pt-1">
           <div className="flex justify-between text-xs text-slate-400">
             <span>Total Orders:</span>
-            <span className="font-mono text-[#00f2fe] font-bold">{totalOrders} orders</span>
+            <span className="font-mono text-[#c7f284] font-bold">{totalOrders} orders</span>
           </div>
           <input
             type="range"
@@ -145,7 +145,7 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
             max="30"
             value={totalOrders}
             onChange={(e) => setTotalOrders(parseInt(e.target.value))}
-            className="w-full accent-[#00f2fe] cursor-pointer"
+            className="w-full accent-[#c7f284] cursor-pointer"
           />
           <div className="flex justify-between text-[10px] text-slate-400 font-mono">
             <span>2 orders</span>
@@ -153,10 +153,10 @@ export const DCAWidget: React.FC<DCAWidgetProps> = ({
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 text-xs space-y-1.5">
+        <div className="p-3 rounded-xl bg-[#0a0e17] border border-white/5 text-xs space-y-1.5">
           <div className="flex justify-between text-slate-300">
             <span>Per Order Size:</span>
-            <span className="font-mono text-[#00f2fe] font-semibold">
+            <span className="font-mono text-[#c7f284] font-semibold">
               {orderAmount.toFixed(4)} {inToken.symbol} (~${(orderAmount * inToken.priceUsd).toFixed(2)})
             </span>
           </div>

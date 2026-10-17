@@ -42,7 +42,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="p-4 rounded-2xl glass-input space-y-2 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
+      <div className="p-4 rounded-2xl bg-[#131924] border border-white/5 space-y-2 focus-within:border-[#c7f284]/50 focus-within:ring-1 focus-within:ring-[#c7f284]/20 transition-all">
         <div className="flex justify-between text-xs text-slate-400">
           <span className="font-medium text-slate-300">You Allocate:</span>
           <span className="font-mono text-slate-400">Balance: {inToken.balance} {inToken.symbol}</span>
@@ -59,7 +59,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
           <button
             onClick={onOpenInTokenModal}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-[#00f2fe]/40 transition-colors cursor-pointer group"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#1a2233] border border-white/10 hover:border-[#c7f284]/40 transition-colors cursor-pointer group"
           >
             <img src={inToken.icon} alt={inToken.symbol} className="w-5 h-5 rounded-full" />
             <span className="font-bold text-sm text-white">{inToken.symbol}</span>
@@ -72,17 +72,17 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-3">
+      <div className="p-4 rounded-2xl bg-[#131924] border border-white/5 space-y-3">
         <div className="flex items-center justify-between text-xs text-slate-400">
           <span className="flex items-center gap-1.5 font-medium text-slate-300">
-            <Target className="w-3.5 h-3.5 text-[#00f2fe]" /> Target Trigger Rate:
+            <Target className="w-3.5 h-3.5 text-[#c7f284]" /> Target Trigger Rate:
           </span>
           <span className="font-mono text-xs text-slate-400">
             Market: 1 {inToken.symbol} = {currentRate.toFixed(4)} {outToken.symbol}
           </span>
         </div>
 
-        <div className="relative flex items-center p-1 rounded-xl bg-slate-900 border border-white/10 gap-1">
+        <div className="relative flex items-center p-1 rounded-xl bg-[#0a0e17] border border-white/10 gap-1">
           {([-10, -5, -1, 5, 10] as const).map((pct) => {
             const isActive = rateOffset === pct;
             return (
@@ -114,18 +114,18 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
           })}
         </div>
 
-        <div className="p-3 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-between">
+        <div className="p-3 rounded-xl bg-[#0a0e17] border border-white/5 flex items-center justify-between">
           <div>
             <span className="text-[10px] text-slate-400">Execute Order When:</span>
             <div className="font-mono text-sm font-bold text-white flex items-center gap-1.5 flex-wrap">
               <span>1 {inToken.symbol} = {targetRate.toFixed(4)} {outToken.symbol}</span>
               {targetPrice ? (
-                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-[#00f2fe]/20 text-[#00f2fe] border border-[#00f2fe]/40">
+                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-[#c7f284]/15 text-[#c7f284] border border-[#c7f284]/30">
                   CLMM Matched Price
                 </span>
               ) : (
                 <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${
-                  rateOffset < 0 ? 'bg-rose-500/20 text-rose-400' : 'bg-emerald-500/20 text-emerald-400'
+                  rateOffset < 0 ? 'bg-rose-500/20 text-rose-400' : 'bg-[#c7f284]/20 text-[#c7f284]'
                 }`}>
                   ({rateOffset > 0 ? `+${rateOffset}% higher` : `${rateOffset}% dip`})
                 </span>
@@ -135,7 +135,7 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
 
           <button
             onClick={onOpenOutTokenModal}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 border border-white/10 text-xs text-white"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#1a2233] border border-white/10 hover:border-[#c7f284]/40 text-xs text-white transition-colors cursor-pointer"
           >
             <img src={outToken.icon} alt={outToken.symbol} className="w-4 h-4 rounded-full" />
             <span>{outToken.symbol}</span>
@@ -143,12 +143,12 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      <div className="p-3 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-between text-xs">
+      <div className="p-3 rounded-xl bg-[#131924] border border-white/5 flex items-center justify-between text-xs">
         <span className="text-slate-400 flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5 text-slate-400" /> Auto-Cancel Expiry:
         </span>
 
-        <div className="relative flex items-center p-0.5 rounded-lg bg-slate-950 border border-white/10">
+        <div className="relative flex items-center p-0.5 rounded-lg bg-[#0a0e17] border border-white/10">
           {(['1d', '7d', '30d', 'never'] as const).map((exp) => {
             const isActive = expiry === exp;
             return (
@@ -156,13 +156,13 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
                 key={exp}
                 onClick={() => setExpiry(exp)}
                 className={`relative z-10 px-2.5 py-1 rounded text-[11px] uppercase font-mono transition-colors cursor-pointer ${
-                  isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-white'
+                  isActive ? 'text-[#c7f284] font-bold' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="limitExpiryPill"
-                    className="absolute inset-0 rounded bg-white/10 border border-[#00f2fe]/40 -z-10 shadow-sm"
+                    className="absolute inset-0 rounded bg-[#c7f284]/15 border border-[#c7f284]/30 -z-10 shadow-sm"
                     transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                   />
                 )}
@@ -173,9 +173,9 @@ export const LimitWidget: React.FC<LimitWidgetProps> = ({
         </div>
       </div>
 
-      <div className="p-3.5 rounded-xl bg-slate-900/90 border border-white/10 flex justify-between items-center text-xs">
+      <div className="p-3.5 rounded-xl bg-[#131924] border border-white/5 flex justify-between items-center text-xs">
         <span className="text-slate-400">Total Output at Trigger:</span>
-        <span className="font-mono text-sm font-bold text-emerald-400">
+        <span className="font-mono text-sm font-bold text-[#c7f284]">
           ~{estimatedOut.toFixed(2)} {outToken.symbol}
         </span>
       </div>

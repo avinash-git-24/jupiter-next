@@ -147,28 +147,28 @@ export const RouteVisualizer: React.FC<RouteVisualizerProps> = ({
           </circle>
         </svg>
 
-        <div className="flex flex-col md:flex-row items-center justify-between relative z-10 gap-3 my-auto">
+        <div className="flex flex-row items-center justify-between relative z-10 gap-2 sm:gap-4 my-auto px-1 sm:px-2">
           
-          <div className="flex flex-col items-center gap-1.5 shrink-0 z-20">
-            <div className="relative p-1 rounded-2xl bg-gradient-to-tr from-[#c7f284] to-[#14F195] shadow-lg shadow-[#c7f284]/20">
+          <div className="flex flex-col items-center gap-1 shrink-0 z-20">
+            <div className="relative p-0.5 sm:p-1 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-[#c7f284] to-[#14F195] shadow-lg shadow-[#c7f284]/20">
               <img 
                 src={inToken.icon} 
                 alt={inToken.symbol} 
-                className="w-10 h-10 rounded-xl bg-black object-cover" 
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-black object-cover" 
               />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#c7f284] border-2 border-[#080b11] flex items-center justify-center">
-                <span className="text-[8px] font-black text-black">✓</span>
+              <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#c7f284] border-2 border-[#080b11] flex items-center justify-center">
+                <span className="text-[7px] sm:text-[8px] font-black text-black">✓</span>
               </div>
             </div>
             
-            <div className="px-2 py-0.5 rounded-lg bg-[#131924] border border-white/10 shadow-sm text-center">
-              <span className="text-[11px] font-bold text-white font-mono block">
+            <div className="px-1.5 sm:px-2 py-0.5 rounded-lg bg-[#131924] border border-white/10 shadow-sm text-center">
+              <span className="text-[9px] sm:text-[11px] font-bold text-white font-mono block whitespace-nowrap">
                 {inAmount || 0} {inToken.symbol}
               </span>
             </div>
           </div>
 
-          <div className="flex-1 w-full max-w-xs md:max-w-none flex flex-col gap-2 relative z-20">
+          <div className="flex-1 w-full max-w-[190px] sm:max-w-xs flex flex-col gap-1.5 sm:gap-2 relative z-20">
             {splits.map((split, idx) => (
               <div 
                 key={idx} 

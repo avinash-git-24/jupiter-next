@@ -87,7 +87,7 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-1 p-2 border-b border-white/5 bg-[#0d111c] text-xs font-mono">
+        <div className="flex items-center gap-1 p-2 border-b border-white/5 bg-[#0a0e17] text-xs font-mono">
           <button
             onClick={() => setTab('holdings')}
             className={`flex-1 py-1.5 rounded-lg text-center font-bold transition-all cursor-pointer ${
@@ -233,7 +233,7 @@ export const PortfolioModal: React.FC<PortfolioModalProps> = ({
           )}
         </div>
 
-        <div className="p-3 border-t border-white/5 bg-[#0d111c] flex items-center justify-between text-xs font-mono text-slate-400">
+        <div className="p-3 border-t border-white/5 bg-[#0a0e17] flex items-center justify-between text-xs font-mono text-slate-400">
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             <span>Solana RPC Synced</span>
