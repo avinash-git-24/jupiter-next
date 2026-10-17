@@ -15,7 +15,7 @@ We redesigned **Jupiter Exchange (jup.ag)**, the flagship liquidity aggregator o
 1. **Kinetic Multi-Hop Route Visualizer**: Dynamic animated SVG flow paths showing real-time split liquidity (e.g. 65% Orca Whirlpool + 35% Raydium CPMM) with an explicit value-add savings badge (`+$3.82 saved vs direct pool`).
 2. **Jup Morph Dynamic Execution Button**: Fuse-inspired state-morphing button (`Idle -> Ready -> Hold to Confirm -> Jito MEV Routing -> Success Confetti Celebration`).
 3. **Safety & Telemetry Diagnostics HUD**: High-frequency telemetry card providing real-time Honeypot verification, Mint Authority checks, Liquidity Lock ratio, and 1-click Jito Bundle MEV protection.
-4. **Unified Execution Matrix**: Seamless mode switching between Market Swap, Dollar Cost Averaging (DCA with visual accumulation curves), and Limit Orders (with dip/peak trigger offsets).
+4. **Unified Execution Matrix**: Direct mode switching between Market Swap, Dollar Cost Averaging (DCA with visual accumulation curves), and Limit Orders (with dip/peak trigger offsets).
 
 ### Question 2: What was the biggest problem you found in the current design, in 2-3 sentences?
 Despite handling billions in volume, Jupiter suffers from high cognitive load and transaction anxiety. Intelligent routing savings are buried in opaque text accordions, critical MEV and slippage protections require digging into nested settings, and static CTA buttons provide zero feedback during high-stakes on-chain settlement.

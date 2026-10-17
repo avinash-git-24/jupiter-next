@@ -123,7 +123,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-950/60 border border-white/5 flex items-center gap-2">
                     <Layers className="w-4 h-4 text-purple-400 shrink-0" />
-                    <span><strong>4. Unified Execution Matrix:</strong> Seamless tab switching between Instant Swap, DCA, and Limit.</span>
+                    <span><strong>4. Unified Execution Matrix:</strong> Direct tab switching between Instant Swap, DCA, and Limit.</span>
                   </div>
                 </div>
               </div>
@@ -227,7 +227,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
                       <span>Jupiter Next (After)</span>
                     </div>
                     <ul className="list-disc list-inside text-[11px] text-slate-300 space-y-1">
-                      <li><strong>Multi-Action Morph Button:</strong> Seamless 5-state lifecycle: <code>Idle → Ready → Hold to Confirm → Jito Routing → Celebration</code>.</li>
+                      <li><strong>Multi-Action Morph Button:</strong> Tactile 5-state lifecycle: <code>Idle → Ready → Hold to Confirm → Jito Routing → Celebration</code>.</li>
                       <li><strong>Hold-to-Confirm Physics:</strong> Radial progress ring prevents fat-finger slippage while preserving 1-tap accessibility.</li>
                       <li><strong>Micro-Confetti Celebration:</strong> Confirms on-chain finality with an instant Solscan receipt drawer.</li>
                     </ul>
