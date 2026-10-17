@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Token } from '../types';
 import { 
   TrendingUp, 
@@ -22,34 +22,79 @@ interface TradingChartProps {
   outToken: Token;
 }
 
+const formatPrice = (val: number) => {
+  if (val < 0.0001) return val.toFixed(7);
+  if (val < 1) return val.toFixed(4);
+  return val.toFixed(2);
+};
+
+const TIMEFRAME_CONFIGS = {
+  '15M': {
+    times: ['14:00', '14:15', '14:30', '14:45', '15:00', '15:15', '15:30', '15:45', '16:00', '16:15', '16:30', '16:45', '17:00', '17:15', '17:30', '17:45', '18:00', '18:15'],
+    multipliers: [0.992, 0.994, 0.991, 0.995, 0.997, 0.996, 0.998, 1.001, 0.999, 1.003, 1.002, 1.005, 1.004, 1.007, 1.006, 1.008, 1.007, 1.009],
+    axis: ['14:00', '14:45', '15:30', '16:15', '17:00', '17:45', 'Live (15M Slot)'],
+    volBase: 19000
+  },
+  '1H': {
+    times: ['01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
+    multipliers: [0.985, 0.982, 0.987, 0.984, 0.989, 0.992, 0.990, 0.994, 0.998, 0.995, 1.002, 1.006, 1.001, 1.008, 1.012, 1.009, 1.015, 1.018],
+    axis: ['02:00', '05:00', '08:00', '11:00', '14:00', '17:00', 'Live (1H Slot)'],
+    volBase: 36000
+  },
+  '4H': {
+    times: ['D1 00:00', 'D1 04:00', 'D1 08:00', 'D1 12:00', 'D1 16:00', 'D1 20:00', 'D2 00:00', 'D2 04:00', 'D2 08:00', 'D2 12:00', 'D2 16:00', 'D2 20:00', 'D3 00:00', 'D3 04:00', 'D3 08:00', 'D3 12:00', 'D3 16:00', 'D3 20:00'],
+    multipliers: [0.975, 0.970, 0.980, 0.974, 0.982, 0.988, 0.985, 0.992, 0.996, 0.993, 1.004, 1.008, 1.003, 1.012, 1.018, 1.014, 1.022, 1.025],
+    axis: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Live (4H Slot)'],
+    volBase: 58000
+  },
+  '1D': {
+    times: ['00:00', '01:20', '02:40', '04:00', '05:20', '06:40', '08:00', '09:20', '10:40', '12:00', '13:20', '14:40', '16:00', '17:20', '18:40', '20:00', '21:20', '22:40'],
+    multipliers: [0.965, 0.968, 0.974, 0.971, 0.982, 0.986, 0.984, 0.978, 0.981, 0.994, 1.004, 1.002, 1.011, 1.020, 1.018, 1.029, 1.035, 1.038],
+    axis: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Live Now (Solana Slot)'],
+    volBase: 72000
+  },
+  '1W': {
+    times: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10', 'W11', 'W12', 'W13', 'W14', 'W15', 'W16', 'W17', 'W18'],
+    multipliers: [0.920, 0.915, 0.930, 0.945, 0.938, 0.955, 0.968, 0.960, 0.975, 0.990, 0.985, 1.010, 1.025, 1.018, 1.035, 1.050, 1.042, 1.055],
+    axis: ['Week 1', 'Week 4', 'Week 8', 'Week 12', 'Week 15', 'Week 18', 'Live (1W Slot)'],
+    volBase: 125000
+  }
+};
+
 export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken }) => {
   const [timeframe, setTimeframe] = useState<'15M' | '1H' | '4H' | '1D' | '1W'>('1D');
   const [chartType, setChartType] = useState<'candles' | 'line'>('candles');
   const [showEma, setShowEma] = useState(true);
   const [hoveredCandle, setHoveredCandle] = useState<CandleData | null>(null);
+  const [liveDelta, setLiveDelta] = useState(0);
+  const [isLivePulsing, setIsLivePulsing] = useState(false);
 
   const base = inToken.priceUsd;
 
-  const candles: CandleData[] = [
-    { time: '00:00', open: base * 0.965, high: base * 0.972, low: base * 0.960, close: base * 0.968, volume: 42000 },
-    { time: '01:20', open: base * 0.968, high: base * 0.975, low: base * 0.964, close: base * 0.974, volume: 38000 },
-    { time: '02:40', open: base * 0.974, high: base * 0.978, low: base * 0.969, close: base * 0.971, volume: 29000 },
-    { time: '04:00', open: base * 0.971, high: base * 0.985, low: base * 0.970, close: base * 0.982, volume: 64000 },
-    { time: '05:20', open: base * 0.982, high: base * 0.988, low: base * 0.979, close: base * 0.986, volume: 51000 },
-    { time: '06:40', open: base * 0.986, high: base * 0.992, low: base * 0.981, close: base * 0.984, volume: 43000 },
-    { time: '08:00', open: base * 0.984, high: base * 0.987, low: base * 0.975, close: base * 0.978, volume: 37000 },
-    { time: '09:20', open: base * 0.978, high: base * 0.983, low: base * 0.976, close: base * 0.981, volume: 31000 },
-    { time: '10:40', open: base * 0.981, high: base * 0.995, low: base * 0.980, close: base * 0.994, volume: 72000 },
-    { time: '12:00', open: base * 0.994, high: base * 1.008, low: base * 0.991, close: base * 1.004, volume: 89000 },
-    { time: '13:20', open: base * 1.004, high: base * 1.012, low: base * 0.998, close: base * 1.002, volume: 65000 },
-    { time: '14:40', open: base * 1.002, high: base * 1.015, low: base * 1.000, close: base * 1.011, volume: 78000 },
-    { time: '16:00', open: base * 1.011, high: base * 1.024, low: base * 1.008, close: base * 1.020, volume: 94000 },
-    { time: '17:20', open: base * 1.020, high: base * 1.026, low: base * 1.014, close: base * 1.018, volume: 56000 },
-    { time: '18:40', open: base * 1.018, high: base * 1.032, low: base * 1.016, close: base * 1.029, volume: 82000 },
-    { time: '20:00', open: base * 1.029, high: base * 1.038, low: base * 1.025, close: base * 1.035, volume: 104000 },
-    { time: '21:20', open: base * 1.035, high: base * 1.039, low: base * 1.028, close: base * 1.031, volume: 67000 },
-    { time: '22:40', open: base * 1.031, high: base * 1.042, low: base * 1.030, close: base * (1 + inToken.change24h / 100), volume: 112000 }
-  ];
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const shift = (Math.random() * 0.002 - 0.001);
+      setLiveDelta((prev) => +(prev + shift).toFixed(5));
+      setIsLivePulsing(true);
+      setTimeout(() => setIsLivePulsing(false), 900);
+    }, 2400);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const cfg = TIMEFRAME_CONFIGS[timeframe];
+  const candles: CandleData[] = cfg.times.map((t, i) => {
+    let mult = cfg.multipliers[i];
+    if (i === cfg.times.length - 1) {
+      mult += liveDelta;
+    }
+    const open = base * (mult - 0.0035 * (i % 2 === 0 ? 1 : -1));
+    const close = base * mult;
+    const high = Math.max(open, close) * 1.004;
+    const low = Math.min(open, close) * 0.996;
+    const volume = Math.round(cfg.volBase * (0.8 + ((i * 7) % 9) * 0.09));
+    return { time: t, open, high, low, close, volume };
+  });
 
   const minPrice = Math.min(...candles.map((c) => c.low)) * 0.998;
   const maxPrice = Math.max(...candles.map((c) => c.high)) * 1.002;
@@ -197,7 +242,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
         <div className="p-3 rounded-2xl bg-slate-950/70 border border-white/5 space-y-0.5">
           <span className="text-[11px] text-slate-400 font-medium">24h High / Low</span>
           <div className="text-sm font-bold font-mono text-slate-200">
-            ${(base * 1.042).toFixed(2)} / ${(base * 0.960).toFixed(2)}
+            ${formatPrice(base * 1.042)} / ${formatPrice(base * 0.960)}
           </div>
           <span className="text-[10px] text-slate-500 font-mono">
             Variance: ~4.2%
@@ -222,10 +267,10 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 text-xs font-mono pb-2 border-b border-white/5">
           <div className="flex items-center gap-3 text-slate-300">
             <span className="text-slate-400">Time: <span className="text-white">{activeCandle.time}</span></span>
-            <span>O: <span className="text-white">${activeCandle.open.toFixed(2)}</span></span>
-            <span>H: <span className="text-emerald-400">${activeCandle.high.toFixed(2)}</span></span>
-            <span>L: <span className="text-rose-400">${activeCandle.low.toFixed(2)}</span></span>
-            <span>C: <span className="text-white font-bold">${activeCandle.close.toFixed(2)}</span></span>
+            <span>O: <span className="text-white">${formatPrice(activeCandle.open)}</span></span>
+            <span>H: <span className="text-emerald-400">${formatPrice(activeCandle.high)}</span></span>
+            <span>L: <span className="text-rose-400">${formatPrice(activeCandle.low)}</span></span>
+            <span>C: <span className="text-white font-bold">${formatPrice(activeCandle.close)}</span></span>
             <span className="hidden sm:inline text-slate-400">Vol: <span className="text-[#00f2fe]">{activeCandle.volume.toLocaleString()}</span></span>
           </div>
 
@@ -300,6 +345,8 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                   const volBarHeight = (c.volume / maxVolume) * (volumeHeight - 8);
                   const volY = chartHeight + volumeHeight - volBarHeight;
 
+                  const isLatest = i === candles.length - 1;
+
                   return (
                     <g 
                       key={i} 
@@ -313,7 +360,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                         x2={centerX}
                         y2={yLow}
                         stroke={color}
-                        strokeWidth="1.5"
+                        strokeWidth={isLatest && isLivePulsing ? 2 : 1.5}
                       />
 
                       <rect
@@ -323,10 +370,10 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                         height={bodyHeight}
                         rx="2"
                         fill={color}
-                        fillOpacity="0.85"
+                        fillOpacity={isLatest && isLivePulsing ? 1 : 0.85}
                         stroke={color}
-                        strokeWidth="1"
-                        className="group-hover:fill-opacity-100 transition-all"
+                        strokeWidth={isLatest && isLivePulsing ? 1.5 : 1}
+                        className={`group-hover:fill-opacity-100 transition-all ${isLatest && isLivePulsing ? 'filter drop-shadow-[0_0_8px_rgba(20,241,149,0.7)]' : ''}`}
                       />
 
                       <rect
@@ -336,7 +383,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
                         height={volBarHeight}
                         rx="1.5"
                         fill={color}
-                        fillOpacity="0.35"
+                        fillOpacity={0.35}
                       />
                     </g>
                   );
@@ -371,13 +418,13 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
         </div>
 
         <div className="relative z-10 flex justify-between text-[10px] font-mono text-slate-400 pt-2 border-t border-white/5">
-          <span>00:00</span>
-          <span>04:00</span>
-          <span>08:00</span>
-          <span>12:00</span>
-          <span>16:00</span>
-          <span>20:00</span>
-          <span className="text-[#00f2fe]">Live Now (Solana Slot)</span>
+          {cfg.axis.slice(0, -1).map((lbl, idx) => (
+            <span key={idx}>{lbl}</span>
+          ))}
+          <span className="text-[#00f2fe] flex items-center gap-1.5 font-bold">
+            <span className={`w-1.5 h-1.5 rounded-full ${isLivePulsing ? 'bg-emerald-400 shadow-lg shadow-emerald-400/80 animate-ping' : 'bg-[#00f2fe]'}`} />
+            {cfg.axis[cfg.axis.length - 1]}
+          </span>
         </div>
 
       </div>
