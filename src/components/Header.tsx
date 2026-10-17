@@ -1,10 +1,12 @@
+import React from 'react';
 import { 
-  Sparkles, 
-  Smartphone, 
-  Monitor, 
+  Search, 
+  Settings2, 
   BookOpen, 
   Zap, 
-  ShieldCheck
+  ShieldCheck, 
+  Smartphone, 
+  Monitor
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -22,120 +24,117 @@ export const Header: React.FC<HeaderProps> = ({
   connectedWallet
 }) => {
   return (
-    <header className="w-full border-b border-white/10 bg-[#080b11]/85 backdrop-blur-xl sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <header className="w-full border-b border-white/5 bg-[#080b11]/90 backdrop-blur-xl sticky top-0 z-40 select-none">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
         
         <div className="flex items-center gap-3">
-          <div className="relative group cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00f2fe] via-[#4facfe] to-[#9945FF] p-[1.5px] shadow-lg shadow-[#00f2fe]/20">
-              <div className="w-full h-full bg-[#0b0e17] rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-[#00f2fe] animate-pulse" />
+          <div className="lg:hidden flex items-center gap-2">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#c7f284] to-[#14F195] p-0.5 flex items-center justify-center">
+              <div className="w-full h-full bg-[#080b11] rounded-[10px] flex items-center justify-center">
+                <span className="text-xs font-black text-[#c7f284]">♃</span>
               </div>
             </div>
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#00f2fe] to-[#9945FF] rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
           </div>
 
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
-                Jupiter <span className="text-[#00f2fe]">Next</span>
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-semibold bg-[#00f2fe]/10 text-[#00f2fe] border border-[#00f2fe]/30 rounded-full font-mono">
-                v3.0 Fluid
+          <div className="flex items-center gap-2">
+            <span className="font-extrabold text-lg tracking-tight text-white flex items-center gap-1.5">
+              <span>Jupiter</span>
+              <span className="text-[#c7f284]">Next</span>
+            </span>
+            <span className="px-2 py-0.5 text-[10px] font-bold bg-[#c7f284]/15 text-[#c7f284] border border-[#c7f284]/30 rounded-full font-mono">
+              v3.0 Fluid
+            </span>
+          </div>
+
+          <div className="hidden xl:flex items-center relative ml-4">
+            <div className="relative flex items-center">
+              <Search className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search tokens, pairs, markets..."
+                readOnly
+                className="w-72 pl-9 pr-10 py-1.5 rounded-xl bg-[#131924] border border-white/10 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-[#c7f284]/40 cursor-pointer transition-all"
+              />
+              <span className="absolute right-2.5 px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] font-mono text-slate-400">
+                /
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 hidden sm:block">
-              Superteam India Redesign Submission
-            </p>
           </div>
         </div>
 
-        <div className="hidden lg:flex items-center gap-6 px-4 py-1.5 rounded-full bg-slate-900/80 border border-white/10 text-xs text-slate-300 shadow-inner">
+        <div className="hidden md:flex items-center gap-5 px-4 py-1.5 rounded-full bg-[#0f141f] border border-white/5 text-xs text-slate-300 shadow-inner">
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c7f284] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c7f284]"></span>
             </span>
-            <span className="text-slate-400">Solana TPS:</span>
-            <span className="font-mono text-emerald-400 font-medium">2,842</span>
+            <span className="text-slate-400 text-[11px]">TPS:</span>
+            <span className="font-mono text-[#c7f284] font-bold text-[11px]">2,842</span>
           </div>
 
           <div className="w-px h-3 bg-white/10" />
 
           <div className="flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-slate-400">Finality:</span>
-            <span className="font-mono text-slate-200">380ms</span>
+            <Zap className="w-3 h-3 text-amber-400" />
+            <span className="text-slate-400 text-[11px]">Finality:</span>
+            <span className="font-mono text-slate-200 text-[11px]">380ms</span>
           </div>
 
           <div className="w-px h-3 bg-white/10" />
 
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#00f2fe]" />
-            <span className="text-slate-400">Jito MEV Shield:</span>
-            <span className="font-medium text-[#00f2fe]">Active</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-[#c7f284]" />
+            <span className="text-slate-400 text-[11px]">Jito MEV:</span>
+            <span className="font-bold text-[#c7f284] text-[11px]">Shielded</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          
-          <div className="relative flex items-center p-1 rounded-xl bg-slate-900/90 border border-white/10">
+        <div className="flex items-center gap-2.5">
+          <div className="lg:hidden flex items-center p-0.5 rounded-xl bg-[#131924] border border-white/10">
             <button
               onClick={() => setIsMobileView(false)}
-              className={`relative z-10 p-1.5 rounded-lg transition-colors cursor-pointer ${
-                !isMobileView ? 'text-[#00f2fe]' : 'text-slate-400 hover:text-white'
-              }`}
-              title="Desktop View (1440px)"
+              className={`p-1.5 rounded-lg transition-colors ${!isMobileView ? 'text-[#c7f284] bg-white/10' : 'text-slate-400'}`}
+              title="Desktop"
             >
-              {!isMobileView && (
-                <motion.div
-                  layoutId="viewportModePill"
-                  className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
-                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-                />
-              )}
-              <Monitor className="w-4 h-4" />
+              <Monitor className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setIsMobileView(true)}
-              className={`relative z-10 p-1.5 rounded-lg transition-colors cursor-pointer ${
-                isMobileView ? 'text-[#00f2fe]' : 'text-slate-400 hover:text-white'
-              }`}
-              title="Mobile View (390px iPhone Frame)"
+              className={`p-1.5 rounded-lg transition-colors ${isMobileView ? 'text-[#c7f284] bg-white/10' : 'text-slate-400'}`}
+              title="Mobile"
             >
-              {isMobileView && (
-                <motion.div
-                  layoutId="viewportModePill"
-                  className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
-                  transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-                />
-              )}
-              <Smartphone className="w-4 h-4" />
+              <Smartphone className="w-3.5 h-3.5" />
             </button>
           </div>
 
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={onOpenCaseStudy}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-500/15 via-[#00f2fe]/15 to-emerald-500/15 hover:from-purple-500/25 hover:to-emerald-500/25 border border-[#00f2fe]/40 hover:border-[#00f2fe]/70 text-xs font-medium text-white transition-all shadow-lg shadow-[#00f2fe]/10 group cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#131924] hover:bg-[#1a2233] border border-[#c7f284]/40 hover:border-[#c7f284]/80 text-xs font-semibold text-white transition-all shadow-md shadow-[#c7f284]/10 cursor-pointer"
           >
-            <BookOpen className="w-3.5 h-3.5 text-[#00f2fe] group-hover:scale-110 transition-transform" />
-            <span className="hidden sm:inline">UX Case Study</span>
+            <BookOpen className="w-3.5 h-3.5 text-[#c7f284]" />
+            <span className="hidden sm:inline">UX Case Study Deck</span>
             <span className="sm:hidden">Case Study</span>
-            <span className="hidden sm:inline-block px-1.5 py-0.2 bg-[#00f2fe]/20 text-[#00f2fe] text-[9px] font-bold rounded">
+            <span className="hidden sm:inline-block px-1.5 py-0.2 bg-[#c7f284]/20 text-[#c7f284] text-[9px] font-extrabold rounded">
               Before/After
             </span>
           </motion.button>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-900 border border-white/10 hover:border-white/25 transition-all cursor-pointer">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 shrink-0"></div>
-            <span className="font-mono text-xs text-slate-200">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0f141f] border border-white/10 hover:border-[#c7f284]/30 transition-all cursor-pointer">
+            <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#10b981] shrink-0" />
+            <span className="font-mono text-xs text-slate-200 font-semibold">
               <span className="inline sm:hidden">...{connectedWallet.slice(-4)}</span>
               <span className="hidden sm:inline">{connectedWallet}</span>
             </span>
           </div>
 
+          <button 
+            className="p-2 rounded-xl bg-[#0f141f] border border-white/10 hover:border-white/20 text-slate-400 hover:text-white transition-all cursor-pointer"
+            title="Terminal Settings"
+          >
+            <Settings2 className="w-4 h-4" />
+          </button>
         </div>
 
       </div>

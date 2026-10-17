@@ -49,7 +49,7 @@ export const TrendingTicker: React.FC<TrendingTickerProps> = ({
                   onClick={() => onSelectToken(token)}
                   className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer ${
                     isActive
-                      ? 'bg-[#00f2fe]/20 border border-[#00f2fe]/60 text-white shadow-md shadow-[#00f2fe]/20'
+                      ? 'bg-[#c7f284]/15 border border-[#c7f284]/50 text-white shadow-md shadow-[#c7f284]/20'
                       : 'bg-slate-900/70 border border-white/10 text-slate-300 hover:border-white/25 hover:bg-slate-900'
                   }`}
                 >

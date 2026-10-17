@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Token } from '../types';
 import { Activity, ExternalLink, ArrowUpRight, ArrowDownRight, Layers } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -138,20 +138,20 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
   });
 
   return (
-    <div className="w-full rounded-3xl specular-card p-5 space-y-4 shadow-2xl relative overflow-hidden">
+    <div className="w-full rounded-2xl bg-[#0f141f] border border-white/5 p-4 sm:p-5 space-y-4 shadow-xl select-none">
       
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-xl bg-[#00f2fe]/10 border border-[#00f2fe]/30 flex items-center justify-center text-[#00f2fe]">
-            <Activity className="w-4 h-4 animate-pulse" />
+          <div className="w-7 h-7 rounded-xl bg-[#131924] border border-[#c7f284]/30 flex items-center justify-center text-[#c7f284]">
+            <Activity className="w-4 h-4 animate-pulse text-[#c7f284]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-bold text-white tracking-tight">
                 Live Solana Aggregator Feed
               </h3>
-              <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] text-emerald-400 font-mono font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#c7f284]/15 border border-[#c7f284]/30 text-[10px] text-[#c7f284] font-mono font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c7f284] animate-ping" />
                 Live Sub-second
               </span>
             </div>
@@ -161,7 +161,7 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
           </div>
         </div>
 
-        <div className="relative flex items-center p-1 rounded-xl bg-slate-900 border border-white/10 text-xs font-mono">
+        <div className="relative flex items-center p-0.5 rounded-xl bg-[#131924] border border-white/10 text-xs font-mono">
           {(['all', 'whale', 'active'] as const).map((tab) => {
             const isActive = filter === tab;
             const label = tab === 'all' ? 'All Swaps' : tab === 'whale' ? 'Whale (> $5K)' : `${activeToken.symbol} Only`;
@@ -170,16 +170,9 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
                 key={tab}
                 onClick={() => setFilter(tab)}
                 className={`relative z-10 px-2.5 py-1 rounded-lg transition-colors cursor-pointer text-[11px] ${
-                  isActive ? 'text-[#00f2fe] font-bold' : 'text-slate-400 hover:text-white'
+                  isActive ? 'text-[#080b11] bg-[#c7f284] font-bold' : 'text-slate-400 hover:text-white'
                 }`}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="recentSwapsTab"
-                    className="absolute inset-0 rounded-lg bg-[#00f2fe]/20 border border-[#00f2fe]/40 shadow-sm -z-10"
-                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-                  />
-                )}
                 {label}
               </button>
             );
@@ -197,12 +190,12 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.25 }}
               onClick={() => onSelectPair && onSelectPair(item.inSymbol, item.outSymbol)}
-              className="flex items-center justify-between p-3 rounded-2xl bg-slate-950/70 border border-white/5 hover:border-[#00f2fe]/40 hover:bg-slate-900/80 transition-all cursor-pointer group"
+              className="flex items-center justify-between p-3 rounded-xl bg-[#131924] border border-white/5 hover:border-[#c7f284]/40 hover:bg-[#1a2233] transition-all cursor-pointer group"
             >
               <div className="flex items-center gap-3">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
                   item.type === 'buy'
-                    ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                    ? 'bg-[#c7f284]/15 text-[#c7f284] border border-[#c7f284]/30'
                     : 'bg-rose-500/15 text-rose-400 border border-rose-500/30'
                 }`}>
                   {item.type === 'buy' ? (
@@ -235,7 +228,7 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
               </div>
 
               <div className="text-right">
-                <div className="font-mono text-xs font-bold text-white group-hover:text-[#00f2fe] transition-colors">
+                <div className="font-mono text-xs font-bold text-white group-hover:text-[#c7f284] transition-colors">
                   ${item.valueUsd.toLocaleString()}
                 </div>
                 <div className="flex items-center justify-end gap-1 text-[10px] text-slate-400 font-mono">
@@ -245,7 +238,7 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="hover:text-[#00f2fe] transition-colors"
+                    className="hover:text-[#c7f284] transition-colors"
                     title="View Transaction on Solscan"
                   >
                     <ExternalLink className="w-2.5 h-2.5" />
@@ -259,7 +252,7 @@ export const RecentSwapsFeed: React.FC<RecentSwapsFeedProps> = ({
 
       <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
         <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#c7f284]" />
           <span>Real-time Solana RPC WebSocket</span>
         </span>
         <span className="text-slate-400">

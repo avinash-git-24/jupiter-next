@@ -68,7 +68,7 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
         particleCount: 85,
         spread: 75,
         origin: { y: 0.6 },
-        colors: ['#00f2fe', '#4facfe', '#14F195', '#9945FF']
+        colors: ['#c7f284', '#14F195', '#ffffff', '#a3e635']
       });
 
       setTimeout(() => {
@@ -106,10 +106,10 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
           state === 'idle'
             ? 'bg-slate-900/60 border border-white/5 text-slate-500 cursor-not-allowed shadow-none'
             : state === 'ready' || state === 'holding'
-            ? 'bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#9945FF] text-slate-950 tactile-button font-bold hover:brightness-110'
+            ? 'bg-[#c7f284] hover:bg-[#b4ea68] text-slate-950 font-extrabold tracking-wide shadow-lg shadow-[#c7f284]/25 hover:shadow-xl hover:shadow-[#c7f284]/35 transition-all'
             : state === 'routing'
-            ? 'bg-slate-900 border border-[#00f2fe]/40 text-[#00f2fe] shadow-lg shadow-[#00f2fe]/20'
-            : 'bg-emerald-400 text-slate-950 font-bold shadow-xl shadow-emerald-500/30'
+            ? 'bg-[#131924] border border-[#c7f284]/50 text-[#c7f284] shadow-lg shadow-[#c7f284]/20'
+            : 'bg-[#c7f284] text-slate-950 font-extrabold shadow-xl shadow-[#c7f284]/35'
         }`}
       >
         <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
@@ -171,9 +171,9 @@ export const MorphButton: React.FC<MorphButtonProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex items-center gap-2.5 font-mono text-xs text-[#00f2fe]"
+              className="flex items-center gap-2.5 font-mono text-xs text-[#c7f284]"
             >
-              <Loader2 className="w-4 h-4 animate-spin text-[#00f2fe]" />
+              <Loader2 className="w-4 h-4 animate-spin text-[#c7f284]" />
               <span>Routing via Jito MEV Bundle... ~280ms</span>
             </motion.span>
           )}

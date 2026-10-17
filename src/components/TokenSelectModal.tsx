@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { Token } from '../types';
 import { POPULAR_TOKENS } from '../data/tokens';
 import { Search, X, CheckCircle2, TrendingUp, TrendingDown, Copy, Check } from 'lucide-react';
@@ -35,13 +35,13 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
   );
 
   return (
-    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn cursor-pointer">
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn cursor-pointer select-none">
       <div 
-        className="w-full max-w-md rounded-3xl bg-[#0c101a] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] specular-card cursor-default"
+        className="w-full max-w-md rounded-2xl bg-[#0f141f] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh] cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-4 border-b border-white/10">
-          <span className="font-semibold text-base text-white">Select a Token</span>
+        <div className="flex items-center justify-between p-4 border-b border-white/5">
+          <span className="font-bold text-base text-white">Select a Token</span>
           <button
             onClick={onClose}
             className="p-1 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
@@ -50,8 +50,8 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
           </button>
         </div>
 
-        <div className="p-4 border-b border-white/10 space-y-3">
-          <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-2xl bg-slate-900 border border-white/10 focus-within:border-[#00f2fe]/60 focus-within:ring-2 focus-within:ring-[#00f2fe]/20 transition-all">
+        <div className="p-4 border-b border-white/5 space-y-3">
+          <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#131924] border border-white/10 focus-within:border-[#c7f284]/50 transition-all">
             <Search className="w-4 h-4 text-slate-400" />
             <input
               type="text"
@@ -71,10 +71,10 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
                   onSelect(t);
                   onClose();
                 }}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
                   selectedToken.symbol === t.symbol
-                    ? 'bg-[#00f2fe]/15 border-[#00f2fe]/40 text-[#00f2fe]'
-                    : 'bg-slate-900/60 border-white/10 text-slate-300 hover:border-white/20'
+                    ? 'bg-[#c7f284]/20 border-[#c7f284]/50 text-[#c7f284]'
+                    : 'bg-[#131924] border-white/5 text-slate-300 hover:border-white/20'
                 }`}
               >
                 <img src={t.icon} alt={t.symbol} className="w-3.5 h-3.5 rounded-full" />
@@ -94,17 +94,17 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
                   onSelect(t);
                   onClose();
                 }}
-                className={`flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all ${
+                className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${
                   isSelected
-                    ? 'bg-[#00f2fe]/10 border border-[#00f2fe]/30'
-                    : 'hover:bg-slate-900/80 border border-transparent'
+                    ? 'bg-[#c7f284]/15 border border-[#c7f284]/30'
+                    : 'hover:bg-[#131924] border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <img src={t.icon} alt={t.symbol} className="w-9 h-9 rounded-full bg-black object-cover" />
                     {t.isVerified && (
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#00f2fe] bg-[#0c101a] rounded-full absolute -bottom-0.5 -right-0.5" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#c7f284] bg-[#0f141f] rounded-full absolute -bottom-0.5 -right-0.5" />
                     )}
                   </div>
                   <div>
@@ -120,11 +120,11 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
                         </span>
                         <button
                           onClick={(e) => handleCopyMint(e, t.mintAddress!, t.symbol)}
-                          className="text-slate-500 hover:text-[#00f2fe] transition-colors p-0.5 rounded cursor-pointer"
+                          className="text-slate-500 hover:text-[#c7f284] transition-colors p-0.5 rounded cursor-pointer"
                           title="Copy Solana Mint Address"
                         >
                           {copiedSymbol === t.symbol ? (
-                            <Check className="w-2.5 h-2.5 text-emerald-400" />
+                            <Check className="w-2.5 h-2.5 text-[#c7f284]" />
                           ) : (
                             <Copy className="w-2.5 h-2.5" />
                           )}
@@ -139,7 +139,7 @@ export const TokenSelectModal: React.FC<TokenSelectModalProps> = ({
                     {t.balance > 1000 ? t.balance.toLocaleString() : t.balance.toFixed(2)}
                   </div>
                   <div className={`text-[11px] font-mono flex items-center justify-end gap-0.5 ${
-                    t.change24h >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                    t.change24h >= 0 ? 'text-[#c7f284]' : 'text-rose-400'
                   }`}>
                     {t.change24h >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                     <span>{t.change24h >= 0 ? '+' : ''}{t.change24h}%</span>
