@@ -470,8 +470,8 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
             High ${formatPrice(highCandle.high)}
           </div>
 
-          {priceTiers.map((tier, idx) => (
-            <span key={idx} className="block leading-none text-slate-400 text-[10px]">
+          {priceTiers.map((tier) => (
+            <span key={`tier-${tier.price}`} className="block leading-none text-slate-400 text-[10px]">
               ${formatPrice(tier.price)}
             </span>
           ))}
@@ -497,7 +497,7 @@ export const TradingChart: React.FC<TradingChartProps> = ({ inToken, outToken })
 
         <div className="flex items-center gap-8">
           {cfg.axis.map((lbl, idx) => (
-            <span key={idx} className={idx === cfg.axis.length - 1 ? 'text-[#c7f284] font-bold' : ''}>
+            <span key={`axis-${lbl}-${idx}`} className={idx === cfg.axis.length - 1 ? 'text-[#c7f284] font-bold' : ''}>
               {lbl}
             </span>
           ))}

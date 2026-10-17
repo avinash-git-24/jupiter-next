@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import type { Token, TransactionReceipt } from './types';
 import { POPULAR_TOKENS } from './data/tokens';
 import { Sidebar } from './components/Sidebar';
@@ -9,11 +9,12 @@ import { OrderBook } from './components/OrderBook';
 import { RecentSwapsFeed } from './components/RecentSwapsFeed';
 import { SwapWidget } from './components/SwapWidget';
 import { TokenSelectModal } from './components/TokenSelectModal';
-import { ReceiptModal } from './components/ReceiptModal';
-import { CaseStudyModal } from './components/CaseStudyModal';
-import { PortfolioModal } from './components/PortfolioModal';
-import { PerpsModal } from './components/PerpsModal';
 import { MobileFrame } from './components/MobileFrame';
+
+const ReceiptModal = lazy(() => import('./components/ReceiptModal').then((m) => ({ default: m.ReceiptModal })));
+const CaseStudyModal = lazy(() => import('./components/CaseStudyModal').then((m) => ({ default: m.CaseStudyModal })));
+const PortfolioModal = lazy(() => import('./components/PortfolioModal').then((m) => ({ default: m.PortfolioModal })));
+const PerpsModal = lazy(() => import('./components/PerpsModal').then((m) => ({ default: m.PerpsModal })));
 import { 
   BookOpen, 
   ExternalLink
@@ -296,32 +297,42 @@ export function App() {
         selectedToken={tokenModalTarget === 'in' ? inToken : outToken}
       />
 
-      <ReceiptModal
-        receipt={receipt}
-        onClose={() => setReceipt(null)}
-      />
+      <Suspense fallback={null}>
+        {receipt && (
+          <ReceiptModal
+            receipt={receipt}
+            onClose={() => setReceipt(null)}
+          />
+        )}
 
-      <CaseStudyModal
-        isOpen={isCaseStudyOpen}
-        onClose={() => setIsCaseStudyOpen(false)}
-      />
+        {isCaseStudyOpen && (
+          <CaseStudyModal
+            isOpen={isCaseStudyOpen}
+            onClose={() => setIsCaseStudyOpen(false)}
+          />
+        )}
 
-      <PortfolioModal
-        isOpen={isPortfolioOpen}
-        onClose={handleClosePortfolio}
-        onSelectTokenToSwap={(selected) => {
-          setInToken(selected);
-          setActiveTab('swap');
-          setIsPortfolioOpen(false);
-        }}
-        walletAddress="avinash...7x89"
-      />
+        {isPortfolioOpen && (
+          <PortfolioModal
+            isOpen={isPortfolioOpen}
+            onClose={handleClosePortfolio}
+            onSelectTokenToSwap={(selected) => {
+              setInToken(selected);
+              setActiveTab('swap');
+              setIsPortfolioOpen(false);
+            }}
+            walletAddress="avinash...7x89"
+          />
+        )}
 
-      <PerpsModal
-        isOpen={isPerpsOpen}
-        onClose={handleClosePerps}
-        indexPrice={inToken.priceUsd}
-      />
+        {isPerpsOpen && (
+          <PerpsModal
+            isOpen={isPerpsOpen}
+            onClose={handleClosePerps}
+            indexPrice={inToken.priceUsd}
+          />
+        )}
+      </Suspense>
 
     </div>
   );
