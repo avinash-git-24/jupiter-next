@@ -1,5 +1,6 @@
 # Jupiter Next (Jup 3.0: Fluid DeFi)
 **Live Interactive Demo:** [https://jupiter-next-amber.vercel.app](https://jupiter-next-amber.vercel.app)  
+**Video Walkthrough (Direct 1080p):** [https://jupiter-next-amber.vercel.app/jupiter-next-demo.webm](https://jupiter-next-amber.vercel.app/jupiter-next-demo.webm)  
 **GitHub Repository:** [https://github.com/avinash-git-24/jupiter-next](https://github.com/avinash-git-24/jupiter-next)  
 **Superteam India Bounty Submission:** [Redesign Your Favourite App on Solana](https://superteam.fun/earn/listing/redesign-your-favourite-app-on-solana)  
 **Author:** Avinash Kumar ([@avinash-git-24](https://github.com/avinash-git-24))  
