@@ -78,7 +78,7 @@ npm run build
 
 ---
 
-## 6. Design Inspirations & Credits
-- **Component Patterns**: [Origin UI / OriginKit](https://www.originkit.dev/) & [ThreeUI](https://threeui.com/)
-- **Micro-Interactions**: Fuse Multi-Action Button by Nick Pyl & Trading Chart UX by Irfan
-- **Challenge Host**: Superteam India ([Listing Link](https://superteam.fun/earn/listing/redesign-your-favourite-app-on-solana))
+## 6. Tech Stack
+- **Framework**: Next.js 15 (App Router) & React 19
+- **Styling & Animations**: Tailwind CSS & Framer Motion
+- **Icons**: Lucide React
