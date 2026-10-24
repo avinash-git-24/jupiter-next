@@ -79,6 +79,6 @@ npm run build
 ---
 
 ## 6. Tech Stack
-- **Framework**: Next.js 15 (App Router) & React 19
+- **Framework**: Vite & React 19 (TypeScript)
 - **Styling & Animations**: Tailwind CSS & Framer Motion
 - **Icons**: Lucide React
